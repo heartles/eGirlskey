@@ -15,11 +15,13 @@ export const darkTheme: Theme = require('@client/themes/_dark.json5');
 export const themeProps = Object.keys(lightTheme.props).filter(key => !key.startsWith('X'));
 
 export const builtinThemes = [
+	require('@client/themes/l-kairi.json5'),
 	require('@client/themes/l-light.json5'),
 	require('@client/themes/l-apricot.json5'),
 	require('@client/themes/l-rainy.json5'),
 	require('@client/themes/l-vivid.json5'),
 
+	require('@client/themes/d-kairi-norted.json5'),
 	require('@client/themes/d-dark.json5'),
 	require('@client/themes/d-persimmon.json5'),
 	require('@client/themes/d-astro.json5'),

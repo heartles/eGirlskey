@@ -1,0 +1,17 @@
+{
+	id: '3e715ccf-d854-475e-8d70-98ff4dc81b40',
+	base: 'light',
+	desc: 'Default light theme for egirls.gay',
+	name: 'Kairi',
+	props: {
+		bg: '#F1C1DE',
+		fg: '#242424',
+		link: '#29677A',
+		navBg: ':darken<10<@panel',
+		accent: '#8E0069',
+		divider: '" rgba(0, 0, 0, 0.1)',
+		hashtag: '#7E4C2A',
+		inputBorder: '#474a4c',
+	},
+	author: '@heartles@egirls.gay',
+}
