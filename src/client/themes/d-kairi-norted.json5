@@ -1,0 +1,11 @@
+{
+	id: '9699c8d5-3f42-4505-955d-dc7a7d090e8a',
+	base: 'dark',
+	desc: 'Default dark theme for egirls.gay',
+	name: 'Kairi (Norted)',
+	props: {
+		bg: '#2b0b21',
+		accent: '#b542a0',
+	},
+	author: '@heartles@egirls.gay',
+}
