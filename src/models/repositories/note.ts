@@ -446,7 +446,6 @@ export const packedNoteSchema = {
 			optional: false as const, nullable: true as const,
 			description: 'The human readable url of a note. it will be null when the note is local.',
 		},
-
 		myReaction: {
 			type: 'object' as const,
 			optional: true as const, nullable: true as const,

@@ -20,6 +20,13 @@ type PackOptions = {
 
 @EntityRepository(DriveFile)
 export class DriveFileRepository extends Repository<DriveFile> {
+	public validateComment(comment: string): boolean {
+		return (
+			(comment.trim().length > 0) &&
+			(comment.length <= 512)
+		);
+	}
+
 	public validateFileName(name: string): boolean {
 		return (
 			(name.trim().length > 0) &&
