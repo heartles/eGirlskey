@@ -12,7 +12,7 @@
 		<span>{{ $ts._profile.name }}</span>
 	</FormInput>
 
-	<FormTextarea v-model:value="description" :max="500" tall manual-save>
+	<FormTextarea v-model:value="description" :max="2000" tall manual-save>
 		<span>{{ $ts._profile.description }}</span>
 		<template #desc>{{ $ts._profile.youCanIncludeHashtags }}</template>
 	</FormTextarea>
