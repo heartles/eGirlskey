@@ -18,14 +18,6 @@ export const meta = {
 	kind: 'write:drive',
 
 	params: {
-		comment: {
-			validator: $.optional.str.pipe(DriveFiles.validateComment),
-			default: undefined as any,
-			desc: {
-				'en-US': 'Description of or comment on the file.'
-			}
-		},
-
 		fileId: {
 			validator: $.type(ID),
 			desc: {
@@ -53,10 +45,11 @@ export const meta = {
 		isSensitive: {
 			validator: $.optional.bool,
 			default: undefined as any,
-			desc: {
-				'ja-JP': 'このメディアが「閲覧注意」(NSFW)かどうか',
-				'en-US': 'Whether this media is NSFW'
-			}
+		},
+
+		comment: {
+			validator: $.optional.nullable.str,
+			default: undefined as any,
 		}
 	},
 
@@ -100,7 +93,7 @@ export default define(meta, async (ps, user) => {
 
 	if (ps.name) file.name = ps.name;
 
-	if (ps.comment) file.comment = ps.comment;
+	if (ps.comment !== undefined) file.comment = ps.comment;
 
 	if (ps.isSensitive !== undefined) file.isSensitive = ps.isSensitive;
 

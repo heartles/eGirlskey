@@ -1,94 +1,74 @@
 <template>
-	<div class="mk-app" :class="{ wallpaper, isMobile }">
-		<div class="columns" :class="{ fullView }">
-			<div class="sidebar" ref="sidebar" v-if="!isMobile">
-				<XSidebar />
+<div class="mk-app" :class="{ wallpaper, isMobile }">
+	<XHeaderMenu v-if="showMenuOnTop"/>
+
+	<div class="columns" :class="{ fullView, withGlobalHeader: showMenuOnTop }">
+		<template v-if="!isMobile">
+			<div class="sidebar" v-if="!showMenuOnTop">
+				<XSidebar/>
 			</div>
-
-			<main class="main _panel" @contextmenu.stop="onContextmenu">
-				<header class="header" @click="onHeaderClick">
-					<XHeader :info="pageInfo" />
-				</header>
-				<div class="content" :class="{ _flat_: !fullView }">
-					<router-view v-slot="{ Component }">
-						<transition
-							:name="$store.state.animation ? 'page' : ''"
-							mode="out-in"
-							@enter="onTransition"
-						>
-							<keep-alive :include="['timeline']">
-								<component :is="Component" :ref="changePage" />
-							</keep-alive>
-						</transition>
-					</router-view>
-				</div>
-			</main>
-
-			<div v-if="isDesktop" class="widgets" ref="widgets">
-				<XWidgets @mounted="attachSticky" />
+			<div class="widgets left" ref="widgetsLeft" v-else>
+				<XWidgets @mounted="attachSticky('widgetsLeft')" :place="'left'"/>
 			</div>
+		</template>
+
+		<main class="main _panel" @contextmenu.stop="onContextmenu">
+			<header class="header" @click="onHeaderClick">
+				<XHeader :info="pageInfo"/>
+			</header>
+			<div class="content" :class="{ _flat_: !fullView }">
+				<router-view v-slot="{ Component }">
+					<transition :name="$store.state.animation ? 'page' : ''" mode="out-in" @enter="onTransition">
+						<keep-alive :include="['timeline']">
+							<component :is="Component" :ref="changePage"/>
+						</keep-alive>
+					</transition>
+				</router-view>
+			</div>
+		</main>
+
+		<div v-if="isDesktop" class="widgets right" ref="widgetsRight">
+			<XWidgets @mounted="attachSticky('widgetsRight')" :place="null"/>
 		</div>
-
-		<div class="buttons" v-if="isMobile">
-			<button class="button nav _button" @click="showDrawerNav" ref="navButton">
-				<i class="fas fa-bars"></i
-				><span v-if="navIndicated" class="indicator"
-					><i class="fas fa-circle"></i
-				></span>
-			</button>
-			<button
-				class="button home _button"
-				@click="$route.name === 'index' ? top() : $router.push('/')"
-			>
-				<i class="fas fa-home"></i>
-			</button>
-			<button
-				class="button notifications _button"
-				@click="$router.push('/my/notifications')"
-			>
-				<i class="fas fa-bell"></i
-				><span v-if="$i.hasUnreadNotification" class="indicator"
-					><i class="fas fa-circle"></i
-				></span>
-			</button>
-			<button class="button widget _button" @click="widgetsShowing = true">
-				<i class="fas fa-layer-group"></i>
-			</button>
-			<button class="button post _button" @click="post">
-				<i class="fas fa-pencil-alt"></i>
-			</button>
-		</div>
-
-		<XDrawerSidebar ref="drawerNav" class="sidebar" v-if="isMobile" />
-
-		<transition name="tray-back">
-			<div
-				class="tray-back _modalBg"
-				v-if="widgetsShowing"
-				@click="widgetsShowing = false"
-				@touchstart.passive="widgetsShowing = false"
-			></div>
-		</transition>
-
-		<transition name="tray">
-			<XWidgets v-if="widgetsShowing" class="tray" />
-		</transition>
-
-		<XCommon />
 	</div>
+
+	<div class="buttons" v-if="isMobile">
+		<button class="button nav _button" @click="showDrawerNav" ref="navButton"><i class="fas fa-bars"></i><span v-if="navIndicated" class="indicator"><i class="fas fa-circle"></i></span></button>
+		<button class="button home _button" @click="$route.name === 'index' ? top() : $router.push('/')"><i class="fas fa-home"></i></button>
+		<button class="button notifications _button" @click="$router.push('/my/notifications')"><i class="fas fa-bell"></i><span v-if="$i.hasUnreadNotification" class="indicator"><i class="fas fa-circle"></i></span></button>
+		<button class="button widget _button" @click="widgetsShowing = true"><i class="fas fa-layer-group"></i></button>
+		<button class="button post _button" @click="post"><i class="fas fa-pencil-alt"></i></button>
+	</div>
+
+	<XDrawerSidebar ref="drawerNav" class="sidebar" v-if="isMobile"/>
+
+	<transition name="tray-back">
+		<div class="tray-back _modalBg"
+			v-if="widgetsShowing"
+			@click="widgetsShowing = false"
+			@touchstart.passive="widgetsShowing = false"
+		></div>
+	</transition>
+
+	<transition name="tray">
+		<XWidgets v-if="widgetsShowing" class="tray"/>
+	</transition>
+
+	<XCommon/>
+</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, defineAsyncComponent } from "vue";
-import { instanceName } from "@client/config";
-import { StickySidebar } from "@client/scripts/sticky-sidebar";
-import XSidebar from "./default.sidebar.vue";
-import XDrawerSidebar from "@client/ui/_common_/sidebar.vue";
-import XCommon from "./_common_/common.vue";
-import XHeader from "./_common_/header.vue";
-import * as os from "@client/os";
-import { sidebarDef } from "@client/sidebar";
-import * as symbols from "@client/symbols";
+import { defineComponent, defineAsyncComponent } from 'vue';
+import { instanceName } from '@client/config';
+import { StickySidebar } from '@client/scripts/sticky-sidebar';
+import XSidebar from './default.sidebar.vue';
+import XDrawerSidebar from '@client/ui/_common_/sidebar.vue';
+import XCommon from './_common_/common.vue';
+import XHeader from './_common_/header.vue';
+import * as os from '@client/os';
+import { menuDef } from '@client/menu';
+import * as symbols from '@client/symbols';
 
 const DESKTOP_THRESHOLD = 1100;
 const MOBILE_THRESHOLD = 600;
@@ -99,67 +79,58 @@ export default defineComponent({
 		XSidebar,
 		XDrawerSidebar,
 		XHeader,
-		XWidgets: defineAsyncComponent(() => import("./default.widgets.vue")),
+		XHeaderMenu: defineAsyncComponent(() => import('./default.header.vue')),
+		XWidgets: defineAsyncComponent(() => import('./default.widgets.vue')),
 	},
 
 	data() {
 		return {
 			pageInfo: null,
-			menuDef: sidebarDef,
+			menuDef: menuDef,
 			isMobile: window.innerWidth <= MOBILE_THRESHOLD,
 			isDesktop: window.innerWidth >= DESKTOP_THRESHOLD,
 			widgetsShowing: false,
 			fullView: false,
-			wallpaper: localStorage.getItem("wallpaper") != null,
+			wallpaper: localStorage.getItem('wallpaper') != null,
 		};
 	},
 
 	computed: {
 		navIndicated(): boolean {
 			for (const def in this.menuDef) {
-				if (def === "notifications") continue; // 通知は下にボタンとして表示されてるから
+				if (def === 'notifications') continue; // 通知は下にボタンとして表示されてるから
 				if (this.menuDef[def].indicated) return true;
 			}
 			return false;
 		},
+
+		showMenuOnTop(): boolean {
+			return !this.isMobile && this.$store.state.menuDisplay === 'top';
+		}
 	},
 
 	created() {
-		document.documentElement.style.overflowY = "scroll";
+		document.documentElement.style.overflowY = 'scroll';
 
 		if (this.$store.state.widgets.length === 0) {
-			this.$store.set("widgets", [
-				{
-					name: "calendar",
-					id: "a",
-					place: "right",
-					data: {},
-				},
-				{
-					name: "notifications",
-					id: "b",
-					place: "right",
-					data: {},
-				},
-				{
-					name: "trends",
-					id: "c",
-					place: "right",
-					data: {},
-				},
-			]);
+			this.$store.set('widgets', [{
+				name: 'calendar',
+				id: 'a', place: null, data: {}
+			}, {
+				name: 'notifications',
+				id: 'b', place: null, data: {}
+			}, {
+				name: 'trends',
+				id: 'c', place: null, data: {}
+			}]);
 		}
 	},
 
 	mounted() {
-		window.addEventListener(
-			"resize",
-			() => {
-				this.isMobile = window.innerWidth <= MOBILE_THRESHOLD;
-				this.isDesktop = window.innerWidth >= DESKTOP_THRESHOLD;
-			},
-			{ passive: true }
-		);
+		window.addEventListener('resize', () => {
+			this.isMobile = (window.innerWidth <= MOBILE_THRESHOLD);
+			this.isDesktop = (window.innerWidth >= DESKTOP_THRESHOLD);
+		}, { passive: true });
 	},
 
 	methods: {
@@ -171,15 +142,11 @@ export default defineComponent({
 			}
 		},
 
-		attachSticky() {
-			const sticky = new StickySidebar(this.$refs.widgets, 16);
-			window.addEventListener(
-				"scroll",
-				() => {
-					sticky.calc(window.scrollY);
-				},
-				{ passive: true }
-			);
+		attachSticky(ref) {
+			const sticky = new StickySidebar(this.$refs[ref], this.$store.state.menuDisplay === 'top' ? 1 : 16, this.$store.state.menuDisplay === 'top' ? 60 : 0); // TODO: ヘッダーの高さを60pxと決め打ちしているのを直す
+			window.addEventListener('scroll', () => {
+				sticky.calc(window.scrollY);
+			}, { passive: true });
 		},
 
 		post() {
@@ -187,7 +154,7 @@ export default defineComponent({
 		},
 
 		top() {
-			window.scroll({ top: 0, behavior: "smooth" });
+			window.scroll({ top: 0, behavior: 'smooth' });
 		},
 
 		showDrawerNav() {
@@ -199,51 +166,38 @@ export default defineComponent({
 		},
 
 		onHeaderClick() {
-			window.scroll({ top: 0, behavior: "smooth" });
+			window.scroll({ top: 0, behavior: 'smooth' });
 		},
 
 		onContextmenu(e) {
 			const isLink = (el: HTMLElement) => {
-				if (el.tagName === "A") return true;
+				if (el.tagName === 'A') return true;
 				if (el.parentElement) {
 					return isLink(el.parentElement);
 				}
 			};
 			if (isLink(e.target)) return;
-			if (
-				["INPUT", "TEXTAREA", "IMG", "VIDEO", "CANVAS"].includes(
-					e.target.tagName
-				) ||
-				e.target.attributes["contenteditable"]
-			)
-				return;
-			if (window.getSelection().toString() !== "") return;
+			if (['INPUT', 'TEXTAREA', 'IMG', 'VIDEO', 'CANVAS'].includes(e.target.tagName) || e.target.attributes['contenteditable']) return;
+			if (window.getSelection().toString() !== '') return;
 			const path = this.$route.path;
-			os.contextMenu(
-				[
-					{
-						type: "label",
-						text: path,
-					},
-					{
-						icon: this.fullView ? "fas fa-compress" : "fas fa-expand",
-						text: this.fullView ? this.$ts.quitFullView : this.$ts.fullView,
-						action: () => {
-							this.fullView = !this.fullView;
-						},
-					},
-					{
-						icon: "fas fa-window-maximize",
-						text: this.$ts.openInWindow,
-						action: () => {
-							os.pageWindow(path);
-						},
-					},
-				],
-				e
-			);
+			os.contextMenu([{
+				type: 'label',
+				text: path,
+			}, {
+				icon: this.fullView ? 'fas fa-compress' : 'fas fa-expand',
+				text: this.fullView ? this.$ts.quitFullView : this.$ts.fullView,
+				action: () => {
+					this.fullView = !this.fullView;
+				}
+			}, {
+				icon: 'fas fa-window-maximize',
+				text: this.$ts.openInWindow,
+				action: () => {
+					os.pageWindow(path);
+				}
+			}], e);
 		},
-	},
+	}
 });
 </script>
 
@@ -252,8 +206,7 @@ export default defineComponent({
 .tray-leave-active {
 	opacity: 1;
 	transform: translateX(0);
-	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1),
-		opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 .tray-enter-from,
 .tray-leave-active {
@@ -277,7 +230,7 @@ export default defineComponent({
 	$widgets-hide-threshold: 1200px;
 	$nav-icon-only-width: 78px; // TODO: どこかに集約したい
 
-	--panelShadow: none;
+	--panelShadow: 0 0 0 1px var(--divider);
 
 	// ほんとは単に 100vh と書きたいところだが... https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 	min-height: calc(var(--vh, 1vh) * 100);
@@ -315,7 +268,7 @@ export default defineComponent({
 
 		&.fullView {
 			margin: 0;
-
+		
 			> .sidebar {
 				display: none;
 			}
@@ -344,7 +297,7 @@ export default defineComponent({
 			> .header {
 				position: sticky;
 				z-index: 1000;
-				top: 0;
+				top: var(--globalHeaderHeight, 0px);
 				height: $header-height;
 				line-height: $header-height;
 				-webkit-backdrop-filter: blur(32px);
@@ -355,7 +308,7 @@ export default defineComponent({
 
 			> .content {
 				background: var(--bg);
-				--stickyTop: #{$header-height};
+				--stickyTop: calc(var(--globalHeaderHeight, 0px) + #{$header-height});
 			}
 
 			@media (max-width: 850px) {
@@ -376,10 +329,29 @@ export default defineComponent({
 			@media (max-width: $widgets-hide-threshold) {
 				display: none;
 			}
+
+			&.left {
+				margin-right: 16px;
+			}
 		}
 
 		> .sidebar {
 			margin-top: 16px;
+		}
+
+		&.withGlobalHeader {
+			--globalHeaderHeight: 60px; // TODO: 60pxと決め打ちしているのを直す
+
+			> .main {
+				margin-top: 1px;
+				border-radius: var(--radius);
+				box-shadow: 0 0 0 1px var(--divider);
+			}
+
+			> .widgets {
+				--stickyTop: var(--globalHeaderHeight);
+				margin-top: 1px;
+			}
 		}
 
 		@media (max-width: 850px) {

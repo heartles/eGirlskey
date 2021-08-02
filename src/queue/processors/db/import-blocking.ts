@@ -2,10 +2,10 @@ import * as Bull from 'bull';
 
 import { queueLogger } from '../../logger';
 import block from '../../../services/blocking/create';
-import parseAcct from '../../../misc/acct/parse';
+import parseAcct from '@/misc/acct';
 import { resolveUser } from '../../../remote/resolve-user';
-import { downloadTextFile } from '../../../misc/download-text-file';
-import { isSelfHost, toPuny } from '../../../misc/convert-host';
+import { downloadTextFile } from '@/misc/download-text-file';
+import { isSelfHost, toPuny } from '@/misc/convert-host';
 import { Users, DriveFiles } from '../../../models';
 
 const logger = queueLogger.createSubLogger('import-blocking');
