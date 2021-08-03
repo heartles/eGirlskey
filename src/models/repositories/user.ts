@@ -326,6 +326,7 @@ export class UserRepository extends Repository<User> {
 	//#region Validators
 	public validateLocalUsername = $.str.match(/^\w{1,20}$/);
 	public validatePassword = $.str.min(1);
+	// Increase name length limit
 	public validateName = $.str.min(1).max(120);
 	public validateDescription = $.str.min(1).max(500);
 	public validateLocation = $.str.min(1).max(50);

@@ -54,25 +54,16 @@
 </template>
 
 <script lang="ts">
-import {
-	computed,
-	defineAsyncComponent,
-	defineComponent,
-	nextTick,
-	onMounted,
-	reactive,
-	ref,
-	watch,
-} from "vue";
-import { i18n } from "@client/i18n";
-import FormLink from "@client/components/form/link.vue";
-import FormGroup from "@client/components/form/group.vue";
-import FormBase from "@client/components/form/base.vue";
-import FormButton from "@client/components/form/button.vue";
-import { scroll } from "@client/scripts/scroll";
-import * as symbols from "@client/symbols";
-import * as os from "@client/os";
-import { lookupUser } from "@client/scripts/lookup-user";
+import { computed, defineAsyncComponent, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import { i18n } from '@client/i18n';
+import FormLink from '@client/components/form/link.vue';
+import FormGroup from '@client/components/form/group.vue';
+import FormBase from '@client/components/form/base.vue';
+import FormButton from '@client/components/form/button.vue';
+import { scroll } from '@client/scripts/scroll';
+import * as symbols from '@client/symbols';
+import * as os from '@client/os';
+import { lookupUser } from '@client/scripts/lookup-user';
 
 export default defineComponent({
 	components: {
@@ -85,14 +76,14 @@ export default defineComponent({
 	props: {
 		initialPage: {
 			type: String,
-			required: false,
-		},
+			required: false
+		}
 	},
 
 	setup(props, context) {
 		const indexInfo = {
 			title: i18n.locale.instance,
-			icon: "fas fa-cog",
+			icon: 'fas fa-cog'
 		};
 		const INFO = ref(indexInfo);
 		const page = ref(props.initialPage);
@@ -135,89 +126,72 @@ export default defineComponent({
 			}
 		});
 
-		watch(
-			component,
-			() => {
-				pageProps.value = {};
+		watch(component, () => {
+			pageProps.value = {};
 
-				nextTick(() => {
-					scroll(el.value, 0);
-				});
-			},
-			{ immediate: true }
-		);
+			nextTick(() => {
+				scroll(el.value, 0);
+			});
+		}, { immediate: true });
 
-		watch(
-			() => props.initialPage,
-			() => {
-				if (props.initialPage == null && !narrow.value) {
-					page.value = "overview";
-				} else {
-					page.value = props.initialPage;
-					if (props.initialPage == null) {
-						INFO.value = indexInfo;
-					}
+		watch(() => props.initialPage, () => {
+			if (props.initialPage == null && !narrow.value) {
+				page.value = 'overview';
+			} else {
+				page.value = props.initialPage;
+				if (props.initialPage == null) {
+					INFO.value = indexInfo;
 				}
 			}
-		);
+		});
 
 		onMounted(() => {
 			narrow.value = el.value.offsetWidth < 800;
 			if (!narrow.value) {
-				page.value = "overview";
+				page.value = 'overview';
 			}
 		});
 
 		const invite = () => {
-			os.api("admin/invite")
-				.then((x) => {
-					os.dialog({
-						type: "info",
-						text: x.code,
-					});
-				})
-				.catch((e) => {
-					os.dialog({
-						type: "error",
-						text: e,
-					});
+			os.api('admin/invite').then(x => {
+				os.dialog({
+					type: 'info',
+					text: x.code
 				});
+			}).catch(e => {
+				os.dialog({
+					type: 'error',
+					text: e
+				});
+			});
 		};
 
 		const lookup = (ev) => {
-			os.modalMenu(
-				[
-					{
-						text: i18n.locale.user,
-						icon: "fas fa-user",
-						action: () => {
-							lookupUser();
-						},
-					},
-					{
-						text: i18n.locale.note,
-						icon: "fas fa-pencil-alt",
-						action: () => {
-							alert("TODO");
-						},
-					},
-					{
-						text: i18n.locale.file,
-						icon: "fas fa-cloud",
-						action: () => {
-							alert("TODO");
-						},
-					},
-					{
-						text: i18n.locale.instance,
-						icon: "fas fa-globe",
-						action: () => {
-							alert("TODO");
-						},
-					},
-				],
-				ev.currentTarget || ev.target
-			);
+			os.modalMenu([{
+				text: i18n.locale.user,
+				icon: 'fas fa-user',
+				action: () => {
+					lookupUser();
+				}
+			}, {
+				text: i18n.locale.note,
+				icon: 'fas fa-pencil-alt',
+				action: () => {
+					alert('TODO');
+				}
+			}, {
+				text: i18n.locale.file,
+				icon: 'fas fa-cloud',
+				action: () => {
+					alert('TODO');
+				}
+			}, {
+				text: i18n.locale.instance,
+				icon: 'fas fa-globe',
+				action: () => {
+					alert('TODO');
+				}
+			}], ev.currentTarget || ev.target);
 		};
 
 		return {

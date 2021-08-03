@@ -441,6 +441,7 @@ export const packedNoteSchema = {
 			type: 'string' as const,
 			optional: false as const, nullable: true as const,
 		},
+
 		myReaction: {
 			type: 'object' as const,
 			optional: true as const, nullable: true as const,

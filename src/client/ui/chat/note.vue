@@ -625,6 +625,7 @@ export default defineComponent({
 					text: this.$ts.watch,
 					action: () => this.toggleWatch(true)
 				}) : undefined,
+				// Allow pinning others' posts
 				true ? (this.$i.pinnedNoteIds || []).includes(this.appearNote.id) ? {
 					icon: 'fas fa-thumbtack',
 					text: this.$ts.unpin,

@@ -163,6 +163,7 @@ export function createImportFollowingJob(user: ThinUser, fileId: DriveFile['id']
 	});
 }
 
+// Allow importing blocks/mutes
 export function createImportBlockingJob(user: ThinUser, fileId: DriveFile['id']) {
 	return dbQueue.add('importBlocking', {
 		user: user,

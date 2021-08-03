@@ -15,10 +15,12 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'account',
 		default: 0
 	},
+	// Turn on keepCw by default
 	keepCw: {
 		where: 'account',
 		default: true
 	},
+	// Add mentions to local replies
 	localMentions: {
 		where: 'account',
 		default: true

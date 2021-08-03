@@ -669,7 +669,7 @@ clips: "书签"
 experimentalFeatures: "实验性功能"
 developer: "开发者"
 makeExplorable: "使账号可见。"
-makeExplorableDescription: '关闭时，账号不会显示在"发现"中。'
+makeExplorableDescription: "关闭时，账号不会显示在\"发现\"中。"
 showGapBetweenNotesInTimeline: "时间线上的帖子分开显示。"
 duplicate: "复制"
 left: "左"
@@ -842,7 +842,7 @@ _mfm:
   jelly: "动画(果冻)"
   jellyDescription: "显示果冻一样的动画效果。"
   tada: "动画(锵锵)"
-  tadaDescription: '显示"锵锵！"的动画效果。'
+  tadaDescription: "显示\"锵锵！\"的动画效果。"
   jump: "动画(跳动)"
   jumpDescription: "显示跳动的动画效果。"
   bounce: "动画(弹性)"
