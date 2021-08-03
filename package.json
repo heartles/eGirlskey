@@ -1,8 +1,8 @@
 {
 	"name": "pluskey",
-	"author": "foggy <foggy@foggy.llc>",
-	"version": "12.91.0+plus.1",
-	"codename": "indigo",
+	"author": "heartles <dev@heartles.xyz>",
+	"version": "12.91.0+egirls.0",
+	"codename": "sanctuary",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/foggy-llc/pluskey.git"
