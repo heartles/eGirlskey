@@ -204,19 +204,6 @@ export const meta = {
 							optional: false as const, nullable: false as const,
 							format: 'url'
 						},
-						category: {
-							type: 'string' as const,
-							optional: false as const, nullable: true as const
-						},
-						host: {
-							type: 'string' as const,
-							optional: false as const, nullable: true as const
-						},
-						url: {
-							type: 'string' as const,
-							optional: false as const, nullable: false as const,
-							format: 'url'
-						}
 					}
 				}
 			},

@@ -57,7 +57,7 @@ export async function addPinned(user: { id: User['id']; host: User['host']; }, n
 export async function removePinned(user: { id: User['id']; host: User['host']; }, noteId: Note['id']) {
 	// Fetch unpinee
 	const note = await Notes.findOne({
-		id: noteId,
+		id: noteId
 	});
 
 	if (note == null) {
