@@ -136,7 +136,8 @@ export default defineComponent({
 
 		watch(() => props.initialPage, () => {
 			if (props.initialPage == null && !narrow.value) {
-				page.value = 'overview';
+				// disable overview page by default
+				//page.value = 'overview';
 			} else {
 				page.value = props.initialPage;
 				if (props.initialPage == null) {
@@ -148,7 +149,8 @@ export default defineComponent({
 		onMounted(() => {
 			narrow.value = el.value.offsetWidth < 800;
 			if (!narrow.value) {
-				page.value = 'overview';
+				// disable overview page by default
+				//page.value = 'overview';
 			}
 		});
 
