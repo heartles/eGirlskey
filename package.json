@@ -1,11 +1,11 @@
 {
-	"name": "pluskey",
-	"author": "foggy <foggy@foggy.llc>",
-	"version": "12.87.0+egirls",
+	"name": "eGirlskey",
+	"author": "heartles <dev@heartles.xyz>",
+	"version": "12.87.0+1",
 	"codename": "indigo",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/foggy-llc/pluskey.git"
+		"url": "https://github.com/heartles/pluskey.git"
 	},
 	"main": "./index.js",
 	"private": true,
