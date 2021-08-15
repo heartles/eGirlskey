@@ -4,7 +4,7 @@ import { Channels } from '../../../../models';
 export const meta = {
 	tags: ['channels'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	res: {
 		type: 'array' as const,

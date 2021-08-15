@@ -7,7 +7,7 @@ import { GalleryPosts } from '@/models';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		postId: {

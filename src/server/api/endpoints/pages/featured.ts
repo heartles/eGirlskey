@@ -4,7 +4,7 @@ import { Pages } from '../../../../models';
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	res: {
 		type: 'array' as const,

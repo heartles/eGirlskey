@@ -8,7 +8,7 @@ import { toPunyNullable } from '@/misc/convert-host';
 export const meta = {
 	tags: ['room'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		userId: {

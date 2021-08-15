@@ -9,7 +9,7 @@ import { activeUsersChart } from '../../../../services/chart';
 export const meta = {
 	tags: ['notes', 'channels'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		channelId: {

@@ -4,7 +4,7 @@ import { Users } from '../../../../models';
 import { normalizeForSearch } from '@/misc/normalize-for-search';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	tags: ['hashtags', 'users'],
 

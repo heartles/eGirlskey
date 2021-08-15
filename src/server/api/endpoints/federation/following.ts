@@ -7,7 +7,7 @@ import { makePaginationQuery } from '../../common/make-pagination-query';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		host: {

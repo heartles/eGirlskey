@@ -9,7 +9,7 @@ import { genId } from '@/misc/gen-id';
 export const meta = {
 	tags: ['auth'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		appSecret: {

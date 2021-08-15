@@ -4,7 +4,7 @@ import { GalleryPosts } from '../../../../models';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	res: {
 		type: 'array' as const,

@@ -10,7 +10,7 @@ import { NoteReaction } from '../../../../models/entities/note-reaction';
 export const meta = {
 	tags: ['notes', 'reactions'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		noteId: {

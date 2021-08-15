@@ -3,7 +3,7 @@ import * as si from 'systeminformation';
 import define from '../define';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	desc: {
 	},

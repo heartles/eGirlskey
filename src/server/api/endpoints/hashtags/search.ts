@@ -5,7 +5,7 @@ import { Hashtags } from '../../../../models';
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		limit: {

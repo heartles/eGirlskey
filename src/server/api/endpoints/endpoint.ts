@@ -3,7 +3,7 @@ import define from '../define';
 import endpoints from '../endpoints';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	tags: ['meta'],
 

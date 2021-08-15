@@ -8,7 +8,8 @@ import { Notes } from '../../../../models';
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+    // make notes private
+	requireCredential: true as const,
 
 	params: {
 		noteId: {

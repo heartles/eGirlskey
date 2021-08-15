@@ -9,7 +9,7 @@ import { In } from 'typeorm';
 export const meta = {
 	tags: ['clips', 'notes'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		noteId: {

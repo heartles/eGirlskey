@@ -11,7 +11,7 @@ import { User } from '@/models/entities/user';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		userId: {

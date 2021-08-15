@@ -7,7 +7,7 @@ import { normalizeForSearch } from '@/misc/normalize-for-search';
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		tag: {

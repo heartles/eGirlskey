@@ -6,7 +6,7 @@ import { generateMutedUserQueryForUsers } from '../common/generate-muted-user-qu
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		limit: {

@@ -6,7 +6,7 @@ import { ApiError } from '../../error';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		uri: {

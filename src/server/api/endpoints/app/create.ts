@@ -8,7 +8,7 @@ import { secureRndstr } from '@/misc/secure-rndstr';
 export const meta = {
 	tags: ['app'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		name: {

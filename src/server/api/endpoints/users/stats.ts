@@ -7,7 +7,7 @@ import { DriveFiles, Followings, NoteFavorites, NoteReactions, Notes, PageLikes,
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		userId: {

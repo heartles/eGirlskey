@@ -7,7 +7,7 @@ import { makePaginationQuery } from '../common/make-pagination-query';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	params: {
 		limit: {

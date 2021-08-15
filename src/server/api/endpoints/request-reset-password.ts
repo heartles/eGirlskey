@@ -11,7 +11,7 @@ import { genId } from '@/misc/gen-id';
 import { IsNull } from 'typeorm';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	limit: {
 		duration: ms('1hour'),

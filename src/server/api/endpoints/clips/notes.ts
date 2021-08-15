@@ -10,7 +10,7 @@ import { ApiError } from '../../error';
 export const meta = {
 	tags: ['account', 'notes', 'clips'],
 
-	requireCredential: false as const,
+	requireCredential: true as const,
 
 	kind: 'read:account',
 
