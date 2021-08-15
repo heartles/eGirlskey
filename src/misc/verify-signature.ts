@@ -13,7 +13,7 @@ async function verifySignature(signature, activity)  {
 	// ブロックしてたら中断
 	const meta = await fetchMeta();
 	if (meta.blockedHosts.includes(host)) {
-        throw `Blocked request: ${host}`;
+		throw `Blocked request: ${host}`;
 	}
 
 	const keyIdLower = signature.keyId.toLowerCase();
@@ -52,11 +52,10 @@ async function verifySignature(signature, activity)  {
 
 	// HTTP-Signatureの検証
 	const httpSignatureValidated = httpSignature.verifySignature(signature, authUser.key.keyPem);
+	const matchesActivity = (activity == null) || (authUser.user.uri === activity.actor);
 
-	// また、signatureのsignerは、activity.actorと一致する必要がある
-	if (!httpSignatureValidated || (activity != null && authUser.user.uri !== activity.actor)) {
-		// 一致しなくても、でもLD-Signatureがありそうならそっちも見る
-		if (activity.signature) {
+	if (!httpSignatureValidated || !matchesActivity) {
+		if (activity && activity.signature) {
 			if (activity.signature.type !== 'RsaSignature2017') {
 				throw `skip: unsupported LD-signature type ${activity.signature.type}`;
 			}
@@ -65,7 +64,7 @@ async function verifySignature(signature, activity)  {
 			// みたいになっててUserを引っ張れば公開キーも入ることを期待する
 			if (activity.signature.creator) {
 				const candicate = activity.signature.creator.replace(/#.*/, '');
-				await resolvePerson(candicate).catch(() => null);
+await resolvePerson(candicate).catch(() => null);
 			}
 
 			// keyIdからLD-Signatureのユーザーを取得
@@ -105,3 +104,4 @@ async function verifySignature(signature, activity)  {
 };
 
 export default verifySignature;
+
