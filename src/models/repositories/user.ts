@@ -327,7 +327,7 @@ export class UserRepository extends Repository<User> {
 	public validatePassword = $.str.min(1);
 	// Increase name length limit
 	public validateName = $.str.min(1).max(120);
-	public validateDescription = $.str.min(1).max(500);
+	public validateDescription = $.str.min(1).max(16000);
 	public validateLocation = $.str.min(1).max(50);
 	public validateBirthday = $.str.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/);
 	//#endregion

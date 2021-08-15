@@ -30,7 +30,7 @@ export class UserProfile {
 	public birthday: string | null;
 
 	@Column('varchar', {
-		length: 2048, nullable: true,
+		length: 16384, nullable: true,
 		comment: 'The description (bio) of the User.'
 	})
 	public description: string | null;
