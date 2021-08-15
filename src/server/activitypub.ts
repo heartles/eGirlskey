@@ -18,6 +18,7 @@ import { ILocalUser, User } from '../models/entities/user';
 import { In } from 'typeorm';
 import { renderLike } from '../remote/activitypub/renderer/like';
 import { getUserKeypair } from '@/misc/keypair-store';
+import { verifySignature } from '@/misc/verify-signature';
 
 // Init router
 const router = new Router();
@@ -57,6 +58,30 @@ export function setResponseType(ctx: Router.RouterContext) {
 	}
 }
 
+// Authenticated fetch
+router.use(
+    [
+        '/notes/:note/activity',
+        '/users/:user/outbox',
+        '/users/:user/followers',
+        '/users/:user/following',
+        '/users/:user/collections/featured',
+        '/users/:user/publickey',
+        '/likes/:like',
+    ],
+    async (ctx, next) => {
+        try {
+            let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
+            verifySignature(signature, null);
+        } catch (e) {
+            ctx.status = 401;
+            return;
+        }
+
+        return next();
+    }
+);
+
 // inbox
 router.post('/inbox', json(), inbox);
 router.post('/users/:user/inbox', json(), inbox);
@@ -64,6 +89,14 @@ router.post('/users/:user/inbox', json(), inbox);
 // note
 router.get('/notes/:note', async (ctx, next) => {
 	if (!isActivityPubReq(ctx)) return await next();
+
+	try {
+		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
+		verifySignature(signature, null);
+	} catch (e) {
+		ctx.status = 401;
+		return;
+	}
 
 	const note = await Notes.findOne({
 		id: ctx.params.note,
@@ -162,6 +195,14 @@ async function userInfo(ctx: Router.RouterContext, user: User | undefined) {
 router.get('/users/:user', async (ctx, next) => {
 	if (!isActivityPubReq(ctx)) return await next();
 
+	try {
+		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
+		verifySignature(signature, null);
+	} catch (e) {
+		ctx.status = 401;
+		return;
+	}
+
 	const userId = ctx.params.user;
 
 	const user = await Users.findOne({
@@ -175,6 +216,14 @@ router.get('/users/:user', async (ctx, next) => {
 
 router.get('/@:user', async (ctx, next) => {
 	if (!isActivityPubReq(ctx)) return await next();
+
+	try {
+		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
+		verifySignature(signature, null);
+	} catch (e) {
+		ctx.status = 401;
+		return;
+	}
 
 	const user = await Users.findOne({
 		usernameLower: ctx.params.user.toLowerCase(),
