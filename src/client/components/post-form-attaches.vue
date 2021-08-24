@@ -72,23 +72,6 @@ export default defineComponent({
 				this.$emit('changeSensitive', file, !file.isSensitive);
 			});
 		},
-		async comment(file) {
-			const { canceled, result } = await os.dialog({
-				title: this.$t('enterComment'),
-				input: {
-					default: ''
-				},
-				allowEmpty: false
-			});
-			if (canceled) return;
-			os.api('drive/files/update', {
-				fileId: file.id,
-				comment: result
-			}).then(() => {
-				this.$emit('changeComment', file, result);
-				file.comment = result;
-			});
-		},
 		async rename(file) {
 			const { canceled, result } = await os.dialog({
 				title: this.$ts.enterFileName,
@@ -106,9 +89,30 @@ export default defineComponent({
 				file.name = result;
 			});
 		},
+
+		async describe(file) {
+			os.popup(import("@client/components/media-caption.vue"), {
+				title: this.$ts.describeFile,
+				input: {
+					placeholder: this.$ts.inputNewDescription,
+					default: file.comment !== null ? file.comment : "",
+				},
+				image: file
+			}, {
+				done: result => {
+					if (!result || result.canceled) return;
+					let comment = result.result;
+					os.api('drive/files/update', {
+						fileId: file.id,
+						comment: comment.length == 0 ? null : comment
+					});
+				}
+			}, 'closed');
+		},
+
 		showFileMenu(file, ev: MouseEvent) {
 			if (this.menu) return;
-			this.menu = os.modalMenu([{
+			this.menu = os.popupMenu([{
 				text: this.$ts.renameFile,
 				icon: 'fas fa-i-cursor',
 				action: () => { this.rename(file) }
@@ -116,11 +120,11 @@ export default defineComponent({
 				text: file.isSensitive ? this.$ts.unmarkAsSensitive : this.$ts.markAsSensitive,
 				icon: file.isSensitive ? 'fas fa-eye-slash' : 'fas fa-eye',
 				action: () => { this.toggleSensitive(file) }
-			},{
-				text: this.$ts.addComment,
+			}, {
+				text: this.$ts.describeFile,
 				icon: 'fas fa-i-cursor',
-				action: () => { this.comment(file) }
-			},{
+				action: () => { this.describe(file) }
+			}, {
 				text: this.$ts.attachCancel,
 				icon: 'fas fa-times-circle',
 				action: () => { this.detachMedia(file.id) }

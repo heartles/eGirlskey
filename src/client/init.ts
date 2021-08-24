@@ -6,7 +6,7 @@ import '@client/style.scss';
 
 import * as Sentry from '@sentry/browser';
 import { Integrations } from '@sentry/tracing';
-import { computed, createApp, watch } from 'vue';
+import { computed, createApp, watch, markRaw } from 'vue';
 
 import widgets from '@client/widgets';
 import directives from '@client/directives';
@@ -16,7 +16,7 @@ import { router } from '@client/router';
 import { applyTheme } from '@client/scripts/theme';
 import { isDeviceDarkmode } from '@client/scripts/is-device-darkmode';
 import { i18n } from '@client/i18n';
-import { stream, dialog, post } from '@client/os';
+import { stream, dialog, post, popup } from '@client/os';
 import * as sound from '@client/scripts/sound';
 import { $i, refreshAccount, login, updateAccount, signout } from '@client/account';
 import { defaultStore, ColdDeviceStorage } from '@client/store';
@@ -33,18 +33,6 @@ console.info(`Misskey v${version}`);
 // boot.jsのやつを解除
 window.onerror = null;
 window.onunhandledrejection = null;
-
-// 後方互換性のため。
-// TODO: そのうち消す
-if ((typeof ColdDeviceStorage.get('lightTheme') === 'string') || (typeof ColdDeviceStorage.get('darkTheme') === 'string')) {
-	ColdDeviceStorage.set('lightTheme', require('@client/themes/l-light.json5'));
-	ColdDeviceStorage.set('darkTheme', require('@client/themes/d-dark.json5'));
-}
-const link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = 'https://use.fontawesome.com/releases/v5.15.3/css/all.css';
-document.head.appendChild(link);
-// TODOここまで
 
 if (_DEV_) {
 	console.warn('Development mode!!!');
@@ -163,8 +151,6 @@ fetchInstance().then(() => {
 	initializeSw();
 });
 
-stream.init($i);
-
 const app = createApp(await (
 	window.location.search === '?zen' ? import('@client/ui/zen.vue') :
 	!$i                               ? import('@client/ui/visitor.vue') :
@@ -212,6 +198,19 @@ if (splash) {
 	splash.style.pointerEvents = 'none';
 }
 
+// クライアントが更新されたか？
+const lastVersion = localStorage.getItem('lastVersion');
+if (lastVersion !== version) {
+	localStorage.setItem('lastVersion', version);
+
+	// テーマリビルドするため
+	localStorage.removeItem('theme');
+
+	// TODO: バージョンが新しくなった時だけダイアログ出す
+	//popup();
+}
+
+// NOTE: この処理は必ず↑のクライアント更新時処理より後に来ること(テーマ再構築のため)
 watch(defaultStore.reactiveState.darkMode, (darkMode) => {
 	applyTheme(darkMode ? ColdDeviceStorage.get('darkTheme') : ColdDeviceStorage.get('lightTheme'));
 }, { immediate: localStorage.theme == null });
@@ -257,6 +256,14 @@ watch(defaultStore.reactiveState.useBlurEffectForModal, v => {
 	document.documentElement.style.setProperty('--modalBgFilter', v ? 'blur(4px)' : 'none');
 }, { immediate: true });
 
+watch(defaultStore.reactiveState.useBlurEffect, v => {
+	if (v) {
+		document.documentElement.style.removeProperty('--blur');
+	} else {
+		document.documentElement.style.setProperty('--blur', 'none');
+	}
+}, { immediate: true });
+
 let reloadDialogShowing = false;
 stream.on('_disconnected_', async () => {
 	if (defaultStore.state.serverDisconnectedBehavior === 'reload') {
@@ -296,7 +303,7 @@ if ($i) {
 		}
 	}
 
-	const main = stream.useSharedConnection('main', 'System');
+	const main = markRaw(stream.useChannel('main', null, 'System'));
 
 	// 自分の情報が更新されたとき
 	main.on('meUpdated', i => {
@@ -356,10 +363,6 @@ if ($i) {
 	main.on('unreadChannel', () => {
 		updateAccount({ hasUnreadChannel: true });
 		sound.play('channel');
-	});
-
-	main.on('readAllAnnouncements', () => {
-		updateAccount({ hasUnreadAnnouncement: false });
 	});
 
 	// トークンが再生成されたとき

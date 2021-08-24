@@ -432,7 +432,7 @@ export default defineComponent({
 			pleaseLogin();
 			this.operating = true;
 			this.blur();
-			os.modalMenu([{
+			os.popupMenu([{
 				text: this.$ts.renote,
 				icon: 'fas fa-retweet',
 				action: () => {
@@ -625,6 +625,7 @@ export default defineComponent({
 					text: this.$ts.watch,
 					action: () => this.toggleWatch(true)
 				}) : undefined,
+				// Allow pinning others' posts
 				true ? (this.$i.pinnedNoteIds || []).includes(this.appearNote.id) ? {
 					icon: 'fas fa-thumbtack',
 					text: this.$ts.unpin,
@@ -726,7 +727,7 @@ export default defineComponent({
 
 		menu(viaKeyboard = false) {
 			this.operating = true;
-			os.modalMenu(this.getMenu(), this.$refs.menuButton, {
+			os.popupMenu(this.getMenu(), this.$refs.menuButton, {
 				viaKeyboard
 			}).then(() => {
 				this.operating = false;
@@ -736,7 +737,7 @@ export default defineComponent({
 
 		showRenoteMenu(viaKeyboard = false) {
 			if (!this.isMyRenote) return;
-			os.modalMenu([{
+			os.popupMenu([{
 				text: this.$ts.unrenote,
 				icon: 'fas fa-trash-alt',
 				danger: true,
@@ -780,7 +781,7 @@ export default defineComponent({
 
 		async clip() {
 			const clips = await os.api('clips/list');
-			os.modalMenu([{
+			os.popupMenu([{
 				icon: 'fas fa-plus',
 				text: this.$ts.createNew,
 				action: async () => {
