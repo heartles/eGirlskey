@@ -16,6 +16,7 @@ async function resolvePersonFromKeyId(id: string) {
 
 	const maybeKey = await resolver.resolve(id);
 	const idProperties = id.split('#').slice(1);
+    logger.debug(JSON.stringify(maybeKey);
 
 	// descend through response to find key
 	let key = maybeKey;
