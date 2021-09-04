@@ -9,7 +9,7 @@ import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
 import Logger from '@/services/logger';
 
-const logger = new Logger('http-signature');
+const logger = new Logger('verify-signature');
 
 async function resolvePersonFromKeyId(id: string) {
 	const resolver = new Resolver();
@@ -24,6 +24,8 @@ async function resolvePersonFromKeyId(id: string) {
     try {
         userId = maybeKey.owner;
     } catch {
+        logger.debug('owner field not present, using id field');
+        logger.debug(maybeKey.id);
         userId = maybeKey.id;
     }
 
