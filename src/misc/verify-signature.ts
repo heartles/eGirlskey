@@ -7,7 +7,7 @@ import DbResolver from '@/remote/activitypub/db-resolver';
 import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
 
-async function verifySignature(signature, activity)  {
+export async function verifySignature(signature, activity)  {
 	const host = toPuny(new URL(signature.keyId).hostname);
 
 	// ブロックしてたら中断
@@ -102,6 +102,4 @@ await resolvePerson(candicate).catch(() => null);
 	// TODO: Verify host isn't suspended
 	return authUser;
 };
-
-export default verifySignature;
 
