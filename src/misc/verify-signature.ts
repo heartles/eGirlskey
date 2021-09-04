@@ -6,6 +6,9 @@ import { getApId } from '@/remote/activitypub/type';
 import DbResolver from '@/remote/activitypub/db-resolver';
 import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
+import Logger from '@/services/logger';
+
+const logger = new Logger('http-signature');
 
 export async function verifySignature(signature, activity)  {
 	const host = toPuny(new URL(signature.keyId).hostname);
@@ -42,6 +45,7 @@ export async function verifySignature(signature, activity)  {
 
 	// それでもわからなければ終了
 	if (authUser == null) {
+		logger.debug(signature);
 		throw `skip: failed to resolve user`;
 	}
 
