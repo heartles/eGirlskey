@@ -19,7 +19,7 @@ async function resolvePersonFromKeyId(id: string) {
 
 	// descend through response to find key
 	let key = maybeKey;
-	for (prop in idProperties) {
+	for (const prop in idProperties) {
 		key = key[prop];
 	}
 
