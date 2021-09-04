@@ -1,9 +1,10 @@
 import * as os from 'os';
 import * as si from 'systeminformation';
 import define from '../define';
+import config from '@/config/index';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	desc: {
 	},

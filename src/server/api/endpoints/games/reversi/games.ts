@@ -4,9 +4,12 @@ import define from '../../../define';
 import { ReversiGames } from '@/models/index';
 import { makePaginationQuery } from '../../../common/make-pagination-query';
 import { Brackets } from 'typeorm';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['games'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		limit: {

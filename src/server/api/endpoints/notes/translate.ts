@@ -9,11 +9,12 @@ import { getAgentByUrl } from '@/misc/fetch';
 import { URLSearchParams } from 'url';
 import { fetchMeta } from '@/misc/fetch-meta';
 import { Notes } from '@/models';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		noteId: {

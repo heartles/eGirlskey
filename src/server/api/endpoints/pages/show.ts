@@ -4,11 +4,12 @@ import { ApiError } from '../../error';
 import { Pages, Users } from '@/models/index';
 import { ID } from '@/misc/cafy-id';
 import { Page } from '@/models/entities/page';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode as const,
 
 	params: {
 		pageId: {

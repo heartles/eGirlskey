@@ -2,11 +2,12 @@ import $ from 'cafy';
 import define from '../../define';
 import { Instances } from '@/models/index';
 import { toPuny } from '@/misc/convert-host';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		host: {

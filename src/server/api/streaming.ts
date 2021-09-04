@@ -21,6 +21,11 @@ module.exports = (server: http.Server) => {
 		// コネクション切断するなりエラーメッセージ返すなりする
 		// (現状はエラーがキャッチされておらずサーバーのログに流れて邪魔なので)
 		const [user, app] = await authenticate(q.i as string);
+		
+		if (user == null) {
+			request.reject(401);
+			return;
+		}
 
 		if (user?.isSuspended) {
 			request.reject(400);

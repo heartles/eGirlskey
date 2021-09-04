@@ -13,7 +13,7 @@ import { generateBlockedUserQuery } from '../../common/generate-block-query';
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		query: {

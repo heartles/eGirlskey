@@ -1,0 +1,19 @@
+extends ./base
+
+block vars
+	- const title = 'Login Required';
+	- const summary = `${instanceName} requires login or federation to view content`;
+
+block title
+	= `${title} | ${instanceName}`
+
+block desc
+	meta(name='description' content= summary)
+
+block og
+	meta(property='og:title'       content= title)
+	meta(property='og:description' content= summary)
+
+block meta
+	meta(name='robots' content='noindex')
+

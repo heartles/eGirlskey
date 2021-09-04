@@ -9,9 +9,12 @@ import { Brackets } from 'typeorm';
 import { safeForSql } from '@/misc/safe-for-sql';
 import { normalizeForSearch } from '@/misc/normalize-for-search';
 import { generateBlockedUserQuery } from '../../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes', 'hashtags'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		tag: {

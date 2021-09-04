@@ -13,9 +13,12 @@ import { generateRepliesQuery } from '../../common/generate-replies-query';
 import { generateMutedNoteQuery } from '../../common/generate-muted-note-query';
 import { generateChannelQuery } from '../../common/generate-channel-query';
 import { generateBlockedUserQuery } from '../../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		withFiles: {

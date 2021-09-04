@@ -2,9 +2,10 @@ import $ from 'cafy';
 import define from '../../define';
 import { Users } from '@/models/index';
 import { normalizeForSearch } from '@/misc/normalize-for-search';
+import config from '@/config/index';
 
 export const meta = {
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	tags: ['hashtags', 'users'],
 

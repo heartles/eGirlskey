@@ -6,11 +6,12 @@ import { makePaginationQuery } from '../../common/make-pagination-query';
 import { generateVisibilityQuery } from '../../common/generate-visibility-query';
 import { generateMutedUserQuery } from '../../common/generate-muted-user-query';
 import { generateBlockedUserQuery } from '../../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		noteId: {
