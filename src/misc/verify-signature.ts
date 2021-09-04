@@ -12,6 +12,7 @@ const logger = new Logger('http-signature');
 
 export async function verifySignature(signature, activity)  {
 	const host = toPuny(new URL(signature.keyId).hostname);
+	logger.debug(JSON.stringify(signature));
 
 	// ブロックしてたら中断
 	const meta = await fetchMeta();
@@ -45,7 +46,6 @@ export async function verifySignature(signature, activity)  {
 
 	// それでもわからなければ終了
 	if (authUser == null) {
-		logger.debug(signature);
 		throw `skip: failed to resolve user`;
 	}
 
