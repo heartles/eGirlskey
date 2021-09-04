@@ -19,6 +19,9 @@ import { In } from 'typeorm';
 import { renderLike } from '@/remote/activitypub/renderer/like';
 import { getUserKeypair } from '@/misc/keypair-store';
 import { verifySignature } from '@/misc/verify-signature';
+import Logger from '@/services/logger';
+
+const logger = new Logger('activitypub', 'gray', false);
 
 // Init router
 const router = new Router();
@@ -31,6 +34,7 @@ function inbox(ctx: Router.RouterContext) {
 	try {
 		signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
 	} catch (e) {
+        logger.warn(e);
 		ctx.status = 401;
 		return;
 	}
@@ -74,6 +78,7 @@ router.use(
             let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
             verifySignature(signature, null);
         } catch (e) {
+            logger.warn(e);
             ctx.status = 401;
             return;
         }
@@ -94,6 +99,7 @@ router.get('/notes/:note', async (ctx, next) => {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
 		verifySignature(signature, null);
 	} catch (e) {
+        logger.warn(e);
 		ctx.status = 401;
 		return;
 	}
@@ -199,6 +205,7 @@ router.get('/users/:user', async (ctx, next) => {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
 		verifySignature(signature, null);
 	} catch (e) {
+        logger.warn(e);
 		ctx.status = 401;
 		return;
 	}
@@ -221,6 +228,7 @@ router.get('/@:user', async (ctx, next) => {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
 		verifySignature(signature, null);
 	} catch (e) {
+        logger.warn(e);
 		ctx.status = 401;
 		return;
 	}
