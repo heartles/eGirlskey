@@ -3,11 +3,12 @@ import { ID } from '@/misc/cafy-id';
 import define from '../../define';
 import { Users } from '@/models/index';
 import { makePaginationQuery } from '../../common/make-pagination-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		host: {

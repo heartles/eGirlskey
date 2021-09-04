@@ -5,11 +5,12 @@ import { ApiError } from '../../error';
 import { getNote } from '../../common/getters';
 import { Note } from '@/models/entities/note';
 import { Notes } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		noteId: {

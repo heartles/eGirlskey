@@ -1,10 +1,11 @@
 import define from '../../define';
 import { GalleryPosts } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	res: {
 		type: 'array' as const,

@@ -155,6 +155,10 @@ id: 'aid'
 # Media Proxy
 #mediaProxy: https://example.com/proxy
 
+# Whether or not to require logins for accessing notes through
+# non-activitypub http or api requests. (default: false)
+#secureMode: true
+
 # Sign to ActivityPub GET request (default: false)
 #signToActivityPubGet: true
 

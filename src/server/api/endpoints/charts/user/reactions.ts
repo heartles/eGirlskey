@@ -3,9 +3,12 @@ import define from '../../../define';
 import { ID } from '@/misc/cafy-id';
 import { convertLog } from '@/services/chart/core';
 import { perUserReactionsChart } from '@/services/chart/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['charts', 'users', 'reactions'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		span: {

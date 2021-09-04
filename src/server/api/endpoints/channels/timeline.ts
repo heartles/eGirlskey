@@ -5,11 +5,12 @@ import { ApiError } from '../../error';
 import { Notes, Channels } from '@/models/index';
 import { makePaginationQuery } from '../../common/make-pagination-query';
 import { activeUsersChart } from '@/services/chart/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes', 'channels'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		channelId: {

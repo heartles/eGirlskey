@@ -1,10 +1,11 @@
 import define from '../../define';
 import { Pages } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	res: {
 		type: 'array' as const,

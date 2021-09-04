@@ -1,11 +1,12 @@
 import $ from 'cafy';
 import define from '../../define';
 import { Hashtags } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		limit: {

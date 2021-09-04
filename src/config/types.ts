@@ -63,6 +63,8 @@ export type Source = {
 
 	mediaProxy?: string;
 
+	secureMode?: boolean;
+
 	signToActivityPubGet?: boolean;
 };
 

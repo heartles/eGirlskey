@@ -15,7 +15,7 @@ import { isActor, isPost, getApId } from '@/remote/activitypub/type';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		uri: {

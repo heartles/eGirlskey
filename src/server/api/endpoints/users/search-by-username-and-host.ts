@@ -1,11 +1,12 @@
 import $ from 'cafy';
 import define from '../../define';
 import { Users } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		username: {

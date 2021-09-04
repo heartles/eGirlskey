@@ -7,11 +7,12 @@ import { ID } from '@/misc/cafy-id';
 import { Users } from '@/models/index';
 import { In } from 'typeorm';
 import { User } from '@/models/entities/user';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		userId: {

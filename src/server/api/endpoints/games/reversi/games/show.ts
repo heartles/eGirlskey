@@ -4,9 +4,12 @@ import Reversi from '../../../../../../games/reversi/core';
 import define from '../../../../define';
 import { ApiError } from '../../../../error';
 import { ReversiGames } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['games'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		gameId: {
