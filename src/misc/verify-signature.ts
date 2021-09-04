@@ -27,7 +27,7 @@ async function resolvePersonFromKeyId(id: string) {
         userId = maybeKey.id;
         
         if (userId == null) {
-            throw "failed to acquire user from key;
+            throw 'failed to acquire user from key';
         }
     }
 
