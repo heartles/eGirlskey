@@ -181,11 +181,15 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 			}));
 
 			if (person.publicKey) {
-				await transactionalEntityManager.save(new UserPublickey({
+                const key = new UserPublickey({
 					userId: user.id,
 					keyId: person.publicKey.id,
 					keyPem: person.publicKey.publicKeyPem
-				}));
+				});
+				await transactionalEntityManager.save(key);
+
+                // update user with private key
+                user.key = key;
 			}
 		});
 	} catch (e) {
