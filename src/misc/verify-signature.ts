@@ -20,13 +20,15 @@ async function resolvePersonFromKeyId(id: string) {
 
     // requesting the key's id typically returns either the key
     // object itself or the user
-    let userId;
-    try {
-        userId = maybeKey.owner;
-    } catch {
+    let userId = maybeKey.owner;
+    if (userId == null) {
         logger.debug('owner field not present, using id field');
         logger.debug(maybeKey.id);
         userId = maybeKey.id;
+        
+        if (userId == null) {
+            throw "failed to acquire user from key;
+        }
     }
 
     return await resolvePerson(userId, resolver);
