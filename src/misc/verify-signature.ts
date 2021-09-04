@@ -14,7 +14,7 @@ const logger = new Logger('http-signature');
 async function resolvePersonFromKeyId(id: string) {
 	const resolver = new Resolver();
 
-	const maybeKey = await resolver.resolve(signature.keyId);
+	const maybeKey = await resolver.resolve(id);
 	const idProperties = id.split('#').slice(1);
 
 	// descend through response to find key
