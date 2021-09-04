@@ -11,7 +11,24 @@ import Logger from '@/services/logger';
 
 const logger = new Logger('http-signature');
 
-export async function verifySignature(signature, activity)  {
+function resolvePersonFromKeyId(id: string) {
+	const resolver = new Resolver();
+
+	const maybeKey = await resolver.resolve(signature.keyId);
+	const idProperties = id.split('#').slice(1);
+
+	// descend through response to find key
+	let key = maybeKey;
+	for (prop in idProperties) {
+		key = key[prop];
+	}
+
+    const userId = key.owner;
+
+    return await resolvePerson(userId, resolver);
+}
+
+export async function verifySignature(signature, activity) {
 	const host = toPuny(new URL(signature.keyId).hostname);
 	logger.debug(JSON.stringify(signature));
 
@@ -47,10 +64,9 @@ export async function verifySignature(signature, activity)  {
 
 	// それでもわからなければ終了
 	if (authUser == null) {
-		// try to resolve user through AP get
-		const resolver = new Resolver();
+		// try to resolve key (and associated user) through AP get
 		try {
-			authUser = await resolver.resolve(signature.keyId);
+			authUser = await resolvePersonFromKeyId(signature.keyId);
 		} catch (e) {
 			logger.error(e);
 			throw `skip: failed to resolve user`;
@@ -76,7 +92,7 @@ export async function verifySignature(signature, activity)  {
 			// みたいになっててUserを引っ張れば公開キーも入ることを期待する
 			if (activity.signature.creator) {
 				const candicate = activity.signature.creator.replace(/#.*/, '');
-await resolvePerson(candicate).catch(() => null);
+                await resolvePerson(candicate).catch(() => null);
 			}
 
 			// keyIdからLD-Signatureのユーザーを取得
