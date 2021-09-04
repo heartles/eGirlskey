@@ -78,6 +78,10 @@ export async function verifySignature(signature, activity) {
 			throw `skip: failed to resolve user`;
 		}
 	}
+    
+    if (meta.blockedHosts.includes(authUser.host)) {
+		throw `Blocked request based on user host: @${authUser.username}@${authuser.host}`;
+	}
 
     logger.debug(JSON.stringify(authUser));
 
