@@ -11,7 +11,7 @@ import Logger from '@/services/logger';
 
 const logger = new Logger('http-signature');
 
-function resolvePersonFromKeyId(id: string) {
+async function resolvePersonFromKeyId(id: string) {
 	const resolver = new Resolver();
 
 	const maybeKey = await resolver.resolve(signature.keyId);
