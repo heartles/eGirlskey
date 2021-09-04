@@ -15,16 +15,17 @@ async function resolvePersonFromKeyId(id: string) {
 	const resolver = new Resolver();
 
 	const maybeKey = await resolver.resolve(id);
-	const idProperties = id.split('#').slice(1);
-    logger.debug(JSON.stringify(maybeKey);
+    
+    logger.debug(JSON.stringify(maybeKey));
 
-	// descend through response to find key
-	let key = maybeKey;
-	for (const prop in idProperties) {
-		key = key[prop];
-	}
-
-    const userId = key.owner;
+    // requesting the key's id typically returns either the key
+    // object itself or the user
+    let userId;
+    try {
+        userId = maybeKey.owner;
+    } catch {
+        userId = maybeKey.id;
+    }
 
     return await resolvePerson(userId, resolver);
 }
