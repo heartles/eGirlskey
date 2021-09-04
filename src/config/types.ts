@@ -62,6 +62,7 @@ export type Source = {
 	privateClientApi?: boolean;
 
 	signToActivityPubGet?: boolean;
+	requireSignToActivityPubGet?: boolean;
 };
 
 /**

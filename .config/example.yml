@@ -160,5 +160,9 @@ id: 'aid'
 # credentials when using the client API. (default: false)
 # privateClientApi: false
 
-# Sign to ActivityPub GET request (default: false)
+# Require other instances use HTTP Signatures with ActivityPub GET
+# requests (default: false)
+#requireSignToActivityPubGet: true
+
+# use HTTP Signatures with ActivityPub GET requests (default: false)
 #signToActivityPubGet: true
