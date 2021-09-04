@@ -14,7 +14,7 @@ import { InboxJobData } from '../types';
 import DbResolver from '@/remote/activitypub/db-resolver';
 import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
-import verifySignature from '@/misc/verify-signature';
+import { verifySignature } from '@/misc/verify-signature';
 
 const logger = new Logger('inbox');
 
