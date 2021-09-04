@@ -79,6 +79,8 @@ export async function verifySignature(signature, activity) {
 		}
 	}
 
+    logger.debug(JSON.stringify(authUser));
+
 	// publicKey がなくても終了
 	if (authUser.key == null) {
 		throw `skip: failed to resolve user publicKey`;
