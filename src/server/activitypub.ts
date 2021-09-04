@@ -18,6 +18,8 @@ import { ILocalUser, User } from '@/models/entities/user';
 import { In } from 'typeorm';
 import { renderLike } from '@/remote/activitypub/renderer/like';
 import { getUserKeypair } from '@/misc/keypair-store';
+import { verifySignature } from '@/misc/verify-signature';
+import config from '@/config/index';
 
 // Init router
 const router = new Router();
@@ -57,6 +59,41 @@ export function setResponseType(ctx: Router.RouterContext) {
 	}
 }
 
+async function isSignatureAllowed(req: any): Promise<boolean> {
+	try {
+		const signature = httpSignature.parseRequest(req, { 'headers': [] });
+		const user = await verifySignature(signature);
+
+		return user != null;
+	} catch {
+		return false;
+	}
+}
+
+// Authenticated fetch
+if (config.secureMode) {
+	router.use(
+		[
+			'/notes/:note/activity',
+			'/users/:user/outbox',
+			'/users/:user/followers',
+			'/users/:user/following',
+			'/users/:user/collections/featured',
+			'/users/:user/publickey',
+			'/likes/:like',
+			'/emojis/:emoji',
+		],
+		async (ctx, next) => {
+			if (!await isSignatureAllowed(ctx.req)) {
+				ctx.status = 401;
+				return;
+			}
+
+			return await next();
+		}
+	);
+}
+
 // inbox
 router.post('/inbox', json(), inbox);
 router.post('/users/:user/inbox', json(), inbox);
@@ -64,6 +101,13 @@ router.post('/users/:user/inbox', json(), inbox);
 // note
 router.get('/notes/:note', async (ctx, next) => {
 	if (!isActivityPubReq(ctx)) return await next();
+
+	if (config.secureMode) {
+		if (!await isSignatureAllowed(ctx.req)) {
+			ctx.status = 401;
+			return;
+		}
+	}
 
 	const note = await Notes.findOne({
 		id: ctx.params.note,
@@ -170,14 +214,31 @@ router.get('/users/:user', async (ctx, next) => {
 		isSuspended: false
 	});
 
+	if (config.secureMode) {
+		// Allow requests to get the instance actor regardless of authorization status
+		if (user.username !== 'instance.actor' && !await isSignatureAllowed(ctx.req)) {
+			ctx.status = 401;
+			return;
+		}
+	}
+
 	await userInfo(ctx, user);
 });
 
 router.get('/@:user', async (ctx, next) => {
 	if (!isActivityPubReq(ctx)) return await next();
 
+	const username = ctx.params.user.toLowerCase();
+	if (config.secureMode) {
+		// Allow requests to get the instance actor regardless of authorization status
+		if (username !== 'instance.actor' && !await isSignatureAllowed(ctx.req)) {
+			ctx.status = 401;
+			return;
+		}
+	}
+
 	const user = await Users.findOne({
-		usernameLower: ctx.params.user.toLowerCase(),
+		usernameLower: username,
 		host: null,
 		isSuspended: false
 	});
