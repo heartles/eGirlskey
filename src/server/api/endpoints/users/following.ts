@@ -5,11 +5,12 @@ import { ApiError } from '../../error';
 import { Users, Followings } from '@/models/index';
 import { makePaginationQuery } from '../../common/make-pagination-query';
 import { toPunyNullable } from '@/misc/convert-host';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		userId: {

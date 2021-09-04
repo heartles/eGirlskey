@@ -2,9 +2,12 @@ import $ from 'cafy';
 import define from '../../define';
 import { convertLog } from '@/services/chart/core';
 import { networkChart } from '@/services/chart/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['charts'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		span: {

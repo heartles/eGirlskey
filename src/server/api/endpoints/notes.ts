@@ -3,9 +3,12 @@ import { ID } from '@/misc/cafy-id';
 import define from '../define';
 import { makePaginationQuery } from '../common/make-pagination-query';
 import { Notes } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
+
+	requireCredential: config.secureMode,
 
 	params: {
 		local: {

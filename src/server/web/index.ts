@@ -202,8 +202,21 @@ const getFeed = async (acct: string) => {
 	return user && await packFeed(user);
 };
 
+const secured = new Router();
+secured.use(async (ctx, next) => {
+	if (config.secureMode) {
+		const meta = await fetchMeta();
+		return await ctx.render('unauthorized', {
+			instanceName: meta.name || 'Misskey',
+			icon: meta.iconUrl
+		});
+	} else {
+		return await next();
+	}
+});
+
 // Atom
-router.get('/@:user.atom', async ctx => {
+secured.get('/@:user.atom', async ctx => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
@@ -215,7 +228,7 @@ router.get('/@:user.atom', async ctx => {
 });
 
 // RSS
-router.get('/@:user.rss', async ctx => {
+secured.get('/@:user.rss', async ctx => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
@@ -227,7 +240,7 @@ router.get('/@:user.rss', async ctx => {
 });
 
 // JSON
-router.get('/@:user.json', async ctx => {
+secured.get('/@:user.json', async ctx => {
 	const feed = await getFeed(ctx.params.user);
 
 	if (feed) {
@@ -240,7 +253,7 @@ router.get('/@:user.json', async ctx => {
 
 //#region SSR (for crawlers)
 // User
-router.get(['/@:user', '/@:user/:sub'], async (ctx, next) => {
+secured.get(['/@:user', '/@:user/:sub'], async (ctx, next) => {
 	const { username, host } = parseAcct(ctx.params.user);
 	const user = await Users.findOne({
 		usernameLower: username.toLowerCase(),
@@ -271,7 +284,7 @@ router.get(['/@:user', '/@:user/:sub'], async (ctx, next) => {
 	}
 });
 
-router.get('/users/:user', async ctx => {
+secured.get('/users/:user', async ctx => {
 	const user = await Users.findOne({
 		id: ctx.params.user,
 		host: null,
@@ -287,7 +300,7 @@ router.get('/users/:user', async ctx => {
 });
 
 // Note
-router.get('/notes/:note', async (ctx, next) => {
+secured.get('/notes/:note', async (ctx, next) => {
 	const note = await Notes.findOne(ctx.params.note);
 
 	if (note) {
@@ -316,7 +329,7 @@ router.get('/notes/:note', async (ctx, next) => {
 });
 
 // Page
-router.get('/@:user/pages/:page', async (ctx, next) => {
+secured.get('/@:user/pages/:page', async (ctx, next) => {
 	const { username, host } = parseAcct(ctx.params.user);
 	const user = await Users.findOne({
 		usernameLower: username.toLowerCase(),
@@ -354,7 +367,7 @@ router.get('/@:user/pages/:page', async (ctx, next) => {
 
 // Clip
 // TODO: 非publicなclipのハンドリング
-router.get('/clips/:clip', async (ctx, next) => {
+secured.get('/clips/:clip', async (ctx, next) => {
 	const clip = await Clips.findOne({
 		id: ctx.params.clip,
 	});
@@ -378,7 +391,7 @@ router.get('/clips/:clip', async (ctx, next) => {
 });
 
 // Gallery post
-router.get('/gallery/:post', async (ctx, next) => {
+secured.get('/gallery/:post', async (ctx, next) => {
 	const post = await GalleryPosts.findOne(ctx.params.post);
 
 	if (post) {
@@ -401,7 +414,7 @@ router.get('/gallery/:post', async (ctx, next) => {
 });
 
 // Channel
-router.get('/channels/:channel', async (ctx, next) => {
+secured.get('/channels/:channel', async (ctx, next) => {
 	const channel = await Channels.findOne({
 		id: ctx.params.channel,
 	});
@@ -422,6 +435,8 @@ router.get('/channels/:channel', async (ctx, next) => {
 	await next();
 });
 //#endregion
+
+router.use(secured.routes());
 
 router.get('/info', async ctx => {
 	const meta = await fetchMeta(true);

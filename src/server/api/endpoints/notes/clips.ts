@@ -5,11 +5,12 @@ import { ClipNotes, Clips } from '@/models/index';
 import { getNote } from '../../common/getters';
 import { ApiError } from '../../error';
 import { In } from 'typeorm';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['clips', 'notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		noteId: {

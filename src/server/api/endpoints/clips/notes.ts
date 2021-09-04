@@ -7,11 +7,12 @@ import { generateVisibilityQuery } from '../../common/generate-visibility-query'
 import { generateMutedUserQuery } from '../../common/generate-muted-user-query';
 import { ApiError } from '../../error';
 import { generateBlockedUserQuery } from '../../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['account', 'notes', 'clips'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	kind: 'read:account',
 

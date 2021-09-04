@@ -13,7 +13,7 @@ import { Notes } from '@/models';
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: false as const,
+	requireCredential: config.secureMode,
 
 	params: {
 		noteId: {
