@@ -4,6 +4,7 @@ import { fetchMeta } from '@/misc/fetch-meta';
 import { toPuny, extractDbHost } from '@/misc/convert-host';
 import { getApId } from '@/remote/activitypub/type';
 import DbResolver from '@/remote/activitypub/db-resolver';
+import Resolver from '@/remote/activitypub/resolver';
 import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
 import Logger from '@/services/logger';
@@ -46,7 +47,14 @@ export async function verifySignature(signature, activity)  {
 
 	// それでもわからなければ終了
 	if (authUser == null) {
-		throw `skip: failed to resolve user`;
+		// try to resolve user through AP get
+		const resolver = new Resolver();
+		try {
+			authUser = await resolver.resolve(signature.keyId);
+		} catch (e) {
+			logger.error(e);
+			throw `skip: failed to resolve user`;
+		}
 	}
 
 	// publicKey がなくても終了
