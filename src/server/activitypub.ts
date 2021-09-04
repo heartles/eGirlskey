@@ -76,7 +76,7 @@ router.use(
     async (ctx, next) => {
         try {
             let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
-            verifySignature(signature, null);
+            await verifySignature(signature, null);
         } catch (e) {
             logger.warn(e);
             ctx.status = 401;
@@ -97,7 +97,7 @@ router.get('/notes/:note', async (ctx, next) => {
 
 	try {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
-		verifySignature(signature, null);
+		await verifySignature(signature, null);
 	} catch (e) {
         logger.warn(e);
 		ctx.status = 401;
@@ -203,7 +203,7 @@ router.get('/users/:user', async (ctx, next) => {
 
 	try {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
-		verifySignature(signature, null);
+		await verifySignature(signature, null);
 	} catch (e) {
         logger.warn(e);
 		ctx.status = 401;
@@ -226,7 +226,7 @@ router.get('/@:user', async (ctx, next) => {
 
 	try {
 		let signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
-		verifySignature(signature, null);
+		await verifySignature(signature, null);
 	} catch (e) {
         logger.warn(e);
 		ctx.status = 401;

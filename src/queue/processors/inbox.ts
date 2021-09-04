@@ -31,7 +31,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
     let authUser;
     try {
-        authUser = verifySignature(signature, activity);
+        authUser = await verifySignature(signature, activity);
     } catch (ex) {
         return ex;
     }
