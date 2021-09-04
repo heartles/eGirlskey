@@ -155,11 +155,16 @@ id: 'aid'
 # Media Proxy
 #mediaProxy: https://example.com/proxy
 
-# Whether or not to require logins for accessing notes through
-# non-activitypub http or api requests. (default: false)
+# When secureMode is set, misskey will require logins to access posts
+# and will reject ActivityPub GET requests that don't use HTTP
+# signatures (default: false)
 #secureMode: true
 
-# Sign to ActivityPub GET request (default: false)
+# Require other instances use HTTP Signatures with ActivityPub GET
+# requests (default: false)
+#requireSignToActivityPubGet: true
+
+# use HTTP Signatures with ActivityPub GET requests (default: false)
 #signToActivityPubGet: true
 
 #allowedPrivateNetworks: [
