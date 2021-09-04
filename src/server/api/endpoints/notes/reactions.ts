@@ -6,11 +6,12 @@ import { ApiError } from '../../error';
 import { NoteReactions } from '@/models/index';
 import { DeepPartial } from 'typeorm';
 import { NoteReaction } from '@/models/entities/note-reaction';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes', 'reactions'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		noteId: {

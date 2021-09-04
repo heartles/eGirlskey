@@ -3,11 +3,12 @@ import { ID } from '@/misc/cafy-id';
 import define from '../define';
 import { Announcements, AnnouncementReads } from '@/models/index';
 import { makePaginationQuery } from '../common/make-pagination-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		limit: {

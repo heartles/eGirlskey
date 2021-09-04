@@ -1,9 +1,10 @@
 import * as os from 'os';
 import * as si from 'systeminformation';
 import define from '../define';
+import config from '@/config/index';
 
 export const meta = {
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	desc: {
 	},

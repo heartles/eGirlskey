@@ -2,11 +2,12 @@ import $ from 'cafy';
 import define from '../../define';
 import Resolver from '@/remote/activitypub/resolver';
 import { ApiError } from '../../error';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		uri: {

@@ -3,11 +3,12 @@ import { ID } from '@/misc/cafy-id';
 import define from '../../define';
 import { ApiError } from '../../error';
 import { Channels } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['channels'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		channelId: {

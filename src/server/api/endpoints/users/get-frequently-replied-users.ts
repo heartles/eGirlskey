@@ -6,11 +6,12 @@ import { ApiError } from '../../error';
 import { getUser } from '../../common/getters';
 import { Not, In, IsNull } from 'typeorm';
 import { Notes, Users } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		userId: {

@@ -7,11 +7,12 @@ import { generateMutedUserQuery } from '../../common/generate-muted-user-query';
 import { Brackets } from 'typeorm';
 import { Notes } from '@/models/index';
 import { generateBlockedUserQuery } from '../../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		noteId: {

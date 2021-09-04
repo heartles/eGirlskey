@@ -3,11 +3,12 @@ import define from '../../define';
 import { ApiError } from '../../error';
 import { ID } from '@/misc/cafy-id';
 import { DriveFiles, Followings, NoteFavorites, NoteReactions, Notes, PageLikes, PollVotes, ReversiGames, Users } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		userId: {

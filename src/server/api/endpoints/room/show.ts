@@ -4,11 +4,12 @@ import { ApiError } from '../../error';
 import { Users, UserProfiles } from '@/models/index';
 import { ID } from '@/misc/cafy-id';
 import { toPunyNullable } from '@/misc/convert-host';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['room'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		userId: {

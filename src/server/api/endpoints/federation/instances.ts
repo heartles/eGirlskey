@@ -7,7 +7,7 @@ import { fetchMeta } from '@/misc/fetch-meta';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		host: {

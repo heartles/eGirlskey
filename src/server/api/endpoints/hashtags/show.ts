@@ -3,11 +3,12 @@ import define from '../../define';
 import { ApiError } from '../../error';
 import { Hashtags } from '@/models/index';
 import { normalizeForSearch } from '@/misc/normalize-for-search';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		tag: {

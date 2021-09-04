@@ -5,6 +5,7 @@ import { Notes } from '@/models/index';
 import { Note } from '@/models/entities/note';
 import { safeForSql } from '@/misc/safe-for-sql';
 import { normalizeForSearch } from '@/misc/normalize-for-search';
+import config from '@/config/index';
 
 /*
 トレンドに載るためには「『直近a分間のユニーク投稿数が今からa分前～今からb分前の間のユニーク投稿数のn倍以上』のハッシュタグの上位5位以内に入る」ことが必要
@@ -23,7 +24,7 @@ const max = 5;
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	res: {
 		type: 'array' as const,

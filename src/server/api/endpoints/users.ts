@@ -3,11 +3,12 @@ import define from '../define';
 import { Users } from '@/models/index';
 import { generateMutedUserQueryForUsers } from '../common/generate-muted-user-query';
 import { generateBlockQueryForUsers } from '../common/generate-block-query';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		limit: {

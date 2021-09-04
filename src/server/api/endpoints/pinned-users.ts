@@ -3,11 +3,12 @@ import { Users } from '@/models/index';
 import { fetchMeta } from '@/misc/fetch-meta';
 import { parseAcct } from '@/misc/acct';
 import { User } from '@/models/entities/user';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 	},

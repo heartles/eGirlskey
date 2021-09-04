@@ -59,6 +59,8 @@ export type Source = {
 
 	mediaProxy?: string;
 
+	privateClientApi?: boolean;
+
 	signToActivityPubGet?: boolean;
 };
 

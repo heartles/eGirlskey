@@ -2,11 +2,12 @@ import $ from 'cafy';
 import define from '../../define';
 import { UserProfiles, Users } from '@/models/index';
 import { User } from '@/models/entities/user';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	params: {
 		query: {

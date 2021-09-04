@@ -1,10 +1,11 @@
 import define from '../../define';
 import { Channels } from '@/models/index';
+import config from '@/config/index';
 
 export const meta = {
 	tags: ['channels'],
 
-	requireCredential: true as const,
+	requireCredential: config.privateClientApi,
 
 	res: {
 		type: 'array' as const,

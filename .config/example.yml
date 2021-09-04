@@ -155,5 +155,10 @@ id: 'aid'
 # Media Proxy
 #mediaProxy: https://example.com/proxy
 
+# Whether or not to require logins for accessing the client API.
+# When this is enabled, users, notes, and other data will require
+# credentials when using the client API. (default: false)
+# privateClientApi: false
+
 # Sign to ActivityPub GET request (default: false)
 #signToActivityPubGet: true
