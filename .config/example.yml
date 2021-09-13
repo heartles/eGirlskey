@@ -166,3 +166,10 @@ id: 'aid'
 
 # use HTTP Signatures with ActivityPub GET requests (default: false)
 #signToActivityPubGet: true
+
+#allowedPrivateNetworks: [
+#  '127.0.0.1/32'
+#]
+
+# Upload or download file size limits (bytes)
+#maxFileSize: 262144000
