@@ -54,6 +54,10 @@ export default defineComponent({
 	align-items: baseline;
 	white-space: nowrap;
 
+	> * {
+		position: relative;
+	}
+
 	> .name {
 		display: block;
 		margin: 0 .5em 0 0;

@@ -2,8 +2,8 @@
 <FormBase>
 	<FormGroup>
 		<template #label>{{ $ts.behavior }}</template>
-		<FormSwitch v-model:value="keepCw">Keep the CW field on replies</FormSwitch>
 		<FormSwitch v-model:value="localMentions">Use @mentions for local replies</FormSwitch>
+		<FormSwitch v-model:value="noteLink">Make notes clickable</FormSwitch>
 	</FormGroup>
 
 	<div>
@@ -57,8 +57,14 @@ export default defineComponent({
 	},
 
 	computed: {
-		keepCw: defaultStore.makeGetterSetter('keepCw'),
 		localMentions: defaultStore.makeGetterSetter('localMentions'),
+		noteLink: defaultStore.makeGetterSetter('noteLink'),
+	},
+
+	watch: {
+		noteLink() {
+			this.reloadAsk();
+		}
 	},
 
 	mounted() {

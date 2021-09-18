@@ -3,6 +3,7 @@
 	<div class="main">
 		<MkAvatar class="avatar" :user="note.user"/>
 		<div class="body">
+			<MkA v-if="noteLink" class="note-link" :to="notePage(note)" />
 			<XNoteHeader class="header" :note="note" :mini="true"/>
 			<div class="body">
 				<p v-if="note.cw != null" class="cw">
@@ -25,6 +26,7 @@ import XNoteHeader from './note-header.vue';
 import XSubNoteContent from './sub-note-content.vue';
 import XCwButton from './cw-button.vue';
 import * as os from '@client/os';
+import notePage from '@client/filters/note';
 
 export default defineComponent({
 	name: 'XSub',
@@ -74,6 +76,16 @@ export default defineComponent({
 			});
 		}
 	},
+
+	computed: {
+		noteLink() {
+			return this.$store.state.noteLink;
+		}
+	},
+
+	methods: {
+		notePage
+	},
 });
 </script>
 
@@ -110,6 +122,15 @@ export default defineComponent({
 		> .body {
 			flex: 1;
 			min-width: 0;
+			position: relative;
+
+			> .note-link {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
 
 			> .header {
 				margin-bottom: 2px;

@@ -38,6 +38,7 @@
 	<article class="article" @contextmenu.stop="onContextmenu">
 		<MkAvatar class="avatar" :user="appearNote.user"/>
 		<div class="main">
+			<MkA v-if="noteLink" class="note-link" :to="notePage(appearNote)" />
 			<XNoteHeader class="header" :note="appearNote" :mini="true"/>
 			<MkInstanceTicker v-if="showTicker" class="ticker" :instance="appearNote.user.instance"/>
 			<div class="body">
@@ -125,6 +126,7 @@ import { url } from '@client/config';
 import copyToClipboard from '@client/scripts/copy-to-clipboard';
 import { checkWordMute } from '@client/scripts/check-word-mute';
 import { userPage } from '@client/filters/user';
+import notePage from '@client/filters/note';
 import * as os from '@client/os';
 import { noteActions, noteViewInterruptors } from '@client/store';
 import { reactionPicker } from '@client/scripts/reaction-picker';
@@ -247,6 +249,10 @@ export default defineComponent({
 			if (this.$store.state.instanceTicker === 'always') return true;
 			if (this.$store.state.instanceTicker === 'remote' && this.appearNote.user.instance) return true;
 			return false;
+		},
+
+		noteLink() {
+			return this.$store.state.noteLink;
 		}
 	},
 
@@ -868,7 +874,8 @@ export default defineComponent({
 			focusNext(this.$el);
 		},
 
-		userPage
+		userPage,
+		notePage
 	}
 });
 </script>
@@ -1017,6 +1024,7 @@ export default defineComponent({
 		}
 
 		> .main {
+			position: relative;
 			flex: 1;
 			min-width: 0;
 
@@ -1027,6 +1035,10 @@ export default defineComponent({
 					margin: 0;
 					padding: 0;
 					overflow-wrap: break-word;
+
+					> * {
+						position: relative;
+					}
 
 					> .text {
 						margin-right: 8px;
@@ -1068,6 +1080,10 @@ export default defineComponent({
 					> .text {
 						overflow-wrap: break-word;
 
+						> * {
+							position: relative;
+						}
+
 						> .reply {
 							color: var(--accent);
 							margin-right: 0.5em;
@@ -1089,10 +1105,12 @@ export default defineComponent({
 
 					> .url-preview {
 						margin-top: 8px;
+						position: relative;
 					}
 
 					> .poll {
 						font-size: 80%;
+						position: relative;
 					}
 
 					> .renote {
@@ -1103,6 +1121,10 @@ export default defineComponent({
 							border: dashed 1px var(--renote);
 							border-radius: 8px;
 						}
+					}
+					
+					> .files {
+						position: relative;
 					}
 				}
 
@@ -1117,6 +1139,7 @@ export default defineComponent({
 					margin: 0;
 					padding: 8px;
 					opacity: 0.7;
+					position: relative;
 
 					&:not(:last-child) {
 						margin-right: 28px;
@@ -1137,6 +1160,14 @@ export default defineComponent({
 					}
 				}
 			}
+		}
+
+		.note-link {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
 		}
 	}
 
@@ -1210,4 +1241,5 @@ export default defineComponent({
 	text-align: center;
 	opacity: 0.7;
 }
+
 </style>

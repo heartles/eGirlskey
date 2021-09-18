@@ -25,6 +25,11 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'account',
 		default: true
 	},
+	// Make notes clickable (links to the detailed note page)
+	noteLink: {
+		where: 'deviceAccount',
+		default: true
+	},
 	showFullAcct: {
 		where: 'account',
 		default: false
