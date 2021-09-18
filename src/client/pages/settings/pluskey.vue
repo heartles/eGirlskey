@@ -6,9 +6,14 @@
 		<FormSwitch v-model:value="noteLink">Make notes clickable</FormSwitch>
 	</FormGroup>
 
-	<div>
-		Feel like translating this page? Ping @heartles
-	</div>
+	<FormGroup>
+		<template #label>Experimental</template>
+		<FormSwitch v-model:value="skipRepeatRenotes">Skip recently repeated renotes</FormSwitch>
+	</FormGroup>
+
+	<FormGroup>
+		<template #label>Feel like translating this page? Ping @heartles</template>
+	</FormGroup>
 </FormBase>
 </template>
 
@@ -59,10 +64,14 @@ export default defineComponent({
 	computed: {
 		localMentions: defaultStore.makeGetterSetter('localMentions'),
 		noteLink: defaultStore.makeGetterSetter('noteLink'),
+		skipRepeatRenotes: defaultStore.makeGetterSetter('skipRepeatRenotes'),
 	},
 
 	watch: {
 		noteLink() {
+			this.reloadAsk();
+		},
+		skipRepeatRenotes() {
 			this.reloadAsk();
 		}
 	},

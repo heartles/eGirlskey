@@ -62,6 +62,22 @@ export default defineComponent({
 
 	created() {
 		const prepend = note => {
+			// skip repeat renotes
+			if (this.$store.state.skipRepeatRenotes && this.isRenote(note)) {
+				const searchId = note.renote.id;
+				const exists = (this.$refs.tl as any).items.some(item => {
+					return item.id === searchId || (this.isRenote(item) && item.renote.id === searchId);
+				})
+
+				if (exists) {
+					if (this.sound && note.userId === this.$i.id) {
+						sound.play('noteMy');
+					}
+
+					return;
+				}
+			}
+
 			(this.$refs.tl as any).prepend(note);
 
 			this.$emit('note');
@@ -177,6 +193,13 @@ export default defineComponent({
 		timetravel(date?: Date) {
 			this.date = date;
 			this.$refs.tl.reload();
+		},
+
+		isRenote(note: any): Boolean {
+			return (note.renote &&
+				note.text == null &&
+				note.fileIds.length == 0 &&
+				note.poll == null);
 		}
 	}
 });

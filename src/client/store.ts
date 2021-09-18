@@ -30,6 +30,11 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'deviceAccount',
 		default: true
 	},
+	// Skip recently repeated renotes
+	skipRepeatRenotes: {
+		where: 'account',
+		default: false
+	},
 	showFullAcct: {
 		where: 'account',
 		default: false
