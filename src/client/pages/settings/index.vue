@@ -31,6 +31,10 @@
 				<FormLink :active="page === 'plugin'" replace to="/settings/plugin"><template #icon><i class="fas fa-plug"></i></template>{{ $ts.plugins }}</FormLink>
 			</FormGroup>
 			<FormGroup>
+				<template #label>Pluskey/eGirls settings</template>
+				<FormLink :active="page === 'pluskey'" replace to="/settings/pluskey"><template #icon><i class="fas fa-plus"></i></template>Client</FormLink>
+			</FormGroup>
+			<FormGroup>
 				<template #label>{{ $ts.otherSettings }}</template>
 				<FormLink :active="page === 'import-export'" replace to="/settings/import-export"><template #icon><i class="fas fa-boxes"></i></template>{{ $ts.importAndExport }}</FormLink>
 				<FormLink :active="page === 'mute-block'" replace to="/settings/mute-block"><template #icon><i class="fas fa-ban"></i></template>{{ $ts.muteAndBlock }}</FormLink>
@@ -128,6 +132,7 @@ export default defineComponent({
 				case 'plugin': return defineAsyncComponent(() => import('./plugin.vue'));
 				case 'plugin/install': return defineAsyncComponent(() => import('./plugin.install.vue'));
 				case 'plugin/manage': return defineAsyncComponent(() => import('./plugin.manage.vue'));
+				case 'pluskey': return defineAsyncComponent(() => import('./pluskey.vue'));
 				case 'import-export': return defineAsyncComponent(() => import('./import-export.vue'));
 				case 'account-info': return defineAsyncComponent(() => import('./account-info.vue'));
 				case 'update': return defineAsyncComponent(() => import('./update.vue'));
