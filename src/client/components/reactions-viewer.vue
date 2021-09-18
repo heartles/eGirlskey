@@ -35,6 +35,10 @@ export default defineComponent({
 .tdflqwzn {
 	margin: 4px -2px 0 -2px;
 
+	> * {
+		position: relative;
+	}
+
 	&:empty {
 		display: none;
 	}
