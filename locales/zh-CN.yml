@@ -1673,3 +1673,10 @@ _deck:
     list: "列表"
     mentions: "提及"
     direct: "指定用户"
+
+
+pluskey:
+  localMentions: "Use @mentions for local replies"
+  pluskeySettings: "Pluskey Settings"
+  client: "Client"
+  translation: "Feel like translating this page? Visit https://github.com/foggy-llc/pluskey"
