@@ -20,6 +20,9 @@ import { renderLike } from '@/remote/activitypub/renderer/like';
 import { getUserKeypair } from '@/misc/keypair-store';
 import { verifySignature } from '@/misc/verify-signature';
 import config from '@/config/index';
+import Logger from '@/services/logger';
+
+const logger = new Logger('ap-web');
 
 // Init router
 const router = new Router();
@@ -32,6 +35,7 @@ function inbox(ctx: Router.RouterContext) {
 	try {
 		signature = httpSignature.parseRequest(ctx.req, { 'headers': [] });
 	} catch (e) {
+		logger.warn(`error in /inbox ${e}`);
 		ctx.status = 401;
 		return;
 	}
@@ -65,7 +69,8 @@ async function isSignatureAllowed(req: any): Promise<boolean> {
 		const user = await verifySignature(signature);
 
 		return user != null;
-	} catch {
+	} catch (e) {
+		logger.warn(`error verifying signature ${e}`);
 		return false;
 	}
 }
