@@ -1672,3 +1672,10 @@ _deck:
     list: "Listes"
     mentions: "Mentions"
     direct: "Direct"
+
+
+pluskey:
+  localMentions: "Use @mentions for local replies"
+  pluskeySettings: "Pluskey Settings"
+  client: "Client"
+  translation: "Feel like translating this page? Visit https://github.com/foggy-llc/pluskey"
