@@ -97,7 +97,8 @@ export default define(meta, async (ps, user) => {
 		.setParameters(followingQuery.getParameters());
 
 	generateChannelQuery(query, user);
-	generateRepliesQuery(query, user);
+	if (hasFollowing) generateRepliesQuery(query, user, followingQuery)
+		else generateRepliesQuery(query, user);
 	generateVisibilityQuery(query, user);
 	generateMutedUserQuery(query, user);
 	generateMutedNoteQuery(query, user);
