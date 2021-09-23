@@ -43,7 +43,7 @@ index aa2ef3a..0e281d1 100644
  
      var params = {
 diff --git a/node_modules/http-signature/lib/utils.js b/node_modules/http-signature/lib/utils.js
-index 65a4b8f..fb10440 100644
+index 65a4b8f..28a6e56 100644
 --- a/node_modules/http-signature/lib/utils.js
 +++ b/node_modules/http-signature/lib/utils.js
 @@ -35,9 +35,24 @@ function InvalidAlgorithmError(message) {
@@ -65,8 +65,8 @@ index 65a4b8f..fb10440 100644
  
 +  if (alg[0] === 'hs2019') {
 +    return publicKeyType !== undefined ?
-+        validateAlgorithm(publicKeyType + '-sha512') :
-+        ['hs2019', 'sha512'];
++        validateAlgorithm(publicKeyType + '-sha256') :
++        ['hs2019', 'sha256'];
 +  }
 +
    if (alg.length !== 2) {
