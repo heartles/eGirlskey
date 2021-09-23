@@ -20,4 +20,5 @@ A non-comprehensive list of changes:
 - The Instance menu no longer defaults to the overview panel on large screens.
 - Some changes to image caption federation
 - Silence and suspended notices are added to account pages for moderators.
-
+- WIP Authorized Fetch mode requires http signatures on all requests
+- Some other nice UI changes
