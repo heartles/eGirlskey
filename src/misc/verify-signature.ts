@@ -6,7 +6,7 @@ import { getApId } from '@/remote/activitypub/type';
 import DbResolver from '@/remote/activitypub/db-resolver';
 import { AuthUser } from '@/remote/activitypub/db-resolver';
 import Resolver from '@/remote/activitypub/resolver';
-import { resolvePerson } from '@/remote/activitypub/models/person';
+import { resolvePerson, updatePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
 import { User } from '@/models/entities/user';
 import Logger from '@/services/logger';
@@ -32,6 +32,7 @@ async function resolvePersonFromKeyId(id: string, dbResolver: DbResolver): Promi
 	}
 
 	await resolvePerson(userId, resolver);
+	await updatePerson(userId);
 	return await dbResolver.getAuthUserFromApId(userId);
 }
 
@@ -68,7 +69,22 @@ async function getAuthUserFromKeyId(keyId: string, actor?: any): Promise<AuthUse
 	return authUser;
 }
 
-export async function verifySignature(signature: httpSignature.IParsedSignature, activity?: IActivity): Promise<AuthUser?> {
+function tryVerifyWithUser(authUser: AuthUser, signature: httpSignature.IParsedSignature, activity?: IActivity | null): boolean {
+	logger.debug(`using actor ${JSON.stringify(authUser)}`);
+
+	if (!authUser || !authUser.key || !authUser.key.keyPem) {
+		logger.debug(`key not present`);
+		return false;
+	}
+
+	const httpSignatureValidated = httpSignature.verifySignature(signature, authUser.key.keyPem);
+	const activityMatches = (activity == null) || (authUser && authUser.user && authUser.user.uri === activity.actor);
+	if (!httpSignatureValidated) logger.debug(`signature verification failed`);
+	if (!activityMatches) logger.debug(`activity did not match`);
+	return httpSignatureValidated && activityMatches;
+}
+
+export async function verifySignature(signature: httpSignature.IParsedSignature, activity?: IActivity | null): Promise<AuthUser?> {
 	const host = toPuny(new URL(signature.keyId).hostname);
 
 	// ブロックしてたら中断
@@ -93,12 +109,8 @@ export async function verifySignature(signature: httpSignature.IParsedSignature,
 		return null;
 	}
 
-	// HTTP-Signatureの検証
-	const httpSignatureValidated = httpSignature.verifySignature(signature, authUser.key.keyPem);
-	const activityMatches = (activity == null) || (authUser && authUser.user && authUser.user.uri === activity.actor);
-
 	// また、signatureのsignerは、activity.actorと一致する必要がある
-	if (!httpSignatureValidated || !activityMatches) {
+	if (!tryVerifyWithUser(authUser, signature, activity)) {
 		// 一致しなくても、でもLD-Signatureがありそうならそっちも見る
 		if (activity && activity.signature) {
 			if (activity.signature.type !== 'RsaSignature2017') {
@@ -139,14 +151,26 @@ export async function verifySignature(signature: httpSignature.IParsedSignature,
 				return null;
 			}
 		} else {
-			logger.warn(`http-signature verification failed and no LD-Signature. keyId=${signature.keyId}`);
-			return null;
+			logger.info(`signature validation failed for actor ${signature.keyId}, attempting to update from remote`);
+			authUser = await resolvePersonFromKeyId(signature.keyId, new DbResolver());
+
+			if (authUser == null) {
+				logger.warn(`error refreshing actor ${signature.keyId}`);
+				return null;
+			}
+			
+			if (!tryVerifyWithUser(authUser, signature, activity)) {
+				logger.warn(`http-signature verification failed and no LD-Signature. keyId=${signature.keyId}`);
+				return null;
+			}
+
+			logger.info(`signature validation for ${signature.keyId} succeeded after refresh`);
 		}
 	}
 
 	const userHost = authUser.user.uri ? extractDbHost(authUser.user.uri) : authUser.user.host;
 	if (meta.blockedHosts.includes(userHost)) {
-		logger.warn(`blocked request based on user host: @${authUser.user.username}@${authUser.user.host}`);
+		logger.warn(`blocked request based on user host: ${signature.keyId}`);
 		return null;
 	}
 
