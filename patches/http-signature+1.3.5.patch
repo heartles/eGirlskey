@@ -1,0 +1,90 @@
+diff --git a/node_modules/http-signature/lib/signer.js b/node_modules/http-signature/lib/signer.js
+index aa2ef3a..0e281d1 100644
+--- a/node_modules/http-signature/lib/signer.js
++++ b/node_modules/http-signature/lib/signer.js
+@@ -234,7 +234,9 @@ RequestSigner.prototype.sign = function (cb) {
+       cb(e);
+       return;
+     }
+-    alg = (this.rs_alg[0] || this.rs_key.type) + '-' + sigObj.hashAlgorithm;
++    alg = sigObj.hideAlgorithm ?
++        'hs2019' :
++        (this.rs_alg[0] || this.rs_key.type) + '-' + sigObj.hashAlgorithm;
+     var signature = sigObj.toString();
+     authz = FormatAuthz('Signature ', {
+       keyId: this.rs_keyId,
+@@ -310,6 +312,9 @@ module.exports = {
+    *                              pass to sshpk to parse the privateKey.
+    *                              This doesn't do anything if algorithm is
+    *                              HMAC.
++   *                   - {Boolean} hideAlgorithm optional; defaults to 'false'.
++   *                               if true, hides algorithm by writing "hs2019"
++   *                               to signature.
+    * @return {Boolean} true if Authorization (and optionally Date) were added.
+    * @throws {TypeError} on bad parameter types (input).
+    * @throws {InvalidAlgorithmError} if algorithm was bad or incompatible with
+@@ -328,6 +333,7 @@ module.exports = {
+     assert.optionalString(options.httpVersion, 'options.httpVersion');
+     assert.optionalNumber(options.expiresIn, 'options.expiresIn');
+     assert.optionalString(options.keyPassphrase, 'options.keyPassphrase');
++    assert.optionalBool(options.hideAlgorithm, 'options.hideAlgorithm');
+ 
+     if (!request.getHeader('Date'))
+       request.setHeader('Date', jsprim.rfc1123(new Date()));
+@@ -372,7 +378,9 @@ module.exports = {
+         alg[1] = key.defaultHashAlgorithm();
+       }
+ 
+-      options.algorithm = alg[0] + '-' + alg[1];
++      options.algorithm = options.hideAlgorithm ?
++          'hs2019' :
++          alg[0] + '-' + alg[1];
+     }
+ 
+     var params = {
+diff --git a/node_modules/http-signature/lib/utils.js b/node_modules/http-signature/lib/utils.js
+index 65a4b8f..fb10440 100644
+--- a/node_modules/http-signature/lib/utils.js
++++ b/node_modules/http-signature/lib/utils.js
+@@ -35,9 +35,24 @@ function InvalidAlgorithmError(message) {
+ }
+ util.inherits(InvalidAlgorithmError, HttpSignatureError);
+ 
+-function validateAlgorithm(algorithm) {
++/**
++ * @param algorithm {String} the algorithm of the signature
++ * @param publicKeyType {String?} fallback algorithm (public key type) for
++ *                                hs2019
++ * @returns {[string, string]}
++ */
++function validateAlgorithm(algorithm, publicKeyType) {
++  assert.string(algorithm, 'algorithm');
++  assert.optionalString(publicKeyType, 'publicKeyType');
++
+   var alg = algorithm.toLowerCase().split('-');
+ 
++  if (alg[0] === 'hs2019') {
++    return publicKeyType !== undefined ?
++        validateAlgorithm(publicKeyType + '-sha512') :
++        ['hs2019', 'sha512'];
++  }
++
+   if (alg.length !== 2) {
+     throw (new InvalidAlgorithmError(alg[0].toUpperCase() + ' is not a ' +
+       'valid algorithm'));
+diff --git a/node_modules/http-signature/lib/verify.js b/node_modules/http-signature/lib/verify.js
+index 4dba400..362464f 100644
+--- a/node_modules/http-signature/lib/verify.js
++++ b/node_modules/http-signature/lib/verify.js
+@@ -30,9 +30,9 @@ module.exports = {
+       pubkey = sshpk.parseKey(pubkey);
+     assert.ok(sshpk.Key.isKey(pubkey, [1, 1]), 'pubkey must be a sshpk.Key');
+ 
+-    var alg = validateAlgorithm(parsedSignature.algorithm);
++    var alg = validateAlgorithm(parsedSignature.algorithm, pubkey.type);
+     if (alg[0] === 'hmac' || alg[0] !== pubkey.type)
+-      return (false);
++      return false;
+ 
+     var v = pubkey.createVerify(alg[1]);
+     v.update(parsedSignature.signingString);
