@@ -1675,6 +1675,7 @@ _deck:
 
 
 pluskey:
+  skipRepeatRenotes: "Skip recently repeated renotes"
   localMentions: "Use @mentions for local replies"
   pluskeySettings: "Pluskey Settings"
   client: "Client"

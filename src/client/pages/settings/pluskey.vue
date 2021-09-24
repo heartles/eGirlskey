@@ -8,6 +8,7 @@
 	<FormGroup>
 		<template #label>{{ $ts.experimentalFeatures }}</template>
 		<FormSwitch v-model:value="noteLink">{{ $ts.pluskey.noteLink }}</FormSwitch>
+		<FormSwitch v-model:value="skipRepeatRenotes">{{ $ts.pluskey.skipRepeatRenotes }}</FormSwitch>
 	</FormGroup>
 
 	<FormGroup>
@@ -63,10 +64,14 @@ export default defineComponent({
 	computed: {
 		localMentions: defaultStore.makeGetterSetter('localMentions'),
 		noteLink: defaultStore.makeGetterSetter('noteLink'),
+		skipRepeatRenotes: defaultStore.makeGetterSetter('skipRepeatRenotes'),
 	},
 
 	watch: {
 		noteLink() {
+			this.reloadAsk();
+		},
+		skipRepeatRenotes() {
 			this.reloadAsk();
 		}
 	},
