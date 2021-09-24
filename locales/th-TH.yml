@@ -6,3 +6,5 @@ pluskey:
   pluskeySettings: "Pluskey Settings"
   client: "Client"
   translation: "Feel like translating this page? Visit https://github.com/foggy-llc/pluskey"
+  noteLink: "Make notes clickable"
+

@@ -6,6 +6,11 @@
 	</FormGroup>
 
 	<FormGroup>
+		<template #label>{{ $ts.experimentalFeatures }}</template>
+		<FormSwitch v-model:value="noteLink">{{ $ts.pluskey.noteLink }}</FormSwitch>
+	</FormGroup>
+
+	<FormGroup>
 		<template #label>{{ $ts.pluskey.translation }}</template>
 	</FormGroup>
 </FormBase>
@@ -56,8 +61,14 @@ export default defineComponent({
 	},
 
 	computed: {
-		keepCw: defaultStore.makeGetterSetter('keepCw'),
 		localMentions: defaultStore.makeGetterSetter('localMentions'),
+		noteLink: defaultStore.makeGetterSetter('noteLink'),
+	},
+
+	watch: {
+		noteLink() {
+			this.reloadAsk();
+		}
 	},
 
 	mounted() {
