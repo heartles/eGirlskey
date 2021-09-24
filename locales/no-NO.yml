@@ -3,6 +3,7 @@ _lang_: "Norsk Bokmål"
 
 
 pluskey:
+  skipRepeatRenotes: "Skip recently repeated renotes"
   localMentions: "Use @mentions for local replies"
   pluskeySettings: "Pluskey Settings"
   client: "Client"
