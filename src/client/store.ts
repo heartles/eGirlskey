@@ -66,6 +66,12 @@ export const defaultStore = markRaw(new Storage('base', {
 		default: [] as string[]
 	},
 
+	// Make notes clickable (links to the detailed note page)
+	noteLink: {
+		where: 'deviceAccount',
+		default: false
+	},
+
 	menu: {
 		where: 'deviceAccount',
 		default: [

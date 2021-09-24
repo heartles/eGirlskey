@@ -54,6 +54,10 @@ export default defineComponent({
 	align-items: baseline;
 	white-space: nowrap;
 
+	> * {
+		position: relative;
+	}
+
 	> .name {
 		flex-shrink: 1;
 		display: block;
