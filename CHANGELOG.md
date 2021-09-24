@@ -7,6 +7,17 @@
 
 -->
 
+## 12.91.0+plus.1 (2021/09/24)
+
+### Improvements
+- Add `secureMode` config setting for `default.yml`. When enabled:
+	- Requires login to access posts, pages, etc
+	- Requires valid and non-blocked HTTP signatures for ActivityPub requests
+- Disables instance overview page by default in the admin panel
+- Add Pluskey settings page
+- Make notes optionally clickable (see Pluskey settings page to enable)
+- Optionally ignore repeated renotes (see Pluskey settings page to enable)
+
 ## 12.91.0 (2021/09/22)
 
 ### Improvements
