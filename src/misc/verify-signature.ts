@@ -14,64 +14,75 @@ import { IActivity } from '@/remote/activitypub/type';
 
 const logger = new Logger('verify-signature');
 
-async function resolvePersonFromKeyId(id: string, dbResolver: DbResolver): Promise<AuthUser | null> {
-	const resolver = new Resolver();
+async function getAuthUserFromActorId(actorId: string, resolver: Resolver, dbResolver: DbResolver): Promise<AuthUser | null> {
+	let authUser;
+	try {
+		authUser = await dbResolver.getAuthUserFromApId(actorId);
+	} catch (e: any) {
+		if (e.statusCode === 404) {
+			// Try resolving user through AP get
+			await resolvePerson(actorId, resolver);
 
-	const maybeKey = await resolver.resolve(id) as any;
+			authUser = await dbResolver.getAuthUserFromApId(actorId);
+		} else if (e.statusCode >= 400 && e.statusCode < 500) {
+			logger.warn(`ignored deleted actors on both ends ${actor} - ${e.statusCode}`);
+		}
 
-	// requesting the key's id typically returns either the key
-	// object itself or the user
-	let userId = maybeKey.owner;
-	if (userId == null) {
-		userId = maybeKey.id;
-
-		if (userId == null) {
-			logger.warn(`failed to acquire user from key ${id}`);
+		if (authUser == null) {
+			logger.error(`error in actor ${actor} - ${e.statusCode || e}`);
 			return null;
 		}
 	}
-
-	await resolvePerson(userId, resolver);
-	return await dbResolver.getAuthUserFromApId(userId);
+	return authUser;
 }
 
-async function getAuthUserFromKeyId(keyId: string, actor?: any | undefined): Promise<AuthUser | null> {
-	// TDOO: キャッシュ
-	const dbResolver = new DbResolver();
-
+async function getAuthUserFromKeyId(keyId: string, resolver: Resolver, dbResolver: DbResolver): Promise<AuthUser | null> {
 	// HTTP-Signature keyIdを元にDBから取得
 	let authUser = await dbResolver.getAuthUserFromKeyId(keyId);
-
-	// If actor provided, try to get authUser from that
-	if (authUser == null && actor != null) {
-		try {
-			authUser = await dbResolver.getAuthUserFromApId(getApId(actor));
-		} catch (e: any) {
-			// 対象が4xxならスキップ
-			if (e.statusCode >= 400 && e.statusCode < 500) {
-				logger.warn(`ignored deleted actors on both ends ${actor} - ${e.statusCode}`);
-			}
-			logger.error(`error in actor ${actor} - ${e.statusCode || e}`);
-		}
-	}
 
 	// try to resolve key (and associated user) through AP get
 	if (authUser == null) {
 		logger.info(`attempting to resolve key through AP get`);
 		try {
-			authUser = await resolvePersonFromKeyId(keyId, dbResolver);
+			const maybeKey = await resolver.resolve(keyId) as any;
+
+			// requesting the key's id typically returns either the key
+			// object itself or the user
+			let userId = maybeKey.owner;
+			if (userId == null) {
+				userId = maybeKey.id;
+
+				if (userId == null) {
+					logger.warn(`failed to acquire user from key ${keyId}`);
+					return null;
+				}
+			}
+
+			await resolvePerson(userId, resolver);
+
+			authUser = await dbResolver.getAuthUserFromKeyId(keyId);
 		} catch (e) {
-			logger.error(`failed to resolve remote user: ${e}`);
+			logger.error(`failed to resolve remote user: ${JSON.stringify(e)}`);
 		}
 	}
 
 	return authUser;
 }
 
-export async function verifySignature(signature: httpSignature.IParsedSignature, activity: IActivity | undefined): Promise<AuthUser | null> {
-	const host = toPuny(new URL(signature.keyId).hostname);
+export type AuthOptions = {
+	activity?: IActivity,
+	resolver?: Resolver,
+};
 
-	// ブロックしてたら中断
+export async function authorizeUserFromSignature(signature: httpSignature.IParsedSignature, options?: AuthOptions): Promise<AuthUser | null> {
+	const host = toPuny(new URL(signature.keyId).hostname);
+	const dbResolver = new DbResolver();
+	const { activity, resolver } = options;
+	if (resolver == null) {
+		resolver = new Resolver();
+	}
+
+	// Early host check
 	const meta = await fetchMeta();
 	if (meta.blockedHosts.includes(host)) {
 		logger.warn(`blocked request based on signature hostname: ${host}`);
@@ -85,10 +96,13 @@ export async function verifySignature(signature: httpSignature.IParsedSignature,
 	}
 
 	// HTTP-Signature keyIdを元にDBから取得
-	let authUser = await getAuthUserFromKeyId(signature.keyId, activity ? activity.actor : null);
+	let authUser = await getAuthUserFromKeyId(signature.keyId, resolver, dbResolver);
+	if (authUser == null && activity != null) {
+		authUser = await getAuthUserFromActorId(getActorId(activity!.actor), resolver, dbResolver);
+	}
 
 	// publicKey がなくても終了
-	if (authUser!.key == null) {
+	if (authUser?.key == null) {
 		logger.warn(`failed to resolve user publicKey`);
 		return null;
 	}
@@ -114,7 +128,7 @@ export async function verifySignature(signature: httpSignature.IParsedSignature,
 			}
 
 			// keyIdからLD-Signatureのユーザーを取得
-			authUser = await getAuthUserFromKeyId(activity!.signature.creator);
+			authUser = await getAuthUserFromKeyId(activity!.signature.creator, resolver, dbResolver);
 			if (authUser == null) {
 				logger.warn(`LD-Signatureのユーザーが取得できませんでした`);
 				return null;
@@ -144,6 +158,7 @@ export async function verifySignature(signature: httpSignature.IParsedSignature,
 		}
 	}
 
+	// Final host check
 	const userHost = authUser!.user.uri ? extractDbHost(authUser!.user.uri) : authUser!.user.host;
 	if (meta.blockedHosts.includes(userHost)) {
 		logger.warn(`blocked request based on user host: ${signature.keyId}`);
