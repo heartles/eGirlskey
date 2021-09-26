@@ -7,7 +7,7 @@ import * as http from 'http';
 import loadConfig from '../src/config/load';
 import { SIGKILL } from 'constants';
 import { createConnection, getConnection } from 'typeorm';
-import { entities } from '../src/db/postgre';
+import { entities, resetDb } from '../src/db/postgre';
 
 const config = loadConfig();
 export const port = config.port;
@@ -153,22 +153,25 @@ export function launchServer(callbackSpawnedProcess: (p: childProcess.ChildProce
 export async function initTestDb(justBorrow = false, initEntities?: any[]) {
 	if (process.env.NODE_ENV !== 'test') throw 'NODE_ENV is not a test';
 
+	let conn;
 	try {
-		const conn = await getConnection();
-		await conn.close();
-	} catch (e) {}
+		conn = await getConnection();
+	} catch (e) {
+		conn = await createConnection({
+			type: 'postgres',
+			host: config.db.host,
+			port: config.db.port,
+			username: config.db.user,
+			password: config.db.pass,
+			database: config.db.db,
+			synchronize: true,
+			dropSchema: true,
+			entities: entities
+		});
+	}
 
-	return await createConnection({
-		type: 'postgres',
-		host: config.db.host,
-		port: config.db.port,
-		username: config.db.user,
-		password: config.db.pass,
-		database: config.db.db,
-		synchronize: true && !justBorrow,
-		dropSchema: true && !justBorrow,
-		entities: initEntities || entities
-	});
+	if (!justBorrow) await resetDb();
+	return conn;
 }
 
 export function startServer(timeout = 30 * 1000): Promise<childProcess.ChildProcess> {
