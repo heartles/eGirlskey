@@ -11,10 +11,9 @@ import { toPuny, extractDbHost } from '@/misc/convert-host';
 import { getApId } from '@/remote/activitypub/type';
 import { fetchInstanceMetadata } from '@/services/fetch-instance-metadata';
 import { InboxJobData } from '../types';
-import DbResolver from '@/remote/activitypub/db-resolver';
 import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
-import { verifySignature } from '@/misc/verify-signature';
+import { authorizeUserFromSignature } from '@/misc/verify-signature';
 
 const logger = new Logger('inbox');
 
@@ -29,7 +28,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 	logger.debug(JSON.stringify(info, null, 2));
 	//#endregion
 
-	const authUser = await verifySignature(signature, activity);
+	const authUser = await authorizeUserFromSignature(signature, { activity });
 	if (authUser == null) {
 		return `skip: signature verification failed`;
 	}

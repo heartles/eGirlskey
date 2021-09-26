@@ -18,7 +18,7 @@ import { ILocalUser, User } from '@/models/entities/user';
 import { In } from 'typeorm';
 import { renderLike } from '@/remote/activitypub/renderer/like';
 import { getUserKeypair } from '@/misc/keypair-store';
-import { verifySignature } from '@/misc/verify-signature';
+import { authorizeUserFromSignature } from '@/misc/verify-signature';
 import config from '@/config/index';
 
 // Init router
@@ -62,7 +62,7 @@ export function setResponseType(ctx: Router.RouterContext) {
 async function isSignatureAllowed(req: any): Promise<boolean> {
 	try {
 		const signature = httpSignature.parseRequest(req, { 'headers': [] });
-		const user = await verifySignature(signature);
+		const user = await authorizeUserFromSignature(signature);
 
 		return user != null;
 	} catch {
