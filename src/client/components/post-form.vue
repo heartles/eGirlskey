@@ -17,7 +17,7 @@
 				<span v-if="visibility === 'followers'"><i class="fas fa-unlock"></i></span>
 				<span v-if="visibility === 'specified'"><i class="fas fa-envelope"></i></span>
 			</button>
-			<button class="submit _buttonPrimary" :disabled="!canPost" @click="post">{{ submitText }}<i :class="reply ? 'fas fa-reply' : renote ? 'fas fa-quote-right' : 'fas fa-paper-plane'"></i></button>
+			<button class="submit _buttonPrimary" :disabled="!canPost" @click="post" data-cy-open-post-form-submit>{{ submitText }}<i :class="reply ? 'fas fa-reply' : renote ? 'fas fa-quote-right' : 'fas fa-paper-plane'"></i></button>
 		</div>
 	</header>
 	<div class="form" :class="{ fixed }">
@@ -36,7 +36,7 @@
 		</div>
 		<MkInfo warn v-if="hasNotSpecifiedMentions" class="hasNotSpecifiedMentions">{{ $ts.notSpecifiedMentionWarning }} - <button class="_textButton" @click="addMissingMention()">{{ $ts.add }}</button></MkInfo>
 		<input v-show="useCw" ref="cw" class="cw" v-model="cw" :placeholder="$ts.annotation" @keydown="onKeydown">
-		<textarea v-model="text" class="text" :class="{ withCw: useCw }" ref="text" :disabled="posting" :placeholder="placeholder" @keydown="onKeydown" @paste="onPaste" @compositionupdate="onCompositionUpdate" @compositionend="onCompositionEnd" />
+		<textarea v-model="text" class="text" :class="{ withCw: useCw }" ref="text" :disabled="posting" :placeholder="placeholder" @keydown="onKeydown" @paste="onPaste" @compositionupdate="onCompositionUpdate" @compositionend="onCompositionEnd" data-cy-post-form-text/>
 		<input v-show="withHashtags" ref="hashtags" class="hashtags" v-model="hashtags" :placeholder="$ts.hashtags" list="hashtags">
 		<XPostFormAttaches class="attaches" :files="files" @updated="updateFiles" @detach="detachFile" @changeSensitive="updateFileSensitive" @changeName="updateFileName"/>
 		<XPollEditor v-if="poll" :poll="poll" @destroyed="poll = null" @updated="onPollUpdate"/>
@@ -246,16 +246,15 @@ export default defineComponent({
 			this.text += ' ';
 		}
 
-		// Conditionally include mentions on local posts
-		if (this.reply && (this.$store.state.localMentions ? this.reply.userId !== this.$i.id : this.reply.user.host != null)) {
-			this.text = this.reply.user.host ? `@${this.reply.user.username}@${toASCII(this.reply.user.host)} ` : `@${this.reply.user.username} `;
+		if (this.reply && this.reply.user.host != null) {
+			this.text = `@${this.reply.user.username}@${toASCII(this.reply.user.host)} `;
 		}
 
 		if (this.reply && this.reply.text != null) {
 			const ast = mfm.parse(this.reply.text);
 
 			for (const x of extractMentions(ast)) {
-				const mention = x.host ? x.host != host ? `@${x.username}@${toASCII(x.host)}` : `@${x.username}` : `@${x.username}`;
+				const mention = x.host ? `@${x.username}@${toASCII(x.host)}` : `@${x.username}`;
 
 				// 自分は除外
 				if (this.$i.username == x.username && x.host == null) continue;
@@ -340,7 +339,12 @@ export default defineComponent({
 				this.cw = init.cw;
 				this.useCw = init.cw != null;
 				if (init.poll) {
-					this.poll = init.poll;
+					this.poll = {
+						choices: init.poll.choices.map(x => x.text),
+						multiple: init.poll.multiple,
+						expiresAt: init.poll.expiresAt,
+						expiredAfter: init.poll.expiredAfter,
+					};
 				}
 				this.visibility = init.visibility;
 				this.localOnly = init.localOnly;
