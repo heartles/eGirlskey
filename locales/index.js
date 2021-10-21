@@ -19,6 +19,7 @@ const languages = [
 	'da-DK',
 	'de-DE',
 	'en-US',
+	'en-US-stock',
 	'es-ES',
 	'fr-FR',
 	'id-ID',
