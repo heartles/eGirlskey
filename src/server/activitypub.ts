@@ -216,7 +216,7 @@ router.get('/users/:user', async (ctx, next) => {
 
 	if (config.secureMode) {
 		// Allow requests to get the instance actor regardless of authorization status
-		if (user.username !== 'instance.actor' && !await isSignatureAllowed(ctx.req)) {
+		if (user?.username !== 'instance.actor' && !await isSignatureAllowed(ctx.req)) {
 			ctx.status = 401;
 			return;
 		}

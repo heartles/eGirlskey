@@ -10,7 +10,7 @@ import { resolvePerson } from '@/remote/activitypub/models/person';
 import { LdSignature } from '@/remote/activitypub/misc/ld-signature';
 import { User } from '@/models/entities/user';
 import Logger from '@/services/logger';
-import { IActivity } from '@/remote/activitypub/type';
+import { IActivity, IObject } from '@/remote/activitypub/type';
 
 const logger = new Logger('verify-signature');
 
@@ -25,11 +25,11 @@ async function getAuthUserFromActorId(actorId: string, resolver: Resolver, dbRes
 
 			authUser = await dbResolver.getAuthUserFromApId(actorId);
 		} else if (e.statusCode >= 400 && e.statusCode < 500) {
-			logger.warn(`ignored deleted actors on both ends ${actor} - ${e.statusCode}`);
+			logger.warn(`ignored deleted actors on both ends ${actorId} - ${e.statusCode}`);
 		}
 
 		if (authUser == null) {
-			logger.error(`error in actor ${actor} - ${e.statusCode || e}`);
+			logger.error(`error in actor ${actorId} - ${e.statusCode || e}`);
 			return null;
 		}
 	}
@@ -69,6 +69,14 @@ async function getAuthUserFromKeyId(keyId: string, resolver: Resolver, dbResolve
 	return authUser;
 }
 
+function getActorId(actor: IObject | string): string | undefined {
+	if (typeof(actor) === 'string') {
+		return actor as string;
+	}
+
+	return actor.id;
+}
+
 export type AuthOptions = {
 	activity?: IActivity,
 	resolver?: Resolver,
@@ -77,10 +85,8 @@ export type AuthOptions = {
 export async function authorizeUserFromSignature(signature: httpSignature.IParsedSignature, options?: AuthOptions): Promise<AuthUser | null> {
 	const host = toPuny(new URL(signature.keyId).hostname);
 	const dbResolver = new DbResolver();
-	const { activity, resolver } = options;
-	if (resolver == null) {
-		resolver = new Resolver();
-	}
+	const activity = options?.activity;
+	const resolver = options?.resolver || new Resolver();
 
 	// Early host check
 	const meta = await fetchMeta();
