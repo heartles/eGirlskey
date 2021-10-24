@@ -246,11 +246,11 @@ export default defineComponent({
 			this.text += ' ';
 		}
 
-		if (this.reply && this.reply.userId !== this.$i.id && (this.reply.user.host != null || this.$store.state.localMentions)) {
-			if (this.reply.userHost == null && this.$store.state.localMentions) {
-				this.text = `@${this.reply.user.username} `;
-			} else if (this.reply.userHost != null) {
+		if (this.reply && this.reply.userId !== this.$i.id) {
+			if (this.reply.user.host != null && this.reply.user.host != host) {
 				this.text = `@${this.reply.user.username}@${toASCII(this.reply.user.host)} `;
+			} else if (this.$store.state.localMentions) {
+				this.text = `@${this.reply.user.username} `;
 			}
 		}
 
