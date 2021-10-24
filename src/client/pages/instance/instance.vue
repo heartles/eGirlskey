@@ -103,7 +103,8 @@
 		<div class="operations section">
 			<span class="label">{{ $ts.operations }}</span>
 			<MkSwitch v-model="isSuspended" class="switch">{{ $ts.stopActivityDelivery }}</MkSwitch>
-			<MkSwitch :model-value="isBlocked" class="switch" @update:modelValue="changeBlock">{{ $ts.blockThisInstance }}</MkSwitch>
+			<MkSwitch :enabled="!isAllowlist" :model-value="isBlocked" class="switch" @update:modelValue="changeBlock">{{ $ts.blockThisInstance }}</MkSwitch>
+			<MkSwitch :enabled="isAllowlist" :model-value="isAllowed" class="switch" @update:modelValue="changeAllow">{{ $ts.pluskey.allowThisInstance }}</MkSwitch>
 			<details>
 				<summary>{{ $ts.deleteAllFiles }}</summary>
 				<MkButton @click="deleteAllFiles()" style="margin: 0.5em 0 0.5em 0;"><i class="fas fa-trash-alt"></i> {{ $ts.deleteAllFiles }}</MkButton>
@@ -209,6 +210,10 @@ export default defineComponent({
 
 		isBlocked() {
 			return this.meta && this.meta.blockedHosts && this.meta.blockedHosts.includes(this.instance.host);
+		},
+
+		isAllowed() {
+			return this.meta && this.meta.allowedHosts && this.meta.allowedHosts.includes(this.instance.host);
 		}
 	},
 
@@ -255,6 +260,12 @@ export default defineComponent({
 		changeBlock(e) {
 			os.api('admin/update-meta', {
 				blockedHosts: this.isBlocked ? this.meta.blockedHosts.concat([this.instance.host]) : this.meta.blockedHosts.filter(x => x !== this.instance.host)
+			});
+		},
+
+		changeAllow(e) {
+			os.api('admin/update-meta', {
+				allowedHosts: this.isAllowed ? this.meta.allowedHosts.concat([this.instance.host]) : this.meta.allowedHosts.filter(x => x !== this.instance.host)
 			});
 		},
 

@@ -1741,4 +1741,8 @@ pluskey:
   client: "Client"
   translation: "Feel like translating this page? Visit https://github.com/foggy-llc/pluskey"
   noteLink: "Make notes clickable"
+  allowlistModeDescription: "Use allowlist instead of blocklist"
+  allowThisInstance: "Allow instance"
+  allowedInstances: "Allowed instances"
+  allowedInstancesDescription: "List the hosts of the instances to be allowed separated by line breaks. Instances not on this list will no longer be able to communicate with this instance."
 

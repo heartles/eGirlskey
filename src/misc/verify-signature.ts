@@ -1,6 +1,6 @@
 import { URL } from 'url';
 import * as httpSignature from 'http-signature';
-import { fetchMeta } from '@/misc/fetch-meta';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { toPuny, extractDbHost } from '@/misc/convert-host';
 import { getApId } from '@/remote/activitypub/type';
 import DbResolver from '@/remote/activitypub/db-resolver';
@@ -89,8 +89,7 @@ export async function authorizeUserFromSignature(signature: httpSignature.IParse
 	const resolver = options?.resolver || new Resolver();
 
 	// Early host check
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(host)) {
+	if (await isHostBlocked(host)) {
 		logger.warn(`blocked request based on signature hostname: ${host}`);
 		return null;
 	}
@@ -166,7 +165,7 @@ export async function authorizeUserFromSignature(signature: httpSignature.IParse
 
 	// Final host check
 	const userHost = authUser!.user.uri ? extractDbHost(authUser!.user.uri) : authUser!.user.host;
-	if (meta.blockedHosts.includes(userHost)) {
+	if (await isHostBlocked(userHost)) {
 		logger.warn(`blocked request based on user host: ${signature.keyId}`);
 		return null;
 	}

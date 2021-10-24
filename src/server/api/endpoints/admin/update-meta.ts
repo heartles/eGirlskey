@@ -5,6 +5,7 @@ import { Meta } from '@/models/entities/meta';
 import { insertModerationLog } from '@/services/insert-moderation-log';
 import { DB_MAX_NOTE_TEXT_LENGTH } from '@/misc/hard-limits';
 import { ID } from '@/misc/cafy-id';
+import { fetchMeta } from '@/misc/fetch-meta';
 
 export const meta = {
 	tags: ['admin'],
@@ -290,6 +291,14 @@ export const meta = {
 		},
 
 		objectStorageS3ForcePathStyle: {
+			validator: $.optional.bool
+		},
+		
+		allowedHosts: {
+			validator: $.optional.nullable.arr($.str),
+		},
+		
+		allowlistMode: {
 			validator: $.optional.bool
 		},
 	}
@@ -580,6 +589,14 @@ export default define(meta, async (ps, me) => {
 
 	if (ps.deeplIsPro !== undefined) {
 		set.deeplIsPro = ps.deeplIsPro;
+	}
+
+	if (Array.isArray(ps.allowedHosts)) {
+		set.allowedHosts = ps.allowedHosts.filter(Boolean);
+	}
+	
+	if (ps.allowlistMode !== undefined) {
+		set.allowlistMode = ps.allowlistMode;
 	}
 
 	await getConnection().transaction(async transactionalEntityManager => {

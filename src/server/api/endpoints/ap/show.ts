@@ -9,7 +9,7 @@ import { extractDbHost } from '@/misc/convert-host';
 import { Users, Notes } from '@/models/index';
 import { Note } from '@/models/entities/note';
 import { User } from '@/models/entities/user';
-import { fetchMeta } from '@/misc/fetch-meta';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { isActor, isPost, getApId } from '@/remote/activitypub/type';
 
 export const meta = {
@@ -89,8 +89,7 @@ async function fetchAny(uri: string) {
 	}
 
 	// ブロックしてたら中断
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(extractDbHost(uri))) return null;
+	if (await isHostBlocked(extractDbHost(uri))) return null;
 
 	// URI(AP Object id)としてDB検索
 	{

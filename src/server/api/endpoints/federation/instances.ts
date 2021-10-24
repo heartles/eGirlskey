@@ -18,6 +18,10 @@ export const meta = {
 			validator: $.optional.nullable.bool,
 		},
 
+		allowed: {
+			validator: $.optional.nullable.bool,
+		},
+
 		notResponding: {
 			validator: $.optional.nullable.bool,
 		},
@@ -96,6 +100,15 @@ export default define(meta, async (ps, me) => {
 			query.andWhere('instance.host IN (:...blocks)', { blocks: meta.blockedHosts });
 		} else {
 			query.andWhere('instance.host NOT IN (:...blocks)', { blocks: meta.blockedHosts });
+		}
+	}
+
+	if (typeof ps.allowed === 'boolean') {
+		const meta = await fetchMeta(true);
+		if (ps.allowed) {
+			query.andWhere('instance.host IN (:...allows)', { allows: meta.allowedHosts });
+		} else {
+			query.andWhere('instance.host NOT IN (:...allows)', { allows: meta.allowedHosts });
 		}
 	}
 

@@ -323,6 +323,18 @@ export const meta = {
 					optional: false as const, nullable: false as const
 				}
 			},
+			allowedHosts: {
+				type: 'array' as const,
+				optional: true as const, nullable: false as const,
+				items: {
+					type: 'string' as const,
+					optional: false as const, nullable: false as const
+				}
+			},
+			allowlistMode: {
+				type: 'boolean' as const,
+				optional: false as const, nullable: false as const
+			},
 			hcaptchaSecretKey: {
 				type: 'string' as const,
 				optional: true as const, nullable: true as const
@@ -439,7 +451,7 @@ export const meta = {
 			objectStorageSetPublicRead: {
 				type: 'boolean' as const,
 				optional: true as const, nullable: false as const
-			}
+			},
 		}
 	}
 };
@@ -553,6 +565,8 @@ export default define(meta, async (ps, me) => {
 			response.pinnedUsers = instance.pinnedUsers;
 			response.hiddenTags = instance.hiddenTags;
 			response.blockedHosts = instance.blockedHosts;
+			response.allowedHosts = instance.allowedHosts;
+			response.allowlistMode = instance.allowlistMode;
 			response.hcaptchaSecretKey = instance.hcaptchaSecretKey;
 			response.recaptchaSecretKey = instance.recaptchaSecretKey;
 			response.proxyAccountId = instance.proxyAccountId;
