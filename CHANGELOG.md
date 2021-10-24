@@ -7,6 +7,11 @@
 
 -->
 
+## 12.91.0+plus.2 (2021/10/23)
+
+### Bugfixes
+- Fix situation where the localMentions option was not being applied.
+
 ## 12.91.0+plus.1 (2021/09/24)
 
 ### Improvements
