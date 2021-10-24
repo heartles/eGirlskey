@@ -7,6 +7,11 @@
 
 -->
 
+## 12.91.0+egirls.2 (2021/10/24)
+
+### Bugfixes
+- Fix situation where replying to a remote user would cause a local user with the same @ to be mentioned.
+
 ## 12.91.0+plus.2 (2021/10/23)
 
 ### Bugfixes
