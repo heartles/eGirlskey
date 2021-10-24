@@ -9,7 +9,7 @@ import config from '@/config/index';
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: config.secureMode,
+	requireCredential: false as const,
 
 	params: {
 		pageId: {
