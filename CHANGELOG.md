@@ -7,6 +7,12 @@
 
 -->
 
+## 12.91.0+egirls.3 (2021/10/24)
+
+### Improvements
+
+- Allowlist mode implemented, as a setting in the "Blocked Instances" section. Please remember to run `yarn migrate`.
+
 ## 12.91.0+egirls.2 (2021/10/24)
 
 ### Bugfixes
