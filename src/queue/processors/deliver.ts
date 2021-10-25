@@ -6,7 +6,7 @@ import Logger from '@/services/logger';
 import { Instances } from '@/models/index';
 import { instanceChart } from '@/services/chart/index';
 import { fetchInstanceMetadata } from '@/services/fetch-instance-metadata';
-import { fetchMeta } from '@/misc/fetch-meta';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { toPuny } from '@/misc/convert-host';
 import { Cache } from '@/misc/cache';
 import { Instance } from '@/models/entities/instance';
@@ -22,8 +22,7 @@ export default async (job: Bull.Job<DeliverJobData>) => {
 	const { host } = new URL(job.data.to);
 
 	// ブロックしてたら中断
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(toPuny(host))) {
+	if (await isHostBlocked(toPuny(host))) {
 		return 'skip (blocked)';
 	}
 

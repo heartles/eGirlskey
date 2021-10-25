@@ -20,7 +20,7 @@ import { Note } from '@/models/entities/note';
 import { IObject, getOneApId, getApId, getOneApHrefNullable, validPost, IPost, isEmoji, getApType } from '../type';
 import { Emoji } from '@/models/entities/emoji';
 import { genId } from '@/misc/gen-id';
-import { fetchMeta } from '@/misc/fetch-meta';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { getApLock } from '@/misc/app-lock';
 import { createMessage } from '@/services/messages/create';
 import { parseAudience } from '../audience';
@@ -273,8 +273,7 @@ export async function resolveNote(value: string | IObject, resolver?: Resolver):
 	if (uri == null) throw new Error('missing uri');
 
 	// ブロックしてたら中断
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(extractDbHost(uri))) throw { statusCode: 451 };
+	if (await isHostBlocked(extractDbHost(uri))) throw { statusCode: 451 };
 
 	const unlock = await getApLock(uri);
 

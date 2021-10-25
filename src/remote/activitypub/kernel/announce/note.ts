@@ -5,7 +5,7 @@ import { IAnnounce, getApId } from '../../type';
 import { fetchNote, resolveNote } from '../../models/note';
 import { apLogger } from '../../logger';
 import { extractDbHost } from '@/misc/convert-host';
-import { fetchMeta } from '@/misc/fetch-meta';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { getApLock } from '@/misc/app-lock';
 import { parseAudience } from '../../audience';
 
@@ -23,8 +23,7 @@ export default async function(resolver: Resolver, actor: IRemoteUser, activity: 
 	}
 
 	// アナウンス先をブロックしてたら中断
-	const meta = await fetchMeta();
-	if (meta.blockedHosts.includes(extractDbHost(uri))) return;
+	if (await isHostBlocked(extractDbHost(uri))) return;
 
 	const unlock = await getApLock(uri);
 

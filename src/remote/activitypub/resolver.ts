@@ -2,9 +2,9 @@ import config from '@/config/index';
 import { getJson } from '@/misc/fetch';
 import { ILocalUser } from '@/models/entities/user';
 import { getInstanceActor } from '@/services/instance-actor';
+import { isHostBlocked } from '@/misc/is-host-blocked';
 import { signedGet } from './request';
 import { IObject, isCollectionOrOrderedCollection, ICollection, IOrderedCollection } from './type';
-import { fetchMeta } from '@/misc/fetch-meta';
 import { extractDbHost } from '@/misc/convert-host';
 
 export default class Resolver {
@@ -46,9 +46,8 @@ export default class Resolver {
 
 		this.history.add(value);
 
-		const meta = await fetchMeta();
 		const host = extractDbHost(value);
-		if (meta.blockedHosts.includes(host)) {
+		if (await isHostBlocked(host)) {
 			throw new Error('Instance is blocked');
 		}
 

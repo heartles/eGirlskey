@@ -1,10 +1,21 @@
 <template>
 <FormBase>
 	<FormSuspense :p="init">
-		<FormTextarea v-model:value="blockedHosts">
-			<span>{{ $ts.blockedInstances }}</span>
-			<template #desc>{{ $ts.blockedInstancesDescription }}</template>
-		</FormTextarea>
+		<FormSwitch v-model:value="allowlistMode">{{ $ts.pluskey.allowlistModeDescription }}</FormSwitch>
+
+		<FormGroup v-if="!allowlistMode">
+			<FormTextarea v-model:value="blockedHosts">
+				<span>{{ $ts.blockedInstances }}</span>
+				<template #desc>{{ $ts.blockedInstancesDescription }}</template>
+			</FormTextarea>
+		</FormGroup>
+
+		<FormGroup v-if="allowlistMode">
+			<FormTextarea v-model:value="allowedHosts">
+				<span>{{ $ts.pluskey.allowedInstances }}</span>
+				<template #desc>{{ $ts.pluskey.allowedInstancesDescription }}</template>
+			</FormTextarea>
+		</FormGroup>
 
 		<FormButton @click="save" primary><i class="fas fa-save"></i> {{ $ts.save }}</FormButton>
 	</FormSuspense>
@@ -46,6 +57,8 @@ export default defineComponent({
 				icon: 'fas fa-ban'
 			},
 			blockedHosts: '',
+			allowedHosts: '',
+			allowlistMode: false,
 		}
 	},
 
@@ -57,12 +70,23 @@ export default defineComponent({
 		async init() {
 			const meta = await os.api('meta', { detail: true });
 			this.blockedHosts = meta.blockedHosts.join('\n');
+			this.allowedHosts = meta.allowedHosts.join('\n');
+			this.allowlistMode = meta.allowlistMode;
 		},
 
 		save() {
-			os.apiWithDialog('admin/update-meta', {
-				blockedHosts: this.blockedHosts.split('\n') || [],
-			}).then(() => {
+			const data = {
+				allowlistMode: this.allowlistMode,
+			};
+
+			if (this.allowlistMode) {
+				data.allowedHosts = this.allowedHosts.split('\n') || [];
+			} else {
+				data.blockedHosts = this.blockedHosts.split('\n') || [];
+			}
+
+			os.apiWithDialog('admin/update-meta', data)
+			.then(() => {
 				fetchInstance();
 			});
 		}

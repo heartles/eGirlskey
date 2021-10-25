@@ -415,4 +415,14 @@ export class Meta {
 		default: true,
 	})
 	public objectStorageS3ForcePathStyle: boolean;
+
+	@Column('varchar', {
+		length: 256, array: true, default: '{}'
+	})
+	public allowedHosts: string[];
+
+	@Column('boolean', {
+		default: false,
+	})
+	public allowlistMode: boolean;
 }
