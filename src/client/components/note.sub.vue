@@ -147,6 +147,10 @@ export default defineComponent({
 					> .text {
 						margin-right: 8px;
 					}
+
+					> * {
+						position: relative;
+					}
 				}
 
 				> .content {

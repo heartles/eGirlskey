@@ -46,7 +46,19 @@ export default defineComponent({
 .wrmlmaau {
 	overflow-wrap: break-word;
 
+	> details > * {
+		position: relative;
+	}
+
+	> details > summary {
+		display: inline list-item;
+	}
+
 	> .body {
+		> * {
+			position: relative;
+		}
+
 		> .reply {
 			margin-right: 6px;
 			color: var(--accent);
