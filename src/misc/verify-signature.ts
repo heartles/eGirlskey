@@ -165,8 +165,8 @@ export async function authorizeUserFromSignature(signature: httpSignature.IParse
 
 	// Final host check
 	const userHost = authUser!.user.uri ? extractDbHost(authUser!.user.uri) : authUser!.user.host;
-	if (await isHostBlocked(userHost)) {
-		logger.warn(`blocked request based on user host: ${signature.keyId}`);
+	if (await isHostBlocked(toPuny(userHost))) {
+		logger.warn(`blocked request based on user host: ${userHost}`);
 		return null;
 	}
 
