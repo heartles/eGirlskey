@@ -7,6 +7,16 @@
 
 -->
 
+## 12.91.0+egirls.4 (2021/10/26)
+
+### Improvements
+
+- CSS tweak - Bring note content in replies/parents to the foreground when using the `noteLink` option.
+
+### Bugfixes
+
+- Fixed a bug where boosts were not federating in if an instance didn't have itself on its allowlist.
+
 ## 12.91.0+egirls.3 (2021/10/24)
 
 ### Improvements
