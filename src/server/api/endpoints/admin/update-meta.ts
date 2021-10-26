@@ -293,11 +293,11 @@ export const meta = {
 		objectStorageS3ForcePathStyle: {
 			validator: $.optional.bool
 		},
-		
+
 		allowedHosts: {
 			validator: $.optional.nullable.arr($.str),
 		},
-		
+
 		allowlistMode: {
 			validator: $.optional.bool
 		},
@@ -594,7 +594,7 @@ export default define(meta, async (ps, me) => {
 	if (Array.isArray(ps.allowedHosts)) {
 		set.allowedHosts = ps.allowedHosts.filter(Boolean);
 	}
-	
+
 	if (ps.allowlistMode !== undefined) {
 		set.allowlistMode = ps.allowlistMode;
 	}

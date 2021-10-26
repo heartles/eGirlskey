@@ -103,7 +103,10 @@ export async function authorizeUserFromSignature(signature: httpSignature.IParse
 	// HTTP-Signature keyIdを元にDBから取得
 	let authUser = await getAuthUserFromKeyId(signature.keyId, resolver, dbResolver);
 	if (authUser == null && activity != null) {
-		authUser = await getAuthUserFromActorId(getActorId(activity!.actor), resolver, dbResolver);
+		const actorId = getActorId(activity!.actor);
+		if (actorId) {
+			authUser = await getAuthUserFromActorId(actorId, resolver, dbResolver);
+		}
 	}
 
 	// publicKey がなくても終了
