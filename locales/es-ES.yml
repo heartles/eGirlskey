@@ -1438,13 +1438,3 @@ _deck:
     list: "Listas"
     mentions: "Menciones"
     direct: "Mensaje directo"
-
-
-pluskey:
-  skipRepeatRenotes: "Skip recently repeated renotes"
-  localMentions: "Use @mentions for local replies"
-  pluskeySettings: "Pluskey Settings"
-  client: "Client"
-  translation: "Feel like translating this page? Visit https://github.com/foggy-llc/pluskey"
-  noteLink: "Make notes clickable"
-
