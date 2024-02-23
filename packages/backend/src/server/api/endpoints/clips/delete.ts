@@ -11,7 +11,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['clips'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:account',
 

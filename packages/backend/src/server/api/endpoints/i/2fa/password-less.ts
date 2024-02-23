@@ -12,7 +12,7 @@ import { DI } from '@/di-symbols.js';
 import { ApiError } from '../../../error.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 
 	secure: true,
 

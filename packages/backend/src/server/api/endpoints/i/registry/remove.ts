@@ -11,7 +11,7 @@ import { RegistryApiService } from '@/core/RegistryApiService.js';
 import { ApiError } from '../../../error.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'write:account',
 
 	errors: {

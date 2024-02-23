@@ -14,7 +14,7 @@ import { UserEntityService } from '@/core/entities/UserEntityService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireAdmin: true,
 	kind: 'write:admin:account',
 } as const;

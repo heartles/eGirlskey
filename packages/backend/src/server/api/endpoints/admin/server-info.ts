@@ -12,7 +12,7 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 	requireModerator: true,
 	kind: 'read:admin:server-info',
 

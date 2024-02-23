@@ -10,7 +10,7 @@ import { AnnouncementService } from '@/core/AnnouncementService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireModerator: true,
 	kind: 'write:admin:announcements',
 

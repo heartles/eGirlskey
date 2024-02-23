@@ -13,7 +13,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account', 'flash'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'read:flash',
 

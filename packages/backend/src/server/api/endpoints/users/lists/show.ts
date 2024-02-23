@@ -13,7 +13,7 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['lists', 'account'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	kind: 'read:account',
 

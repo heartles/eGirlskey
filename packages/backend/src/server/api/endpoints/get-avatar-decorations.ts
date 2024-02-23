@@ -13,7 +13,7 @@ import { RoleService } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	res: {
 		type: 'array',

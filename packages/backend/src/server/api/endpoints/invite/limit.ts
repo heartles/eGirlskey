@@ -14,7 +14,7 @@ import { IdService } from '@/core/IdService.js';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireRolePolicy: 'canInvite',
 	kind: 'read:invite-codes',
 

@@ -12,7 +12,7 @@ import { QueueService } from '@/core/QueueService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireModerator: true,
 	kind: 'write:admin:federation',
 } as const;

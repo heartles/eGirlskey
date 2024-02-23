@@ -12,7 +12,7 @@ import { sqlLikeEscape } from '@/misc/sql-like-escape.js';
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	res: {
 		type: 'array',

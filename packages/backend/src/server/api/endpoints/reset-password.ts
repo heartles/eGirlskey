@@ -14,7 +14,7 @@ import { IdService } from '@/core/IdService.js';
 export const meta = {
 	tags: ['reset password'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	description: 'Complete the password reset that was previously requested.',
 

@@ -14,7 +14,7 @@ import { MetaService } from '@/core/MetaService.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	res: {
 		type: 'object',

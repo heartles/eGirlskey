@@ -21,7 +21,7 @@ import { FanoutTimelineEndpointService } from '@/core/FanoutTimelineEndpointServ
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'read:account',
 
 	res: {

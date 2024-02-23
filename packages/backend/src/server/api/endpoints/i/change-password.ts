@@ -12,7 +12,7 @@ import { DI } from '@/di-symbols.js';
 import { UserAuthService } from '@/core/UserAuthService.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 
 	secure: true,
 } as const;

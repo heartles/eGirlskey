@@ -21,7 +21,7 @@ export const meta = {
 		max: 100,
 	},
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:following',
 

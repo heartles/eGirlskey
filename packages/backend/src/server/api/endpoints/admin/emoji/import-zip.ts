@@ -9,7 +9,7 @@ import { QueueService } from '@/core/QueueService.js';
 
 export const meta = {
 	secure: true,
-	requireCredential: true,
+	requireCredential: 'always',
 	requireRolePolicy: 'canManageCustomEmojis',
 } as const;
 

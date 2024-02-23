@@ -14,7 +14,7 @@ import { FlashEntityService } from '@/core/entities/FlashEntityService.js';
 export const meta = {
 	tags: ['flash'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	prohibitMoved: true,
 

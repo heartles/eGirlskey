@@ -11,7 +11,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	description: 'Unregister from receiving push notifications.',
 } as const;

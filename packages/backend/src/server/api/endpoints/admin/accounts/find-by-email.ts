@@ -13,7 +13,7 @@ import { ApiError } from '@/server/api/error.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireAdmin: true,
 	kind: 'read:admin:account',
 

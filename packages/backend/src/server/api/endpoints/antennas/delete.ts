@@ -13,7 +13,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['antennas'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:account',
 

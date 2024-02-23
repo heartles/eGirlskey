@@ -14,7 +14,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	prohibitMoved: true,
 

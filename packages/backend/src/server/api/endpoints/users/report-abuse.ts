@@ -19,7 +19,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'write:report-abuse',
 
 	description: 'File a report.',

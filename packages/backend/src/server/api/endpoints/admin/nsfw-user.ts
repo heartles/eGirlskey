@@ -6,7 +6,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireModerator: true,
 	kind: 'write:admin:nsfw-user',
 } as const;

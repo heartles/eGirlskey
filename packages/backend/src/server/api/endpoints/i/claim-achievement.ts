@@ -9,7 +9,7 @@ import { AchievementService, ACHIEVEMENT_TYPES } from '@/core/AchievementService
 import { MetaService } from '@/core/MetaService.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 	prohibitMoved: true,
 	kind: 'write:account',
 } as const;

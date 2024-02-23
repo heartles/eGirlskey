@@ -10,7 +10,7 @@ import { UserEntityService } from '@/core/entities/UserEntityService.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'read:account',
 
 	description: 'Show the different kinds of relations between the authenticated user and the specified user(s).',

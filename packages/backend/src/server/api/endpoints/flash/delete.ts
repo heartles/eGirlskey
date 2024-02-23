@@ -12,7 +12,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['flashs'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:flash',
 

@@ -17,7 +17,7 @@ import { DEFAULT_POLICIES } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	res: {
 		type: 'object',

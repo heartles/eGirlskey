@@ -770,7 +770,7 @@ interface IEndpointMetaBase {
 	 * このエンドポイントにリクエストするのにユーザー情報が必須か否か
 	 * 省略した場合は false として解釈されます。
 	 */
-	readonly requireCredential?: boolean;
+	readonly requireCredential?: 'always' | 'conditional' | 'never';
 
 	/**
 	 * isModeratorなロールを必要とするか
@@ -851,13 +851,13 @@ interface IEndpointMetaBase {
 }
 
 export type IEndpointMeta = (Omit<IEndpointMetaBase, 'requireCrential' | 'requireModerator' | 'requireAdmin'> & {
-	requireCredential?: false,
+	requireCredential?: 'conditional',
 	requireAdmin?: false,
 	requireModerator?: false,
 }) | (Omit<IEndpointMetaBase, 'secure'> & {
 	secure: true,
 }) | (Omit<IEndpointMetaBase, 'requireCredential' | 'kind'> & {
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: (typeof permissions)[number],
 }) | (Omit<IEndpointMetaBase, 'requireModerator' | 'kind'> & {
 	requireModerator: true,

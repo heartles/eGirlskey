@@ -24,7 +24,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'read:account',
 
 	limit: {

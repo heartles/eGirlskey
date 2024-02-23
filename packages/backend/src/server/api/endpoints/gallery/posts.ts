@@ -13,6 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['gallery'],
 
+	requireCredential: 'conditional',
+
 	res: {
 		type: 'array',
 		optional: false, nullable: false,

@@ -15,6 +15,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['admin'],
 
+	requireCredential: 'never',
+
 	res: {
 		type: 'object',
 		optional: false, nullable: false,

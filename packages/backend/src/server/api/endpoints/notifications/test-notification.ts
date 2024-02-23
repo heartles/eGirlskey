@@ -10,7 +10,7 @@ import { NotificationService } from '@/core/NotificationService.js';
 export const meta = {
 	tags: ['notifications'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:notifications',
 

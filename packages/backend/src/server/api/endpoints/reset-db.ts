@@ -13,7 +13,7 @@ import { resetDb } from '@/misc/reset-db.js';
 export const meta = {
 	tags: ['non-productive'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	description: 'Only available when running with <code>NODE_ENV=testing</code>. Reset the database and flush Redis.',
 

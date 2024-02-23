@@ -10,7 +10,7 @@ import { AnnouncementService } from '@/core/AnnouncementService.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:account',
 

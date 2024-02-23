@@ -12,7 +12,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['channels'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	res: {
 		type: 'array',

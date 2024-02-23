@@ -12,6 +12,8 @@ import { schema } from '@/core/chart/charts/entities/notes.js';
 export const meta = {
 	tags: ['charts', 'notes'],
 
+	requireCredential: 'conditional',
+
 	res: getJsonSchema(schema),
 
 	allowGet: true,

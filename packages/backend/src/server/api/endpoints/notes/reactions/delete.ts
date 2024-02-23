@@ -13,7 +13,7 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['reactions', 'notes'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:reactions',
 

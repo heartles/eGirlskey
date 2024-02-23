@@ -16,7 +16,7 @@ import { ApiError } from '@/server/api/error.js';
 export const meta = {
 	tags: ['webhooks'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:account',
 

@@ -13,7 +13,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account', 'notes', 'favorites'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'read:favorites',
 

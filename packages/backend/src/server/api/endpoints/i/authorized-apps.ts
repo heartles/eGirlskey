@@ -11,7 +11,7 @@ import { AppEntityService } from '@/core/entities/AppEntityService.js';
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 
 	secure: true,
 

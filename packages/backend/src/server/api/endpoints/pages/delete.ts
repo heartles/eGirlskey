@@ -12,7 +12,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:pages',
 

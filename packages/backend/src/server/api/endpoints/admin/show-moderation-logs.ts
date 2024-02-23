@@ -13,7 +13,7 @@ import { ModerationLogEntityService } from '@/core/entities/ModerationLogEntityS
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireAdmin: true,
 	kind: 'read:admin:show-moderation-log',
 

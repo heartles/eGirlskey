@@ -14,7 +14,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'read:account',
 

@@ -11,7 +11,7 @@ import { DriveFileEntityService } from '@/core/entities/DriveFileEntityService.j
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 
 	tags: ['drive'],
 

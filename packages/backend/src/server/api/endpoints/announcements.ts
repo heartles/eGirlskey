@@ -14,7 +14,7 @@ import type { AnnouncementReadsRepository, AnnouncementsRepository } from '@/mod
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	res: {
 		type: 'array',

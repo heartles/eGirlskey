@@ -17,7 +17,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireRolePolicy: 'canInvite',
 	kind: 'write:invite-codes',
 

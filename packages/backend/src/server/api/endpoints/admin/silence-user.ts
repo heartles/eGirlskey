@@ -7,7 +7,7 @@ import { RoleService } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireModerator: true,
 	kind: 'write:admin:silence-user',
 } as const;

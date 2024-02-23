@@ -13,7 +13,7 @@ import { FeaturedService } from '@/core/FeaturedService.js';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	res: {
 		type: 'array',

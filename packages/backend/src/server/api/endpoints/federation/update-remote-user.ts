@@ -11,7 +11,7 @@ import { GetterService } from '@/server/api/GetterService.js';
 export const meta = {
 	tags: ['federation'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 } as const;
 
 export const paramDef = {

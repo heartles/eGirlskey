@@ -16,7 +16,7 @@ import { sqlLikeEscape } from '@/misc/sql-like-escape.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	description: 'Search for a user by username and/or host.',
 

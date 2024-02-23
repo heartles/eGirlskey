@@ -13,6 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['users', 'pages'],
 
+	requireCredential: 'conditional',
+
 	description: 'Show all pages this user created.',
 
 	res: {

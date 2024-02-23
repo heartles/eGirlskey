@@ -17,7 +17,7 @@ import { L_CHARS, secureRndstr } from '@/misc/secure-rndstr.js';
 export const meta = {
 	tags: ['reset password'],
 
-	requireCredential: false,
+	requireCredential: 'never',
 
 	description: 'Request a users password to be reset.',
 

@@ -9,7 +9,7 @@ import type { AccessTokensRepository } from '@/models/_.js';
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: true,
+	requireCredential: 'always',
 
 	secure: true,
 } as const;

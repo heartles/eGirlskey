@@ -12,7 +12,7 @@ import { MetaService } from '@/core/MetaService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireAdmin: true,
 	kind: 'write:admin:meta',
 } as const;

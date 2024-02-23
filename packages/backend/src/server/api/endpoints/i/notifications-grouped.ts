@@ -19,7 +19,7 @@ import { MiGroupedNotification, MiNotification } from '@/models/Notification.js'
 export const meta = {
 	tags: ['account', 'notifications'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	limit: {
 		duration: 30000,

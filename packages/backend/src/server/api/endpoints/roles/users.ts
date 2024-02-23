@@ -15,7 +15,7 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['role', 'users'],
 
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	errors: {
 		noSuchRole: {

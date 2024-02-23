@@ -91,6 +91,7 @@ type Source = {
 
 	signToActivityPubGet?: boolean;
 	checkActivityPubGetSignature?: boolean;
+	secureApiMode?: boolean;
 
 	perChannelMaxNoteCacheCount?: number;
 	perUserNotificationsMaxCount?: number;
@@ -151,6 +152,7 @@ export type Config = {
 	customMOTD: string[] | undefined;
 	signToActivityPubGet: boolean | undefined;
 	checkActivityPubGetSignature: boolean | undefined;
+	secureApiMode: boolean | undefined;
 
 	version: string;
 	host: string;
@@ -267,6 +269,7 @@ export function loadConfig(): Config {
 		customMOTD: config.customMOTD,
 		signToActivityPubGet: config.signToActivityPubGet,
 		checkActivityPubGetSignature: config.checkActivityPubGetSignature,
+		secureApiMode: config.secureApiMode,
 		mediaProxy: externalMediaProxy ?? internalMediaProxy,
 		externalMediaProxyEnabled: externalMediaProxy !== null && externalMediaProxy !== internalMediaProxy,
 		videoThumbnailGenerator: config.videoThumbnailGenerator ?

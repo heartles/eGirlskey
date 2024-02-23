@@ -11,7 +11,7 @@ import { UserEntityService } from '@/core/entities/UserEntityService.js';
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: false,
+	requireCredential: 'conditional',
 
 	tags: ['hashtags', 'users'],
 

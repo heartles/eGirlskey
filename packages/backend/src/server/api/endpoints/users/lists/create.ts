@@ -16,7 +16,7 @@ import { RoleService } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['lists'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	prohibitMoved: true,
 

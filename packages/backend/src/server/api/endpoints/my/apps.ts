@@ -12,7 +12,7 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account', 'app'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	kind: 'read:account',
 
 	res: {

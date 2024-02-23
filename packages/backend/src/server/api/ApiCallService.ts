@@ -24,6 +24,7 @@ import { AuthenticateService, AuthenticationError } from './AuthenticateService.
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import type { OnApplicationShutdown } from '@nestjs/common';
 import type { IEndpointMeta, IEndpoint } from './endpoints.js';
+import type { Config } from '@/config.js';
 
 const accessDenied = {
 	message: 'Access denied.',
@@ -38,6 +39,9 @@ export class ApiCallService implements OnApplicationShutdown {
 	private userIpHistoriesClearIntervalId: NodeJS.Timeout;
 
 	constructor(
+		@Inject(DI.config)
+		private config: Config,
+
 		@Inject(DI.userIpsRepository)
 		private userIpsRepository: UserIpsRepository,
 
@@ -268,7 +272,9 @@ export class ApiCallService implements OnApplicationShutdown {
 			}
 		}
 
-		if (ep.meta.requireCredential || ep.meta.requireModerator || ep.meta.requireAdmin) {
+		const requireCredential = (ep.meta.requireCredential === 'always' ||
+			(ep.meta.requireCredential === 'conditional' && this.config.secureApiMode));
+		if (requireCredential || ep.meta.requireModerator || ep.meta.requireAdmin) {
 			if (user == null) {
 				throw new ApiError({
 					message: 'Credential required.',
@@ -331,7 +337,7 @@ export class ApiCallService implements OnApplicationShutdown {
 		}
 
 		if (token && ((ep.meta.kind && !token.permission.some(p => p === ep.meta.kind))
-			|| (!ep.meta.kind && (ep.meta.requireCredential || ep.meta.requireModerator || ep.meta.requireAdmin)))) {
+			|| (!ep.meta.kind && (requireCredential || ep.meta.requireModerator || ep.meta.requireAdmin)))) {
 			throw new ApiError({
 				message: 'Your app does not have the necessary permissions to use this endpoint.',
 				code: 'PERMISSION_DENIED',

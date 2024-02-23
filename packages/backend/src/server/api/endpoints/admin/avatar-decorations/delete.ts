@@ -12,7 +12,7 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 	requireRolePolicy: 'canManageAvatarDecorations',
 	kind: 'write:admin:avatar-decorations',
 	errors: {

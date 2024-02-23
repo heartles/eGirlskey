@@ -15,7 +15,7 @@ import { DB_MAX_IMAGE_COMMENT_LENGTH } from '@/const.js';
 export const meta = {
 	tags: ['drive'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	kind: 'write:drive',
 

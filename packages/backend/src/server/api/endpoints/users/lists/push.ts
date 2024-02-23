@@ -15,7 +15,7 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['lists', 'users'],
 
-	requireCredential: true,
+	requireCredential: 'always',
 
 	prohibitMoved: true,
 

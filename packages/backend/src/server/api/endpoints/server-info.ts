@@ -10,7 +10,7 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import { MetaService } from '@/core/MetaService.js';
 
 export const meta = {
-	requireCredential: false,
+	requireCredential: 'never',
 	allowGet: true,
 	cacheSec: 60 * 1,
 
