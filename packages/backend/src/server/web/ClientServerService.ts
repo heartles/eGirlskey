@@ -432,6 +432,8 @@ export class ClientServerService {
 
 		// Atom
 		fastify.get<{ Params: { user: string; } }>('/@:user.atom', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const feed = await getFeed(request.params.user);
 
 			if (feed) {
@@ -445,6 +447,8 @@ export class ClientServerService {
 
 		// RSS
 		fastify.get<{ Params: { user: string; } }>('/@:user.rss', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const feed = await getFeed(request.params.user);
 
 			if (feed) {
@@ -458,6 +462,8 @@ export class ClientServerService {
 
 		// JSON
 		fastify.get<{ Params: { user: string; } }>('/@:user.json', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const feed = await getFeed(request.params.user);
 
 			if (feed) {
@@ -472,6 +478,8 @@ export class ClientServerService {
 		//#region SSR (for crawlers)
 		// User
 		fastify.get<{ Params: { user: string; sub?: string; } }>('/@:user/:sub?', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const { username, host } = Acct.parse(request.params.user);
 			const user = await this.usersRepository.findOneBy({
 				usernameLower: username.toLowerCase(),
@@ -507,6 +515,8 @@ export class ClientServerService {
 		});
 
 		fastify.get<{ Params: { user: string; } }>('/users/:user', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const user = await this.usersRepository.findOneBy({
 				id: request.params.user,
 				host: IsNull(),
@@ -523,6 +533,8 @@ export class ClientServerService {
 
 		// Note
 		fastify.get<{ Params: { note: string; } }>('/notes/:note', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			vary(reply.raw, 'Accept');
 
 			const note = await this.notesRepository.findOneBy({
@@ -554,6 +566,8 @@ export class ClientServerService {
 
 		// Page
 		fastify.get<{ Params: { user: string; page: string; } }>('/@:user/pages/:page', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const { username, host } = Acct.parse(request.params.user);
 			const user = await this.usersRepository.findOneBy({
 				usernameLower: username.toLowerCase(),
@@ -593,6 +607,8 @@ export class ClientServerService {
 
 		// Flash
 		fastify.get<{ Params: { id: string; } }>('/play/:id', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const flash = await this.flashsRepository.findOneBy({
 				id: request.params.id,
 			});
@@ -619,6 +635,8 @@ export class ClientServerService {
 
 		// Clip
 		fastify.get<{ Params: { clip: string; } }>('/clips/:clip', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const clip = await this.clipsRepository.findOneBy({
 				id: request.params.clip,
 			});
@@ -645,6 +663,8 @@ export class ClientServerService {
 
 		// Gallery post
 		fastify.get<{ Params: { post: string; } }>('/gallery/:post', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const post = await this.galleryPostsRepository.findOneBy({ id: request.params.post });
 
 			if (post) {
@@ -669,6 +689,8 @@ export class ClientServerService {
 
 		// Channel
 		fastify.get<{ Params: { channel: string; } }>('/channels/:channel', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const channel = await this.channelsRepository.findOneBy({
 				id: request.params.channel,
 			});
