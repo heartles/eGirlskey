@@ -49,6 +49,10 @@ export const packedFederationInstanceSchema = {
 			type: 'boolean',
 			optional: false, nullable: false,
 		},
+		isAllowed: {
+			type: 'boolean',
+			optional: false, nullable: true,
+		},
 		softwareName: {
 			type: 'string',
 			optional: false, nullable: true,

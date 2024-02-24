@@ -53,8 +53,12 @@ export class DeliverProcessorService {
 
 		// ブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if (this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.toPuny(host))) {
+		const punyHost = this.utilityService.toPuny(host);
+		if (this.utilityService.isBlockedHost(meta.blockedHosts, punyHost)) {
 			return 'skip (blocked)';
+		}
+		if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, punyHost)) {
+    		return 'skip (not allowed)';
 		}
 
 		// isSuspendedなら中断

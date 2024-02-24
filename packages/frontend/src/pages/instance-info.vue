@@ -36,6 +36,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<div class="_gaps_s">
 					<MkSwitch v-model="suspended" :disabled="!instance" @update:modelValue="toggleSuspend">{{ i18n.ts.stopActivityDelivery }}</MkSwitch>
 					<MkSwitch v-model="isBlocked" :disabled="!meta || !instance" @update:modelValue="toggleBlock">{{ i18n.ts.blockThisInstance }}</MkSwitch>
+					<MkSwitch v-model="isAllowed" :disabled="!meta || !instance" @update:modelValue="toggleAllow">{{ i18n.ts.allowThisInstance }}</MkSwitch>
 					<MkSwitch v-model="isSilenced" :disabled="!meta || !instance" @update:modelValue="toggleSilenced">{{ i18n.ts.silenceThisInstance }}</MkSwitch>
 					<MkSwitch v-model="isNSFW" :disabled="!instance" @update:modelValue="toggleNSFW">Mark as NSFW</MkSwitch>
 					<MkButton @click="refreshMetadata"><i class="ph-arrows-counter-clockwise ph-bold ph-lg"></i> Refresh metadata</MkButton>
@@ -149,6 +150,7 @@ const meta = ref<Misskey.entities.AdminMetaResponse | null>(null);
 const instance = ref<Misskey.entities.FederationInstance | null>(null);
 const suspended = ref(false);
 const isBlocked = ref(false);
+const isAllowed = ref(false);
 const isSilenced = ref(false);
 const isNSFW = ref(false);
 const faviconUrl = ref<string | null>(null);
@@ -173,6 +175,7 @@ async function fetch(): Promise<void> {
 	});
 	suspended.value = instance.value?.isSuspended ?? false;
 	isBlocked.value = instance.value?.isBlocked ?? false;
+	isAllowed.value = instance.value?.isAllowed ?? false;
 	isSilenced.value = instance.value?.isSilenced ?? false;
 	isNSFW.value = instance.value?.isNSFW ?? false;
 	faviconUrl.value = getProxiedImageUrlNullable(instance.value?.faviconUrl, 'preview') ?? getProxiedImageUrlNullable(instance.value?.iconUrl, 'preview');
@@ -184,6 +187,15 @@ async function toggleBlock(): Promise<void> {
 	const { host } = instance.value;
 	await os.api('admin/update-meta', {
 		blockedHosts: isBlocked.value ? meta.value.blockedHosts.concat([host]) : meta.value.blockedHosts.filter(x => x !== host),
+	});
+}
+
+async function toggleAllow(): Promise<void> {
+	if (!meta.value) throw new Error('No meta?');
+	if (!instance.value) throw new Error('No instance?');
+	const { host } = instance.value;
+	await os.api('admin/update-meta', {
+		allowedHosts: isAllowed.value ? meta.value.allowedHosts.concat([host]) : meta.value.allowedHosts.filter(x => x !== host),
 	});
 }
 

@@ -74,6 +74,16 @@ export class MiMeta {
 	@Column('varchar', {
 		length: 1024, array: true, default: '{}',
 	})
+	public allowedHosts: string[];
+
+	@Column('boolean', {
+		default: false,
+	})
+	public allowlistMode: boolean;
+
+	@Column('varchar', {
+		length: 1024, array: true, default: '{}',
+	})
 	public sensitiveWords: string[];
 
 	@Column('varchar', {

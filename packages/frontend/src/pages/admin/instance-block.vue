@@ -16,6 +16,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<span>{{ i18n.ts.silencedInstances }}</span>
 				<template #caption>{{ i18n.ts.silencedInstancesDescription }}</template>
 			</MkTextarea>
+			<template v-else-if="tab === 'allow'">
+				<MkSwitch v-model="allowlistMode">{{ i18n.ts.allowlistModeDescription }}</MkSwitch>
+				<br />
+				<MkTextarea v-model="allowedHosts" class="_formBlock">
+					<span>{{ i18n.ts.allowedInstances }}</span>
+					<template #caption>{{ i18n.ts.allowedInstancesDescription }}</template>
+				</MkTextarea>
+			</template>
 			<MkButton primary @click="save"><i class="ph-floppy-disk ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 		</FormSuspense>
 	</MkSpacer>
@@ -27,6 +35,7 @@ import { ref, computed } from 'vue';
 import XHeader from './_header_.vue';
 import MkButton from '@/components/MkButton.vue';
 import MkTextarea from '@/components/MkTextarea.vue';
+import MkSwitch from '@/components/MkSwitch.vue';
 import FormSuspense from '@/components/form/suspense.vue';
 import * as os from '@/os.js';
 import { fetchInstance } from '@/instance.js';
@@ -35,18 +44,24 @@ import { definePageMetadata } from '@/scripts/page-metadata.js';
 
 const blockedHosts = ref<string>('');
 const silencedHosts = ref<string>('');
-const tab = ref('block');
+const allowedHosts = ref<string>('');
+const allowlistMode = ref<boolean>(false);
+const tab = ref('allow');
 
 async function init() {
 	const meta = await os.api('admin/meta');
 	blockedHosts.value = meta.blockedHosts.join('\n');
 	silencedHosts.value = meta.silencedHosts.join('\n');
+	allowedHosts.value = meta.allowedHosts.join('\n');
+	allowlistMode.value = meta.allowlistMode;
 }
 
 function save() {
 	os.apiWithDialog('admin/update-meta', {
 		blockedHosts: blockedHosts.value.split('\n') || [],
 		silencedHosts: silencedHosts.value.split('\n') || [],
+		allowedHosts: allowedHosts.value.split('\n') || [],
+		allowlistMode: allowlistMode.value || false,
 
 	}).then(() => {
 		fetchInstance();
@@ -63,6 +78,10 @@ const headerTabs = computed(() => [{
 	key: 'silence',
 	title: i18n.ts.silence,
 	icon: 'ph-eye-closed ph-bold ph-lg',
+}, {
+	key: 'allow',
+	title: i18n.ts.allow,
+	icon: 'ph-prohibit ph-bold ph-lg',
 }]);
 
 definePageMetadata({

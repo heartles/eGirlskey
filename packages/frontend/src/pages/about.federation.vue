@@ -21,6 +21,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<option value="suspended">{{ i18n.ts.suspended }}</option>
 				<option value="silenced">{{ i18n.ts.silence }}</option>
 				<option value="blocked">{{ i18n.ts.blocked }}</option>
+				<option value="allowed">{{ i18n.ts.allowed }}</option>
 				<option value="notResponding">{{ i18n.ts.notResponding }}</option>
 			</MkSelect>
 			<MkSelect v-model="sort">
@@ -77,6 +78,7 @@ const pagination = {
 			state.value === 'publishing' ? { publishing: true } :
 			state.value === 'suspended' ? { suspended: true } :
 			state.value === 'blocked' ? { blocked: true } :
+			state.value === 'allowed' ? { allowed: true } :
 			state.value === 'silenced' ? { silenced: true } :
 			state.value === 'notResponding' ? { notResponding: true } :
 			state.value === 'nsfw' ? { nsfw: true } :
