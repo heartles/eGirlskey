@@ -34,6 +34,7 @@ export const paramDef = {
 	properties: {
 		host: { type: 'string', nullable: true, description: 'Omit or use `null` to not filter by host.' },
 		blocked: { type: 'boolean', nullable: true },
+		allowed: { type: 'boolean', nullable: true },
 		notResponding: { type: 'boolean', nullable: true },
 		suspended: { type: 'boolean', nullable: true },
 		silenced: { type: 'boolean', nullable: true },
@@ -104,6 +105,15 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					query.andWhere(meta.blockedHosts.length === 0 ? '1=0' : 'instance.host IN (:...blocks)', { blocks: meta.blockedHosts });
 				} else {
 					query.andWhere(meta.blockedHosts.length === 0 ? '1=1' : 'instance.host NOT IN (:...blocks)', { blocks: meta.blockedHosts });
+				}
+			}
+
+			if (typeof ps.allowed === 'boolean') {
+				const meta = await this.metaService.fetch(true);
+				if (ps.allowed) {
+					query.andWhere(meta.allowedHosts.length === 0 ? '1=0' : 'instance.host IN (:...allows)', { allows: meta.allowedHosts });
+				} else {
+					query.andWhere(meta.allowedHosts.length === 0 ? '1=1' : 'instance.host NOT IN (:...allows)', { allows: meta.allowedHosts });
 				}
 			}
 

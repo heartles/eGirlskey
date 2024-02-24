@@ -36,6 +36,12 @@ export const paramDef = {
 				type: 'string',
 			},
 		},
+		allowedHosts: {
+			type: 'array', nullable: true, items: {
+				type: 'string',
+			},
+		},
+		allowlistMode: { type: 'boolean', nullable: true },
 		sensitiveWords: {
 			type: 'array', nullable: true, items: {
 				type: 'string',
@@ -170,6 +176,14 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (Array.isArray(ps.blockedHosts)) {
 				set.blockedHosts = ps.blockedHosts.filter(Boolean).map(x => x.toLowerCase());
+			}
+
+			if (Array.isArray(ps.allowedHosts)) {
+				set.allowedHosts = ps.allowedHosts.filter(Boolean).map(x => x.toLowerCase());
+			}
+
+			if (ps.allowlistMode !== undefined) {
+				set.allowlistMode = ps.allowlistMode;
 			}
 
 			if (Array.isArray(ps.sensitiveWords)) {

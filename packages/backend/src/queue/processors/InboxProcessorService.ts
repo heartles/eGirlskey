@@ -67,6 +67,10 @@ export class InboxProcessorService {
 			return `Blocked request: ${host}`;
 		}
 
+		if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, host)) {
+			return `Blocked request: ${host}`;
+		}
+
 		const keyIdLower = signature.keyId.toLowerCase();
 		if (keyIdLower.startsWith('acct:')) {
 			return `Old keyId is no longer supported. ${keyIdLower}`;
@@ -157,6 +161,9 @@ export class InboxProcessorService {
 				// ブロックしてたら中断
 				const ldHost = this.utilityService.extractDbHost(authUser.user.uri);
 				if (this.utilityService.isBlockedHost(meta.blockedHosts, ldHost)) {
+					throw new Bull.UnrecoverableError(`Blocked request: ${ldHost}`);
+				}
+				if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, ldHost)) {
 					throw new Bull.UnrecoverableError(`Blocked request: ${ldHost}`);
 				}
 			} else {

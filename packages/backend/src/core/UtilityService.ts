@@ -43,6 +43,12 @@ export class UtilityService {
 	}
 
 	@bindThis
+	public isAllowedHost(allowedHosts: string[], host: string | null): boolean {
+		if (host == null) return false;
+		return allowedHosts.some(x => `.${host.toLowerCase()}`.endsWith(`.${x}`));
+	}
+
+	@bindThis
 	public isSensitiveWordIncluded(text: string, sensitiveWords: string[]): boolean {
 		if (sensitiveWords.length === 0) return false;
 		if (text === '') return false;

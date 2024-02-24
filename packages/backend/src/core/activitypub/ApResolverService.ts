@@ -99,6 +99,10 @@ export class Resolver {
 			throw new Error('Instance is blocked');
 		}
 
+		if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, host)) {
+			throw new Error('Instance is blocked');
+		}
+
 		if (this.config.signToActivityPubGet && !this.user) {
 			this.user = await this.instanceActorService.getInstanceActor();
 		}

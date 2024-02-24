@@ -181,6 +181,11 @@ export class ActivityPubServerService {
 			this.authlogger.warn(`${request.id} ${request.url} instance ${keyHost} is blocked: refuse`);
 			reply.code(401);
 			return true;
+		} else if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, keyHost)) {
+			/* allowlist mode enabled and instance not on allowlist: refuse */
+			this.authLogger.warn(`${request.id} ${request.url} instance ${keyHost} is not on allowlist: refuse`);
+			reply.code(401);
+			return true;
 		}
 
 		// do we know the signer already?

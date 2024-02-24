@@ -269,7 +269,9 @@ export class ApInboxService {
 
 		// アナウンス先をブロックしてたら中断
 		const meta = await this.metaService.fetch();
-		if (this.utilityService.isBlockedHost(meta.blockedHosts, this.utilityService.extractDbHost(uri))) return;
+		const dbHost = this.utilityService.extractDbHost(uri);
+		if (this.utilityService.isBlockedHost(meta.blockedHosts, dbHost)) return;
+		if (meta.allowlistMode && !this.utilityService.isAllowedHost(meta.allowedHosts, dbHost)) return;
 
 		const unlock = await this.appLockService.getApLock(uri);
 
