@@ -122,7 +122,7 @@ export class ReactionService {
 		let reaction = _reaction ?? FALLBACK;
 
 		if (note.reactionAcceptance === 'likeOnly' || ((note.reactionAcceptance === 'likeOnlyForRemote' || note.reactionAcceptance === 'nonSensitiveOnlyForLocalLikeOnlyForRemote') && (user.host != null))) {
-			reaction = '❤️';
+			reaction = '⭐️';
 		} else if (_reaction) {
 			const custom = reaction.match(isCustomEmojiRegexp);
 			if (custom) {
