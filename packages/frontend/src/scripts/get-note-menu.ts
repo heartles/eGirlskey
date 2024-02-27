@@ -341,7 +341,7 @@ export function getNoteMenu(props: {
 				text: i18n.ts.muteThread,
 				action: () => toggleThreadMute(true),
 			}),
-			appearNote.userId === $i.id ? ($i.pinnedNoteIds ?? []).includes(appearNote.id) ? {
+			($i.pinnedNoteIds ?? []).includes(appearNote.id) ? {
 				icon: 'ph-push-pin ph-bold ph-lgned-off',
 				text: i18n.ts.unpin,
 				action: () => togglePin(false),
@@ -349,7 +349,7 @@ export function getNoteMenu(props: {
 				icon: 'ph-push-pin ph-bold ph-lg',
 				text: i18n.ts.pin,
 				action: () => togglePin(true),
-			} : undefined,
+			},
 			{
 				type: 'parent' as const,
 				icon: 'ph-user ph-bold ph-lg',

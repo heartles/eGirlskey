@@ -53,7 +53,6 @@ export class NotePiningService {
 	// Fetch pinee
 		const note = await this.notesRepository.findOneBy({
 			id: noteId,
-			userId: user.id,
 		});
 
 		if (note == null) {
@@ -92,7 +91,6 @@ export class NotePiningService {
 	// Fetch unpinee
 		const note = await this.notesRepository.findOneBy({
 			id: noteId,
-			userId: user.id,
 		});
 
 		if (note == null) {
