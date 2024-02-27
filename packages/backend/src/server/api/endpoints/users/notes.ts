@@ -124,8 +124,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				redisTimelines,
 				useDbFallback: true,
 				ignoreAuthorFromMute: true,
-				excludeReplies: ps.withChannelNotes && !ps.withReplies, // userTimelineWithChannel may include replies
-				excludeNoFiles: ps.withChannelNotes && ps.withFiles, // userTimelineWithChannel may include notes without files
+				excludeReplies: !ps.withReplies,
+				excludeNoFiles: ps.withFiles,
 				excludePureRenotes: !ps.withRenotes,
 				noteFilter: note => {
 					if (note.channel?.isSensitive && !isSelf) return false;
