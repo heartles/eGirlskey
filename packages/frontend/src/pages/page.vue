@@ -29,8 +29,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 					</div>
 					<div class="actions">
 						<div class="like">
-							<MkButton v-if="page.isLiked" v-tooltip="i18n.ts._pages.unlike" class="button" asLike primary @click="unlike()"><i class="ph-heart-break ph-bold ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
-							<MkButton v-else v-tooltip="i18n.ts._pages.like" class="button" asLike @click="like()"><i class="ph-heart ph-bold ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
+							<MkButton v-if="page.isLiked" v-tooltip="i18n.ts._pages.unlike" class="button" asLike primary @click="unlike()"><i class="ph-star-break ph-bold ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
+							<MkButton v-else v-tooltip="i18n.ts._pages.like" class="button" asLike @click="like()"><i class="ph-star ph-bold ph-lg"></i><span v-if="page.likedCount > 0" class="count">{{ page.likedCount }}</span></MkButton>
 						</div>
 						<div class="other">
 							<button v-tooltip="i18n.ts.shareWithNote" v-click-anime class="_button" @click="shareWithNote"><i class="ph-rocket-launch ph-bold ph-lg ti-fw"></i></button>

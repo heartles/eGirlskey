@@ -67,7 +67,7 @@
 					<i class="ph-quotes ph-bold ph-lg"></i>
 				</button>
 				<button class="_button" :class="$style.noteFooterButton">
-					<i class="ph-heart ph-bold ph-lg"></i>
+					<i class="ph-star ph-bold ph-lg"></i>
 				</button>
 			</footer>
 		</article>

@@ -15,8 +15,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<MkAsUi v-if="root" :component="root" :components="components"/>
 						</div>
 						<div class="actions _panel">
-							<MkButton v-if="flash.isLiked" v-tooltip="i18n.ts.unlike" asLike class="button" rounded primary @click="unlike()"><i class="ph-heart ph-bold ph-lg"></i><span v-if="flash.likedCount > 0" style="margin-left: 6px;">{{ flash.likedCount }}</span></MkButton>
-							<MkButton v-else v-tooltip="i18n.ts.like" asLike class="button" rounded @click="like()"><i class="ph-heart ph-bold ph-lg"></i><span v-if="flash.likedCount > 0" style="margin-left: 6px;">{{ flash.likedCount }}</span></MkButton>
+							<MkButton v-if="flash.isLiked" v-tooltip="i18n.ts.unlike" asLike class="button" rounded primary @click="unlike()"><i class="ph-star ph-bold ph-lg"></i><span v-if="flash.likedCount > 0" style="margin-left: 6px;">{{ flash.likedCount }}</span></MkButton>
+							<MkButton v-else v-tooltip="i18n.ts.like" asLike class="button" rounded @click="like()"><i class="ph-star ph-bold ph-lg"></i><span v-if="flash.likedCount > 0" style="margin-left: 6px;">{{ flash.likedCount }}</span></MkButton>
 							<MkButton v-tooltip="i18n.ts.shareWithNote" class="button" rounded @click="shareWithNote"><i class="ph-repeat ph-bold ph-lg ti-fw"></i></MkButton>
 							<MkButton v-tooltip="i18n.ts.copyLink" class="button" rounded @click="copyLink"><i class="ph-share-network ph-bold ph-lg ti-fw"></i></MkButton>
 							<MkButton v-if="isSupportShare()" v-tooltip="i18n.ts.share" class="button" rounded @click="share"><i class="ph-share-network ph-bold ph-lg ti-fw"></i></MkButton>
@@ -28,7 +28,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<div class="summary">{{ flash.summary }}</div>
 							<MkButton class="start" gradate rounded large @click="start">Play</MkButton>
 							<div class="info">
-								<span v-tooltip="i18n.ts.numberOfLikes"><i class="ph-heart ph-bold ph-lg"></i> {{ flash.likedCount }}</span>
+								<span v-tooltip="i18n.ts.numberOfLikes"><i class="ph-star ph-bold ph-lg"></i> {{ flash.likedCount }}</span>
 							</div>
 						</div>
 					</div>

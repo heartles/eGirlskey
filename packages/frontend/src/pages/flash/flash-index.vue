@@ -84,7 +84,7 @@ const headerTabs = computed(() => [{
 }, {
 	key: 'liked',
 	title: i18n.ts._play.liked,
-	icon: 'ph-heart ph-bold ph-lg',
+	icon: 'ph-star ph-bold ph-lg',
 }]);
 
 definePageMetadata(computed(() => ({

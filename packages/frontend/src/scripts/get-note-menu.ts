@@ -318,11 +318,11 @@ export function getNoteMenu(props: {
 			} : undefined,
 			{ type: 'divider' },
 			statePromise.then(state => state.isFavorited ? {
-				icon: 'ph-star-half ph-bold ph-lg',
+				icon: 'ph-bookmarks ph-bold ph-lg',
 				text: i18n.ts.unfavorite,
 				action: () => toggleFavorite(false),
 			} : {
-				icon: 'ph-star ph-bold ph-lg',
+				icon: 'ph-bookmark-simple ph-bold ph-lg',
 				text: i18n.ts.favorite,
 				action: () => toggleFavorite(true),
 			}),
