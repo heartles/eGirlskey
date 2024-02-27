@@ -86,8 +86,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			const serverSettings = await this.metaService.fetch();
 
-			if (ps.withReplies && ps.withFiles) throw new ApiError(meta.errors.bothWithRepliesAndWithFiles);
-
 			// early return if me is blocked by requesting user
 			if (me != null) {
 				const userIdsWhoBlockingMe = await this.cacheService.userBlockedCache.fetch(me.id);
