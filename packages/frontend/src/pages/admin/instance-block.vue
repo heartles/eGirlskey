@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: syuilo and other misskey contributors
+SPDX-FileCopyrightText: syuilo and misskey-project
 SPDX-License-Identifier: AGPL-3.0-only
 -->
 
@@ -38,6 +38,7 @@ import MkTextarea from '@/components/MkTextarea.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
 import FormSuspense from '@/components/form/suspense.vue';
 import * as os from '@/os.js';
+import { misskeyApi } from '@/scripts/misskey-api.js';
 import { fetchInstance } from '@/instance.js';
 import { i18n } from '@/i18n.js';
 import { definePageMetadata } from '@/scripts/page-metadata.js';
@@ -49,7 +50,7 @@ const allowlistMode = ref<boolean>(false);
 const tab = ref('allow');
 
 async function init() {
-	const meta = await os.api('admin/meta');
+	const meta = await misskeyApi('admin/meta');
 	blockedHosts.value = meta.blockedHosts.join('\n');
 	silencedHosts.value = meta.silencedHosts.join('\n');
 	allowedHosts.value = meta.allowedHosts.join('\n');
@@ -64,7 +65,7 @@ function save() {
 		allowlistMode: allowlistMode.value || false,
 
 	}).then(() => {
-		fetchInstance();
+		fetchInstance(true);
 	});
 }
 
@@ -84,8 +85,8 @@ const headerTabs = computed(() => [{
 	icon: 'ph-prohibit ph-bold ph-lg',
 }]);
 
-definePageMetadata({
+definePageMetadata(() => ({
 	title: i18n.ts.instanceBlocking,
 	icon: 'ph-prohibit ph-bold ph-lg',
-});
+}));
 </script>
