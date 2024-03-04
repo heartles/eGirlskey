@@ -757,6 +757,8 @@ export class ClientServerService {
 
 		// Reversi game
 		fastify.get<{ Params: { game: string; } }>('/reversi/g/:game', async (request, reply) => {
+    		if (this.config.secureApiMode) return await renderBase(reply);
+
 			const game = await this.reversiGamesRepository.findOneBy({
 				id: request.params.game,
 			});
