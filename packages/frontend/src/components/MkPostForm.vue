@@ -65,6 +65,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		</div>
 	</div>
 	<MkInfo v-if="hasNotSpecifiedMentions" warn :class="$style.hasNotSpecifiedMentions">{{ i18n.ts.notSpecifiedMentionWarning }} - <button class="_textButton" @click="addMissingMention()">{{ i18n.ts.add }}</button></MkInfo>
+	<MkInfo v-if="useCw && hasNonsensitiveFiles" warn :class="$style.hasCwAndNonsensitiveFiles ">{{ i18n.ts.cwAndNonsensitiveFilesWarning }} - <button class="_textButton" @click="setAllFilesSensitive()">{{ i18n.ts.setAllFilesSensitive }}</button></MkInfo>
 	<input v-show="useCw" ref="cwInputEl" v-model="cw" :class="$style.cw" :placeholder="i18n.ts.annotation" @keydown="onKeydown">
 	<div :class="[$style.textOuter, { [$style.withCw]: useCw }]">
 		<div v-if="channel" :class="$style.colorBar" :style="{ background: channel.color }"></div>
@@ -198,6 +199,8 @@ const autocomplete = ref(null);
 const draghover = ref(false);
 const quoteId = ref<string | null>(null);
 const hasNotSpecifiedMentions = ref(false);
+const hasNonsensitiveFiles = ref(false);
+watch(files, () => updateNonsensitiveFiles());
 const recentHashtags = ref(JSON.parse(miLocalStorage.getItem('hashtags') ?? '[]'));
 const imeText = ref('');
 const showingOptions = ref(false);
@@ -354,6 +357,8 @@ if (defaultStore.state.keepCw && props.reply && props.reply.cw) {
 	cw.value = props.reply.cw;
 }
 
+hasNonsensitiveFiles.value = files.value.length !== 0 && files.value.some((file) => !file.isSensitive);
+
 function watchForDraft() {
 	watch(text, () => saveDraft());
 	watch(useCw, () => saveDraft());
@@ -418,6 +423,10 @@ function focus() {
 	}
 }
 
+function updateNonsensitiveFiles() {
+	hasNonsensitiveFiles.value = files.value.length !== 0 && files.value.some((file) => !file.isSensitive);
+}
+
 function chooseFileFrom(ev) {
 	if (props.mock) return;
 
@@ -426,10 +435,14 @@ function chooseFileFrom(ev) {
 			files.value.push(file);
 		}
 	});
+
+	updateNonsensitiveFiles();
 }
 
 function detachFile(id) {
 	files.value = files.value.filter(x => x.id !== id);
+
+	updateNonsensitiveFiles();
 }
 
 function updateFileSensitive(file, sensitive) {
@@ -437,14 +450,20 @@ function updateFileSensitive(file, sensitive) {
 		emit('fileChangeSensitive', file.id, sensitive);
 	}
 	files.value[files.value.findIndex(x => x.id === file.id)].isSensitive = sensitive;
+
+	updateNonsensitiveFiles();
 }
 
 function updateFileName(file, name) {
 	files.value[files.value.findIndex(x => x.id === file.id)].name = name;
+
+	updateNonsensitiveFiles();
 }
 
 function replaceFile(file: Misskey.entities.DriveFile, newFile: Misskey.entities.DriveFile): void {
 	files.value[files.value.findIndex(x => x.id === file.id)] = newFile;
+
+	updateNonsensitiveFiles();
 }
 
 function upload(file: File, name?: string): void {
@@ -452,7 +471,23 @@ function upload(file: File, name?: string): void {
 
 	uploadFile(file, defaultStore.state.uploadFolder, name).then(res => {
 		files.value.push(res);
+		updateNonsensitiveFiles();
 	});
+}
+
+function setAllFilesSensitive() {
+	for (let file of files.value.values()) {
+		console.log(file, file.isSensitive);
+		if (!file.isSensitive) {
+			misskeyApi('drive/files/update', {
+				fileId: file.id,
+				isSensitive: true,
+			}).then((file) => {
+				console.log(file.id);
+				updateFileSensitive(file, file.isSensitive);
+			});
+		}
+	}
 }
 
 function setVisibility() {
@@ -1198,7 +1233,7 @@ defineExpose({
 	background: var(--X4);
 }
 
-.hasNotSpecifiedMentions {
+.hasNotSpecifiedMentions, .hasCwAndNonsensitiveFiles {
 	margin: 0 20px 16px 20px;
 }
 
