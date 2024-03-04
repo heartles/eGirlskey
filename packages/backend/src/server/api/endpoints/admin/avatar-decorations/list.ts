@@ -15,7 +15,8 @@ import { AvatarDecorationService } from '@/core/AvatarDecorationService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireRolePolicy: 'canManageAvatarDecorations',
 	kind: 'read:admin:avatar-decorations',
 

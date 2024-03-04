@@ -19,7 +19,8 @@ import { MiNotification } from '@/models/Notification.js';
 export const meta = {
 	tags: ['account', 'notifications'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	limit: {
 		duration: 30000,

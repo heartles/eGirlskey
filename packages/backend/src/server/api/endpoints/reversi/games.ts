@@ -13,6 +13,7 @@ import { QueryService } from '@/core/QueryService.js';
 
 export const meta = {
 	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'array',

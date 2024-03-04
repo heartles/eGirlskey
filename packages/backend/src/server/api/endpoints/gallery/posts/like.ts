@@ -14,7 +14,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	prohibitMoved: true,
 

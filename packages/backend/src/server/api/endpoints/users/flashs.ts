@@ -13,7 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['users', 'flashs'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	description: 'Show all flashs this user created.',
 

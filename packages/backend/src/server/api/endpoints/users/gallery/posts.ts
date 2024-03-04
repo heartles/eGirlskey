@@ -13,7 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['users', 'gallery'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	description: 'Show all gallery posts by the given user.',
 

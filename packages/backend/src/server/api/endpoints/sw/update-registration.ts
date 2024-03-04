@@ -13,7 +13,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	secure: true,
 
 	description: 'Update push notification registration.',

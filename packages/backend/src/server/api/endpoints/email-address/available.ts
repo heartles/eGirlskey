@@ -10,7 +10,8 @@ import { EmailService } from '@/core/EmailService.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

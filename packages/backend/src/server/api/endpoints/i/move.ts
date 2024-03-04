@@ -24,7 +24,8 @@ export const meta = {
 	tags: ['users'],
 
 	secure: true,
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	prohibitMoved: true,
 	limit: {
 		duration: ms('1day'),

@@ -15,7 +15,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['app'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

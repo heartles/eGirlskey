@@ -7,7 +7,8 @@ export const meta = {
 	tags: ['meta'],
 	description: 'Get Sharkey GH Sponsors',
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 	requireCredentialPrivateMode: false,
 } as const;
 

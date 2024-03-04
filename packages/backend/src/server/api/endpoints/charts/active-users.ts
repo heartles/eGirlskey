@@ -12,7 +12,8 @@ import { schema } from '@/core/chart/charts/entities/active-users.js';
 export const meta = {
 	tags: ['charts', 'users'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: getJsonSchema(schema),
 

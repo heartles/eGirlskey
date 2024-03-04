@@ -11,7 +11,8 @@ import { ApiError } from '@/server/api/error.js';
 import { DI } from '@/di-symbols.js';
 
 export const meta = {
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	kind: 'write:account',
 	errors: {
 		noSuchList: {

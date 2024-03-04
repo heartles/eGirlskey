@@ -14,7 +14,8 @@ import { MetaService } from '@/core/MetaService.js';
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'array',

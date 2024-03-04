@@ -12,7 +12,8 @@ import { RoleService } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['drive', 'account'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'read:drive',
 

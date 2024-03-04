@@ -12,7 +12,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['flash'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'array',

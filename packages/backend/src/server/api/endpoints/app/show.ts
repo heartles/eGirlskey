@@ -13,7 +13,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['app'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	errors: {
 		noSuchApp: {

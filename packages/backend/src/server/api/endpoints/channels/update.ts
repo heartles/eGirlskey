@@ -14,7 +14,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['channels'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:channels',
 

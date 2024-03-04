@@ -13,7 +13,8 @@ import { ClipService } from '@/core/ClipService.js';
 export const meta = {
 	tags: ['clips'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	prohibitMoved: true,
 

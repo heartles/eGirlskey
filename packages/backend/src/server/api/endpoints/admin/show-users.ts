@@ -14,7 +14,8 @@ import { RoleService } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:show-users',
 

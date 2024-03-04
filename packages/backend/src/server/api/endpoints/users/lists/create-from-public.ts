@@ -16,7 +16,8 @@ import { RoleService } from '@/core/RoleService.js';
 import { UserListService } from '@/core/UserListService.js';
 
 export const meta = {
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	prohibitMoved: true,
 	kind: 'write:account',
 	res: {

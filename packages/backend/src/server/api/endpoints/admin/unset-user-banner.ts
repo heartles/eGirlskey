@@ -12,7 +12,8 @@ import { ModerationLogService } from '@/core/ModerationLogService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'write:admin:unset-user-banner',
 } as const;

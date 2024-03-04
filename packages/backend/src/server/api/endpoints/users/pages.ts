@@ -13,7 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['users', 'pages'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	description: 'Show all pages this user created.',
 

@@ -14,7 +14,8 @@ import { PushNotificationService } from '@/core/PushNotificationService.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	secure: true,
 
 	description: 'Register to receive push notifications.',

@@ -19,7 +19,8 @@ import { UserAuthService } from '@/core/UserAuthService.js';
 import { ApiError } from '../../error.js';
 
 export const meta = {
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	secure: true,
 

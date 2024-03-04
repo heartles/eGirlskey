@@ -13,7 +13,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account', 'gallery'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'read:gallery-likes',
 

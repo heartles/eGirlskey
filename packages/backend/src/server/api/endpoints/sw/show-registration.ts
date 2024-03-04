@@ -11,7 +11,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	secure: true,
 
 	description: 'Check push notification registration exists.',

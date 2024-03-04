@@ -12,7 +12,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['following', 'account'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:following',
 

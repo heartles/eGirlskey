@@ -10,7 +10,8 @@ import { MetaEntityService } from '@/core/entities/MetaEntityService.js';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

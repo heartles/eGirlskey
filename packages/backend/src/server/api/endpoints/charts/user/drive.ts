@@ -12,7 +12,8 @@ import { schema } from '@/core/chart/charts/entities/per-user-drive.js';
 export const meta = {
 	tags: ['charts', 'drive', 'users'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: getJsonSchema(schema),
 

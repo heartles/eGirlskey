@@ -16,7 +16,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	description: 'Get a list of other users that the specified user frequently replies to.',
 

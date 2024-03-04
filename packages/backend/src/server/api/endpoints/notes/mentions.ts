@@ -15,7 +15,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['notes'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	kind: 'read:account',
 
 	res: {

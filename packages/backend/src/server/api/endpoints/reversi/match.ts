@@ -12,6 +12,7 @@ import { GetterService } from '../../GetterService.js';
 
 export const meta = {
 	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:account',
 

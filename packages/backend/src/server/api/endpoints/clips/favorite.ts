@@ -13,7 +13,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['clip'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	prohibitMoved: true,
 

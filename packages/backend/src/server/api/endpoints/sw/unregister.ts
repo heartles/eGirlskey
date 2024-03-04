@@ -12,7 +12,8 @@ import { PushNotificationService } from '@/core/PushNotificationService.js';
 export const meta = {
 	tags: ['account'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	description: 'Unregister from receiving push notifications.',
 } as const;

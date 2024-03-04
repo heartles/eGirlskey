@@ -15,7 +15,8 @@ import { isNotNull } from '@/misc/is-not-null.js';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	prohibitMoved: true,
 

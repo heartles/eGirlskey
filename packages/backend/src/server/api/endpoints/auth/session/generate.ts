@@ -15,7 +15,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['auth'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

@@ -21,7 +21,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['notes', 'lists'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	kind: 'read:account',
 
 	res: {

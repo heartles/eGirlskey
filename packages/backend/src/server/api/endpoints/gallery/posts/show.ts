@@ -13,7 +13,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['gallery'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	errors: {
 		noSuchPost: {

@@ -12,7 +12,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:pages',
 

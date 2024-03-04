@@ -13,7 +13,8 @@ import { AbuseUserReportEntityService } from '@/core/entities/AbuseUserReportEnt
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:abuse-user-reports',
 

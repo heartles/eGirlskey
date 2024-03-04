@@ -12,7 +12,8 @@ import { HashtagService } from '@/core/HashtagService.js';
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 	allowGet: true,
 	cacheSec: 60 * 1,
 

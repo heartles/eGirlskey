@@ -12,7 +12,8 @@ import { RoleEntityService } from '@/core/entities/RoleEntityService.js';
 export const meta = {
 	tags: ['role'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	kind: 'read:account',
 
 	res: {

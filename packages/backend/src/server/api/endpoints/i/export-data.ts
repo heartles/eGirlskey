@@ -10,7 +10,8 @@ import { QueueService } from '@/core/QueueService.js';
 
 export const meta = {
 	secure: true,
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	limit: {
 		duration: ms('3days'),
 		max: 1,

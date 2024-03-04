@@ -13,7 +13,8 @@ import { RoleEntityService } from '@/core/entities/RoleEntityService.js';
 export const meta = {
 	tags: ['admin', 'role'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:roles',
 

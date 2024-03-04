@@ -15,7 +15,8 @@ import { ApiError } from '../../error.js';
 
 export const meta = {
 	secure: true,
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	prohibitMoved: true,
 
 	limit: {

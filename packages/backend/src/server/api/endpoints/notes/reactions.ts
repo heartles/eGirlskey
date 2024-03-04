@@ -15,7 +15,8 @@ import { QueryService } from '@/core/QueryService.js';
 export const meta = {
 	tags: ['notes', 'reactions'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	allowGet: true,
 	cacheSec: 60,

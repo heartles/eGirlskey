@@ -21,7 +21,8 @@ export const meta = {
 		max: 20,
 	},
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:blocks',
 

@@ -11,6 +11,7 @@ import { ReversiService } from '@/core/ReversiService.js';
 
 export const meta = {
 	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'read:account',
 

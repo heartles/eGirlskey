@@ -19,7 +19,8 @@ import { UtilityService } from '@/core/UtilityService.js';
 export const meta = {
 	tags: ['notes', 'hashtags'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'array',

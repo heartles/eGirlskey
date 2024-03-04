@@ -15,7 +15,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['pages'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'object',

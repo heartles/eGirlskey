@@ -11,7 +11,8 @@ import type { DeliverQueue } from '@/core/QueueModule.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:queue',
 

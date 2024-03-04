@@ -791,7 +791,12 @@ interface IEndpointMetaBase {
 	 * このエンドポイントにリクエストするのにユーザー情報が必須か否か
 	 * 省略した場合は false として解釈されます。
 	 */
-	readonly requireCredential?: 'always' | 'conditional' | 'never';
+	readonly requireCredential?: boolean;
+
+	/**
+	 * Should a credential be required when the server is in secureApiMode
+	 */
+	readonly requireCredentialSecureMode?: boolean;
 
 	/**
 	 * isModeratorなロールを必要とするか
@@ -871,14 +876,14 @@ interface IEndpointMetaBase {
 	readonly cacheSec?: number;
 }
 
-export type IEndpointMeta = (Omit<IEndpointMetaBase, 'requireCrential' | 'requireModerator' | 'requireAdmin'> & {
-	requireCredential?: 'conditional',
+export type IEndpointMeta = (Omit<IEndpointMetaBase, 'requireCredential' | 'requireModerator' | 'requireAdmin'> & {
+	requireCredential?: false,
 	requireAdmin?: false,
 	requireModerator?: false,
 }) | (Omit<IEndpointMetaBase, 'secure'> & {
 	secure: true,
 }) | (Omit<IEndpointMetaBase, 'requireCredential' | 'kind'> & {
-	requireCredential: 'always',
+	requireCredential: true,
 	kind: (typeof permissions)[number],
 }) | (Omit<IEndpointMetaBase, 'requireModerator' | 'kind'> & {
 	requireModerator: true,

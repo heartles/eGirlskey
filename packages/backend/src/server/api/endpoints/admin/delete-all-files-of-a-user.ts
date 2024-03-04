@@ -12,7 +12,8 @@ import { DI } from '@/di-symbols.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireAdmin: true,
 	kind: 'write:admin:delete-all-files-of-a-user',
 } as const;

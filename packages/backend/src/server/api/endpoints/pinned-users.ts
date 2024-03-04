@@ -17,7 +17,8 @@ import { isNotNull } from '@/misc/is-not-null.js';
 export const meta = {
 	tags: ['users'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'array',

@@ -11,7 +11,8 @@ export const meta = {
 
 	description: 'Endpoint for testing input validation.',
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

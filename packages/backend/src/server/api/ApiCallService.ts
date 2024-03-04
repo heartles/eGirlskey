@@ -272,8 +272,7 @@ export class ApiCallService implements OnApplicationShutdown {
 			}
 		}
 
-		const requireCredential = (ep.meta.requireCredential === 'always' ||
-			(ep.meta.requireCredential === 'conditional' && this.config.secureApiMode));
+		const requireCredential = (ep.meta.requireCredential || (ep.meta.requireCredentialSecureMode && this.config.secureApiMode));
 		if (requireCredential || ep.meta.requireModerator || ep.meta.requireAdmin) {
 			if (user == null) {
 				throw new ApiError({

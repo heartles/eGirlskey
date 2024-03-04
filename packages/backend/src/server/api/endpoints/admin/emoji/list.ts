@@ -15,7 +15,8 @@ import { EmojiEntityService } from '@/core/entities/EmojiEntityService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireRolePolicy: 'canManageCustomEmojis',
 	kind: 'read:admin:emoji',
 

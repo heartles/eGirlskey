@@ -8,7 +8,8 @@ import { Endpoint } from '@/server/api/endpoint-base.js';
 import endpoints from '../endpoints.js';
 
 export const meta = {
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	tags: ['meta'],
 

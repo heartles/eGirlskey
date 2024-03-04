@@ -14,6 +14,9 @@ export const meta = {
 	allowGet: true,
 	cacheSec: 60,
 
+	requireCredential: false,
+	requireCredentialSecureMode: true,
+
 	errors: {
 	},
 

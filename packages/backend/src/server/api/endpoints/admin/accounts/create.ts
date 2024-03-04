@@ -17,7 +17,8 @@ import { Packed } from '@/misc/json-schema.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 
 	res: {
 		type: 'object',

@@ -16,7 +16,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['admin', 'role', 'users'],
 
-	requireCredential: 'never',
+	requireCredential: false,
+	requireCredentialSecureMode: false,
 	requireModerator: true,
 	kind: 'read:admin:roles',
 

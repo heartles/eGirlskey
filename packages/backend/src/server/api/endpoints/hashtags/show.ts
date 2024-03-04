@@ -14,7 +14,8 @@ import { ApiError } from '../../error.js';
 export const meta = {
 	tags: ['hashtags'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: {
 		type: 'object',

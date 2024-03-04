@@ -12,7 +12,8 @@ import { ClipEntityService } from '@/core/entities/ClipEntityService.js';
 export const meta = {
 	tags: ['account', 'clip'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'read:clip-favorite',
 

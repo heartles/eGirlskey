@@ -10,7 +10,8 @@ import { RelayService } from '@/core/RelayService.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:relays',
 

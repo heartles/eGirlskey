@@ -15,7 +15,8 @@ import { notificationRecieveConfig } from '@/models/json-schema/user.js';
 export const meta = {
 	tags: ['admin'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireModerator: true,
 	kind: 'read:admin:show-user',
 

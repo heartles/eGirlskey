@@ -12,7 +12,8 @@ import { schema } from '@/core/chart/charts/entities/ap-request.js';
 export const meta = {
 	tags: ['charts'],
 
-	requireCredential: 'conditional',
+	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	res: getJsonSchema(schema),
 

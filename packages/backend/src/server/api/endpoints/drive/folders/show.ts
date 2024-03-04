@@ -13,7 +13,8 @@ import { ApiError } from '../../../error.js';
 export const meta = {
 	tags: ['drive'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'read:drive',
 

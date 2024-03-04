@@ -13,7 +13,8 @@ import { DEFAULT_POLICIES } from '@/core/RoleService.js';
 export const meta = {
 	tags: ['meta'],
 
-	requireCredential: 'always',
+	requireCredential: true,
+	requireCredentialSecureMode: true,
 	requireAdmin: true,
 	kind: 'read:admin:meta',
 

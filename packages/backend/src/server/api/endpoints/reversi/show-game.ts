@@ -11,6 +11,7 @@ import { ApiError } from '../../error.js';
 
 export const meta = {
 	requireCredential: false,
+	requireCredentialSecureMode: true,
 
 	errors: {
 		noSuchGame: {

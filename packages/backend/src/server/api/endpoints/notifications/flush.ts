@@ -11,6 +11,7 @@ export const meta = {
 	tags: ['notifications', 'account'],
 
 	requireCredential: true,
+	requireCredentialSecureMode: true,
 
 	kind: 'write:notifications',
 } as const;
