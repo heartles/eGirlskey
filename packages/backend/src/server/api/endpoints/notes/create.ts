@@ -139,6 +139,12 @@ export const meta = {
 			code: 'CONTAINS_TOO_MANY_MENTIONS',
 			id: '4de0363a-3046-481b-9b0f-feff3e211025',
 		},
+
+		visibleUsersAndMentionsMustMatch: {
+			message: 'Cannot send message because message recipients and mentioned users must match',
+			code: 'RECIPIENTS_MUST_MATCH_MENTIONED_USERS',
+			id: 'ba675fa7-e993-4267-a20e-c611141742af',
+		},
 	},
 } as const;
 
@@ -408,6 +414,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 						throw new ApiError(meta.errors.containsProhibitedWords);
 					} else if (e.id === '9f466dab-c856-48cd-9e65-ff90ff750580') {
 						throw new ApiError(meta.errors.containsTooManyMentions);
+					} else if (e.id === '9d311820-f927-463c-ae38-b7435c6a9f4f') {
+						throw new ApiError(meta.errors.visibleUsersAndMentionsMustMatch);
 					}
 				}
 				throw e;

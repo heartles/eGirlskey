@@ -367,6 +367,16 @@ export class NoteCreateService implements OnApplicationShutdown {
 		if (data.visibility === 'specified') {
 			if (data.visibleUsers == null) throw new Error('invalid param');
 
+			// Check that mentions and recipients are the same set if note originates locally
+			if (user.host == null) {
+				if (mentionedUsers.length !== data.visibleUsers.length) {
+					throw new IdentifiableError('9d311820-f927-463c-ae38-b7435c6a9f4f', 'Note recipients and mentions must match');
+				}
+				if (!mentionedUsers.every((mention) => data.visibleUsers.some((visible) => mention.id === visible.id))) {
+					throw new IdentifiableError('9d311820-f927-463c-ae38-b7435c6a9f4f', 'Note recipients and mentions must match');
+				}
+			}
+
 			for (const u of data.visibleUsers) {
 				if (!mentionedUsers.some(x => x.id === u.id)) {
 					mentionedUsers.push(u);
