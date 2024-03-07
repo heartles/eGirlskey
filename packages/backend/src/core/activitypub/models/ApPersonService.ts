@@ -51,7 +51,7 @@ import type { ApImageService } from './ApImageService.js';
 import type { IActor, IObject } from '../type.js';
 
 const nameLength = 128;
-const summaryLength = 2048;
+const summaryLength = 65536;
 
 type Field = Record<'name' | 'value', string>;
 

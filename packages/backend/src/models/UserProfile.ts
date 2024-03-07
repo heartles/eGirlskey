@@ -43,8 +43,8 @@ export class MiUserProfile {
 	})
 	public listenbrainz: string | null;
 
-	@Column('varchar', {
-		length: 2048, nullable: true,
+	@Column('text', {
+		nullable: true,
 		comment: 'The description (bio) of the User.',
 	})
 	public description: string | null;
