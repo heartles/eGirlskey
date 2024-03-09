@@ -277,6 +277,17 @@ export class MiUserProfile {
 		unlockedAt: number;
 	}[];
 
+	@Column('boolean', {
+		default: false,
+	})
+	public autoDeleteNotes: boolean;
+
+	@Column('integer', {
+		default: 43200, // 30 days in minutes
+	})
+	public autoDeleteNotesMinutes: number;
+
+
 	//#region Denormalized fields
 	@Index()
 	@Column('varchar', {

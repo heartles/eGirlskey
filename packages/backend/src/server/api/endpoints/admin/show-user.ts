@@ -88,6 +88,14 @@ export const meta = {
 					type: 'string',
 				},
 			},
+			autoDeleteNotes: {
+				type: 'boolean',
+				optional: false, nullable: false,
+			},
+			autoDeleteNotesMinutes: {
+				type: 'number',
+				optional: false, nullable: false,
+			},
 			notificationRecieveConfig: {
 				type: 'object',
 				optional: false, nullable: false,
@@ -239,6 +247,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				receiveAnnouncementEmail: profile.receiveAnnouncementEmail,
 				mutedWords: profile.mutedWords,
 				mutedInstances: profile.mutedInstances,
+				autoDeleteNotesMinutes: profile.autoDeleteNotesMinutes,
+				autoDeleteNotes: profile.autoDeleteNotes,
 				notificationRecieveConfig: profile.notificationRecieveConfig,
 				isModerator: isModerator,
 				isSilenced: isSilenced,
