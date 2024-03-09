@@ -68,6 +68,15 @@ SPDX-License-Identifier: AGPL-3.0-only
 	</FormSection>
 
 	<MkSwitch v-model="keepCw" @update:modelValue="save()">{{ i18n.ts.keepCw }}</MkSwitch>
+
+	<FormSection>
+		<div class="_gaps_m">
+			<MkFolder>
+				<template #label>{{ i18n.ts.autoDeleteNotes }}</template>
+				<XAutoDelete />
+			</MkFolder>
+		</div>
+	</FormSection>
 </div>
 </template>
 
@@ -82,6 +91,7 @@ import { defaultStore } from '@/store.js';
 import { i18n } from '@/i18n.js';
 import { signinRequired } from '@/account.js';
 import { definePageMetadata } from '@/scripts/page-metadata.js';
+import XAutoDelete from './privacy.autodelete.vue';
 
 const $i = signinRequired();
 
