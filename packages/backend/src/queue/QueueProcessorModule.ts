@@ -13,6 +13,7 @@ import { EndedPollNotificationProcessorService } from './processors/EndedPollNot
 import { InboxProcessorService } from './processors/InboxProcessorService.js';
 import { WebhookDeliverProcessorService } from './processors/WebhookDeliverProcessorService.js';
 import { CheckExpiredMutingsProcessorService } from './processors/CheckExpiredMutingsProcessorService.js';
+import { AutoDeleteNotesProcessorService } from './processors/AutoDeleteNotesProcessorService.js';
 import { CleanChartsProcessorService } from './processors/CleanChartsProcessorService.js';
 import { CleanProcessorService } from './processors/CleanProcessorService.js';
 import { CleanRemoteFilesProcessorService } from './processors/CleanRemoteFilesProcessorService.js';
@@ -52,6 +53,7 @@ import { RelationshipProcessorService } from './processors/RelationshipProcessor
 		ResyncChartsProcessorService,
 		CleanChartsProcessorService,
 		CheckExpiredMutingsProcessorService,
+		AutoDeleteNotesProcessorService,
 		CleanProcessorService,
 		DeleteDriveFilesProcessorService,
 		ExportAccountDataProcessorService,
