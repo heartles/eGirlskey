@@ -605,6 +605,14 @@ export const packedMeDetailedOnlySchema = {
 				nullable: false, optional: false,
 			},
 		},
+		autoDeleteNotes: {
+			type: 'boolean',
+			nullable: false, optional: false,
+		},
+		autoDeleteNotesMinutes: {
+			type: 'number',
+			nullable: false, optional: false,
+		},
 		notificationRecieveConfig: {
 			type: 'object',
 			nullable: false, optional: false,

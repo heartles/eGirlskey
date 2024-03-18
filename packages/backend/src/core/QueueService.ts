@@ -69,6 +69,12 @@ export class QueueService {
 			repeat: { pattern: '*/5 * * * *' },
 			removeOnComplete: true,
 		});
+
+		this.systemQueue.add('autoDeleteNotes', {
+		}, {
+			repeat: { pattern: '*/5 * * * *' },
+			removeOnComplete: true,
+		});
 	}
 
 	@bindThis
