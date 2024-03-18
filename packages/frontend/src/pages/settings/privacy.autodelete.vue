@@ -3,7 +3,14 @@
 	<MkButton :disabled="!changed" :primary="changed" @click="save()"><i class="ph-check ph-bold ph-lg"></i> {{ i18n.ts.save }}</MkButton>
 	<MkSwitch v-model="enable">
 		{{ i18n.ts.enable }}
-		<template #caption>When enabled, notes you post will automatically delete themselves if they are older than the given threshold age.</template>
+		<template #caption>
+			When enabled, notes you post will automatically delete themselves if they are older than the given threshold age.
+			Notes of yours that you have favorited (aka bookmarked) or pinned will be excluded from this.
+			<br />
+			<br />
+			WARNING: Even if a note is favorited or pinned, if any notes above it in the thread are deleted (or autodeleted)
+			then the favorited/pinned post will be deleted as well. Consider favoriting all notes in a thread if you pin/favorite one of them.
+		</template>
 	</MkSwitch>
 	<MkInput v-model="threshold" type="number" :min="1">
 		<template #suffix>{{ i18n.ts._time.minute }}</template>
