@@ -8,6 +8,13 @@
 
 import { shallowRef, onMounted } from 'vue';
 
+const props = defineProps({
+	spritesheet: {
+		type: String,
+		default: '/client-assets/oneko.gif',
+	},
+});
+
 const nekoEl = shallowRef<HTMLDivElement>();
 
 let nekoPosX = 32;
@@ -88,6 +95,8 @@ const spriteSets = {
 
 function init() {
 	if (!nekoEl.value) return;
+
+	nekoEl.value.style.backgroundImage = `url(${props.spritesheet})`;
 
 	nekoEl.value.style.left = `${nekoPosX - 16}px`;
 	nekoEl.value.style.top = `${nekoPosY - 16}px`;
@@ -235,6 +244,5 @@ onMounted(init);
 	pointer-events: none;
 	image-rendering: pixelated;
 	z-index: 2147483647;
-	background-image: url(/client-assets/oneko.gif);
 }
 </style>

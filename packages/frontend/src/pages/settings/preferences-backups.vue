@@ -100,6 +100,7 @@ const defaultStoreSaveKeys: (keyof typeof defaultStore['state'])[] = [
 	'reactionsDisplaySize',
 	'forceShowAds',
 	'oneko',
+	'boobdog',
 	'numberOfReplies',
 	'aiChanMode',
 	'devMode',
