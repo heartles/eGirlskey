@@ -114,16 +114,20 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 	@bindThis
 	private async fetchAny(uri: string, me: MiLocalUser | null | undefined): Promise<SchemaType<typeof meta['res']> | null> {
 	// ブロックしてたら中断
+		const host = this.utilityService.extractDbHost(uri);
 		const fetchedMeta = await this.metaService.fetch();
-		const dbHost = this.utilityService.extractDbHost(uri);
-		if (this.utilityService.isBlockedHost(fetchedMeta.blockedHosts, dbHost)) return null;
-		if (fetchedMeta.allowlistMode && !this.utilityService.isAllowedHost(fetchedMeta.allowedHosts, dbHost)) return null;
+
+		if (this.utilityService.isBlockedHost(fetchedMeta.blockedHosts, host)) return null;
+		if (fetchedMeta.allowlistMode && !this.utilityService.isAllowedHost(fetchedMeta.allowedHosts, host)) return null;
 
 		let local = await this.mergePack(me, ...await Promise.all([
 			this.apDbResolverService.getUserFromApId(uri),
 			this.apDbResolverService.getNoteFromApId(uri),
 		]));
 		if (local != null) return local;
+
+		// local object, not found in db? fail
+		if (this.utilityService.isSelfHost(host)) return null;
 
 		// リモートから一旦オブジェクトフェッチ
 		const resolver = this.apResolverService.createResolver();
