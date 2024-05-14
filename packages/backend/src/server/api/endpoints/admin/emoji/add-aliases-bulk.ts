@@ -35,7 +35,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private customEmojiService: CustomEmojiService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
-			await this.customEmojiService.addAliasesBulk(ps.ids, ps.aliases);
+			await this.customEmojiService.addAliasesBulk(ps.ids, ps.aliases.map(a => a.normalize('NFC')));
 		});
 	}
 }

@@ -99,7 +99,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			}
 
 			if (ps.query) {
-				q.andWhere('emoji.name like :query', { query: '%' + sqlLikeEscape(ps.query) + '%' })
+				q.andWhere('emoji.name like :query', { query: '%' + sqlLikeEscape(ps.query.normalize('NFC')) + '%' })
 					.orderBy('length(emoji.name)', 'ASC');
 			}
 
